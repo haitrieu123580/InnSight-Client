@@ -1,0 +1,19 @@
+@import '../../../Common.scss';
+
+footer {
+    background-color: $blue-dark;
+    width: 100%;
+    >* {
+        background-color: $blue-dark !important;
+    }
+
+    .footer-text {
+        color: #FBFF4C;
+        font-weight: $font-weight-bold;
+        font-size: 32px;
+    }
+
+    svg {
+        color: white;
+    }
+}

@@ -1,0 +1,35 @@
+@import "../../../../Common.scss";
+.register-4 {
+  // min-height: 100vh;
+  background-color: white;
+
+  .content {
+    // height: 100vh;
+    padding: 0 190px;
+    padding-top: 50px;
+    margin-bottom: 100px;
+
+    .form {
+      border-radius: 5px;
+      border: 1px solid #d6d5d5;
+      box-shadow: 1px 3px #ecebeb;
+
+      .time-field{
+        padding: 10px;
+      }
+    }
+
+    .btn-continue {
+      background-color: #3182d3;
+      color: white;
+    }
+    .btn-continue:hover {
+      transition: 0.5s;
+      border: 1px solid #333;
+
+    }
+    .info-hotel {
+      padding-bottom: 20px;
+    }
+  }
+}

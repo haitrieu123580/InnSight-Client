@@ -1,0 +1,59 @@
+@import '../../../Common.scss';
+
+.header {
+    width: 100%;
+    background-color: $blue-dark !important;
+    height: 70px;
+    padding: 12px 0 ;
+    display: flex;
+    // justify-content: space-between;
+
+    .logo-text {
+        font-size: 40px;
+        color: white;
+        font-weight: $font-weight-bold;
+        flex: auto;
+        padding-left: 190px;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        flex: initial;
+        // width: 123px;
+        height: 60px;
+        margin-right: 20px;
+
+        span {
+            font-size: $fontSizeMedium;
+            color: white ;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .group-button{
+        padding-right: 170px;
+        
+    }
+
+    .header-button {
+        font-size:15px;
+        width: 130px;
+        height: 45px;
+        padding: 11px !important;
+        
+        background: #CBDCF7;
+        border-radius: $border-radius;
+        margin-left: 24px;
+    }
+    .button-account{
+        font-size:15px;
+        width: 205px;
+        height: 45px;
+        border-radius: 5px;
+        font-weight: 700; 
+        background: #CBDCF7;
+        margin-left: 24px;
+    }
+    
+}

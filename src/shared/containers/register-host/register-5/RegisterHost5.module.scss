@@ -1,0 +1,73 @@
+@import "../../../../Common.scss";
+.register-5 {
+  // min-height: 100vh;
+  background-color: white;
+
+  .content {
+    // height: 100vh;
+    padding: 0 190px;
+    padding-top: 50px;
+    margin-bottom: 100px;
+
+    .form {
+      border-radius: 5px;
+      border: 1px solid #d6d5d5;
+      box-shadow: 1px 3px #ecebeb;
+
+      .container-upload-image{
+        min-height: 50px;
+      }
+      .previewStyles  {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      };
+    
+      .imageStyles  {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border:  1px solid black;
+      };
+      .imageContainerStyles  {
+        position: relative;
+        width: 20%;
+        height: 100px;
+        padding: 10px 2px;
+      };
+      .btn-remove{
+        position: absolute;
+        top: 10px;
+        right: 2px;
+        padding: 5px;
+        background: #efeded;
+        opacity: 0.7;
+        color: red;
+        border: none;
+        cursor: pointer;
+      }
+     
+    }
+
+    .btn-continue {
+      background-color: #3182d3;
+      color: white;
+    }
+    .btn-continue:hover {
+      transition: 0.5s;
+      border: 1px solid #333;
+
+    }
+    .hint-box{
+                
+      border-radius: 5px;
+      border: 1px solid #d6d5d5;
+
+      li{
+          padding: 5px 0;
+          list-style-type: circle;
+      }
+
+  }
+  }
+}
