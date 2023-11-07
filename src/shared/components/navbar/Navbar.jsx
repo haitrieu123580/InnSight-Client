@@ -46,7 +46,7 @@ const Navbar = () => {
                     <>
                         <div className="pr-10">
                         <button
-                            class={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                            className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
                         >
                             <IcAvatar />
                             <span>Tài khoản của bạn</span>

@@ -36,3 +36,6 @@ body {
 * {
     box-sizing: border-box !important;
 }
+.ant-popover-content button, [type='button']{
+    background-color:  white;
+}
