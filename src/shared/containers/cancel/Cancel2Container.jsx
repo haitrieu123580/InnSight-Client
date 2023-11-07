@@ -9,7 +9,29 @@ import IcBed from '../../components/icons/cancelbooking-icons/IcBed';
 const invoice = [
   {
     id: 1,
-
+    name_hotel: 'Taian Hotel & Apartment',
+    image_hotel_path: '',
+    date_start: '15/12/2023',
+    date_end: '16/12/2023',
+    count_room: 1,
+    amount: 1000000,
+    cancel_charge: 0
+  }
+]
+const detail_room = [
+  {
+    id: 1,
+    room_name: 'Superior With King Size Bed',
+    count: 2,
+    amount: 635878,
+    people: 2,
+  },
+  {
+    id: 2,
+    room_name: 'Superior Room With King Size Bed',
+    count: 1,
+    amount: 635878,
+    people: 2,
   }
 ]
 const Cancel2Container = () => {
@@ -27,9 +49,9 @@ const Cancel2Container = () => {
   const handleContinue = () => {
     
   };
-  const charged = false;
   return (
     <div className={styles['content']}>
+    {invoice.map((item, index) => (
       <Row>
         <Col flex="1 1 500px">
           <Link to="/cancel/1" className='flex text-green-600 font-semibold'>
@@ -41,21 +63,16 @@ const Cancel2Container = () => {
           <div className='mt-6 flex '>
             <IcBed/>
             <div>
-              <div className='ml-2 mb-3'>
-                <h3 className='font-bold'>(1x) Superior Room With King Size Bed</h3>
-                <div className='flex'>
-                  <h3 className='mr-2'>635,878 VND</h3>
-                  <h3>- 2 người lớn</h3>
+              {detail_room.map((room, index) => (
+                <div className='ml-2 mb-3'>
+                  <h3 className='font-bold'>({room.count}x) {room.room_name}</h3>
+                  <div className='flex'>
+                    <h3 className='mr-2'>{room.amount} VND</h3>
+                    <h3>- {room.people} người lớn</h3>
+                  </div>
                 </div>
-              </div>
-              <div className='ml-2 mb-3'>
-                <h3 className='font-bold'>(1x) Superior Room With King Size Bed</h3>
-                <div className='flex'>
-                  <h3 className='mr-2'>635,878 VND</h3>
-                  <h3>- 2 người lớn</h3>
-                </div>
-              </div>
-              {charged ? (
+              ))}
+              {item.cancel_charge ? (
                 <h2 className='mb-3 ml-2 text-red-600 font-semibold'>Hủy mất phí</h2>
               ):(
                 <h2 className='mb-3 ml-2 text-green-600 font-semibold'>Hủy miễn phí</h2>
@@ -63,25 +80,25 @@ const Cancel2Container = () => {
               }
             </div>
           </div>
-          <div className='border-t border-b pt-5 pb-5'>
-            <h1 className='text-2xl font-bold mb-4'>Chi tiết giá</h1>
-            <div className='flex ml-10 text-lg mb-3'>
-              <h3>Đặt phòng của bạn</h3>
-              <h3>......VND</h3>
+            <div className='border-t border-b pt-5 pb-5'>
+              <h1 className='text-2xl font-bold mb-4'>Chi tiết giá</h1>
+              <Row className='ml-10 text-lg mb-3'>
+                <Col flex={2} className='text-lg mb-3'>
+                  <h3 className=' mb-3'>Đặt phòng của bạn</h3>
+                  <h3 className=' mb-3'>Phí hủy</h3>
+                  <h3 className='font-bold mb-3'>Số tiền bạn sẽ trả</h3>
+                </Col>
+                <Col flex={3} className='text-right text-lg mb-3 mr-14'>
+                  <h3 className=' mb-3'>{item.amount} VND</h3>
+                  <h3 className=' mb-3'>{item.cancel_charge} VND</h3>
+                  <h3 className='font-bold mb-3'>{item.cancel_charge} VND</h3>
+                </Col>
+              </Row>
             </div>
-            <div className='flex ml-10 text-lg mb-3'>
-              <h3>Phí hủy</h3>
-              <h3>......VND</h3>
-            </div>
-            <div className='flex ml-10 text-lg font-bold'>
-              <h3>Số tiền bạn sẽ trả</h3>
-              <h3>......VND</h3>
-            </div>
-          </div>
-          {charged ? (
-                <h2 className='mt-3 mb-3 ml-10 text-red-600 font-semibold text-base'>Tiền hoàn lại là 0 VND</h2>
+          {item.cancel_charge ? (
+                <h2 className='mt-3 mb-3 ml-10 text-red-600 font-semibold text-base'>Tiền hoàn lại là {item.amount - item.cancel_charge} VND</h2>
               ):(
-                <h2 className='mt-3 mb-3 ml-10 text-green-600 font-semibold text-base'>Số tiền...... VND sẽ được hoàn vào tài khoản của bạn.</h2>
+                <h2 className='mt-3 mb-3 ml-10 text-green-600 font-semibold text-base'>Số tiền {item.amount - item.cancel_charge} VND sẽ được hoàn vào tài khoản của bạn.</h2>
               )
               }
           <div className="flex gap-2 mt-6 text-lg">
@@ -90,7 +107,7 @@ const Cancel2Container = () => {
               type="button"
               // onClick={''}
             >
-              {charged ? (
+              {item.cancel_charge ? (
                 <Link to={'/cancel/4'}> Xác nhận hủy</Link> // có phí
               ):(
                 <Link to={'/cancel/3'}> Xác nhận hủy</Link> // miễn phí
@@ -108,26 +125,28 @@ const Cancel2Container = () => {
         </Col>
         <Col flex="1 1 200px" style={{ marginLeft: '50px' }}>
           <Box className='border mb-6'>
-            <div className='flex m-3'>
-              <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg" alt="" className={`${styles.image}`}/>
-              <div className='ml-3'>
-                <h1 className='text-2xl font-bold'>Taian Hotel & Apartment</h1>
-                <h1 className='mt-2 text-lg'>15 tháng 12 – 16 tháng 12</h1>
-                <h1 className='text-lg'>1 phòng</h1>
+              <div className='flex m-3'>
+                <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg" alt="" className={`${styles.image}`}/>
+                <div className='ml-3'>
+                  <h1 className='text-2xl font-bold'>{item.name_hotel}</h1>
+                  <span className='mt-2 text-lg'>
+                  {item.date_start} - {item.date_end}
+                  </span>
+                  <h1 className='text-lg'>{item.count_room} phòng</h1>
+                </div>
               </div>
-            </div>
-            <Row className='m-4 text-xl border-t'>
-              <Col flex={2}>
-                <h2 className='text-lg mb-4 mt-2'>Đặt phòng của bạn</h2>
-                <h2 className='text-lg mb-4'>Phí hủy</h2>
-                <h2 className='text-lg font-bold'>Số tiền bạn sẽ trả</h2>
-              </Col>
-                <Col flex={3} className='text-right'>
-                <h2 className='text-lg mb-4 mt-2'>...... VND</h2>
-                <h2 className='text-lg mb-4'>...... VND</h2>
-                <h2 className='text-lg font-bold '>...... VND</h2>
-              </Col>
-            </Row>
+              <Row className='m-4 text-xl border-t'>
+                <Col flex={2}>
+                  <h2 className='text-lg mb-4 mt-2'>Đặt phòng của bạn</h2>
+                  <h2 className='text-lg mb-4'>Phí hủy</h2>
+                  <h2 className='text-lg font-bold'>Số tiền bạn sẽ trả</h2>
+                </Col>
+                  <Col flex={3} className='text-right'>
+                  <h2 className='text-lg mb-4 mt-2'>{item.amount} VND</h2>
+                  <h2 className='text-lg mb-4'>{item.cancel_charge} VND</h2>
+                  <h2 className='text-lg font-bold '>{item.will_pay} VND</h2>
+                </Col>
+              </Row>
           </Box>
           <Box className='border p-3'>
             <h1 className='text-xl font-bold'>Chính sách hủy</h1>
@@ -135,6 +154,7 @@ const Cancel2Container = () => {
           </Box>
         </Col>
       </Row>
+    ))}
     </div>
   );
 }

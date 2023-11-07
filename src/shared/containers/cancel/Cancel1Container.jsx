@@ -20,7 +20,13 @@ const reasons = [
 const invoice = [
   {
     id: 1,
-    
+    name_hotel: 'Taian Hotel & Apartment',
+    date_start: '15/12/2023',
+    date_end: '16/12/2023',
+    count_room: 1,
+    amount: 1000000,
+    cancel_charge: 0,
+    will_pay: 0
   }
 ]
 const Cancel1Container = () => {
@@ -87,28 +93,32 @@ const Cancel1Container = () => {
           </div>
         </Col>
         <Col flex="1 1 200px" style={{ marginLeft: '50px' }}>
-          <Box className='border mb-6'>
-            <div className='flex m-3'>
-              <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg" alt="" className={`${styles.image}`}/>
-              <div className='ml-3'>
-                <h1 className='text-2xl font-bold'>Taian Hotel & Apartment</h1>
-                <h1 className='mt-2 text-lg'>15 tháng 12 – 16 tháng 12</h1>
-                <h1 className='text-lg'>1 phòng</h1>
+        {invoice.map((item, index) => (
+            <Box className='border mb-6'>
+              <div className='flex m-3'>
+                <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg" alt="" className={`${styles.image}`}/>
+                <div className='ml-3'>
+                  <h1 className='text-2xl font-bold'>{item.name_hotel}</h1>
+                  <span className='mt-2 text-lg'>
+                  {item.date_start} - {item.date_end}
+                  </span>
+                  <h1 className='text-lg'>{item.count_room} phòng</h1>
+                </div>
               </div>
-            </div>
-            <Row className='m-4 text-xl border-t'>
-              <Col flex={2}>
-                <h2 className='text-lg mb-4 mt-2'>Đặt phòng của bạn</h2>
-                <h2 className='text-lg mb-4'>Phí hủy</h2>
-                <h2 className='text-lg font-bold'>Số tiền bạn sẽ trả</h2>
-              </Col>
-                <Col flex={3} className='text-right'>
-                <h2 className='text-lg mb-4 mt-2'>...... VND</h2>
-                <h2 className='text-lg mb-4'>...... VND</h2>
-                <h2 className='text-lg font-bold '>...... VND</h2>
-              </Col>
-            </Row>
-          </Box>
+              <Row className='m-4 text-xl border-t'>
+                <Col flex={2}>
+                  <h2 className='text-lg mb-4 mt-2'>Đặt phòng của bạn</h2>
+                  <h2 className='text-lg mb-4'>Phí hủy</h2>
+                  <h2 className='text-lg font-bold'>Số tiền bạn sẽ trả</h2>
+                </Col>
+                  <Col flex={3} className='text-right'>
+                  <h2 className='text-lg mb-4 mt-2'>{item.amount} VND</h2>
+                  <h2 className='text-lg mb-4'>{item.cancel_charge} VND</h2>
+                  <h2 className='text-lg font-bold '>{item.will_pay} VND</h2>
+                </Col>
+              </Row>
+            </Box>
+          ))}
           <Box className='border p-3'>
             <h1 className='text-xl font-bold'>Chính sách hủy</h1>
             <h1 className='text-base mt-2'>Bạn có thể hủy miễn phí đến 1 ngày trước khi tới nhận phòng. Bạn sẽ phải trả toàn bộ tiền phòng nếu bạn hủy trong vòng 1 ngày trước khi tới nhận phòng. Nếu bạn vắng mặt, phí vắng mặt sẽ bằng với phí hủy.</h1>
