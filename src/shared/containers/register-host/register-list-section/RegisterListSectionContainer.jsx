@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import styles from "./RegisterListSection.module.scss";
+import styles from "./RegisterListSectionContainer.module.scss";
 import IcCheck from "../../../components/icons/home-icons/IcCheck";
 import IcBed from "../../../components/icons/home-icons/IcBed";
+import { useParams } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 const RegisterListSectionContainer = () => {
+  const { sectionStatus } = useParams();
+  console.log(sectionStatus);
   const CustomButton = styled(Button)({
     height: "25px",
   });
@@ -31,9 +34,17 @@ const RegisterListSectionContainer = () => {
             </div>
           </div>
           <div>
-            <Link to="/host/register-1" className="text-sky-600">
-              Chỉnh sửa
-            </Link>
+            {sectionStatus > 1 ? (
+              <Link to="/host/register-1" className="text-sky-600">
+                Chỉnh sửa
+              </Link>
+            ) : (
+              <CustomButton variant="contained" className="bg-sky-600">
+                <Link to="/host/add-room" className=" px-2">
+                  Thêm
+                </Link>
+              </CustomButton>
+            )}
           </div>
         </div>
 
@@ -55,11 +66,17 @@ const RegisterListSectionContainer = () => {
             </div>
           </div>
           <div>
-            <CustomButton variant="contained" className="bg-sky-600">
-              <Link to="/host/add-room" className=" px-2">
-                Thêm
+            {sectionStatus > 2 ? (
+              <Link to="/host/add-room" className="text-sky-600">
+                Chỉnh sửa
               </Link>
-            </CustomButton>
+            ) : (
+              <CustomButton variant="contained" className="bg-sky-600">
+                <Link to="/host/add-room" className=" px-2">
+                  Thêm
+                </Link>
+              </CustomButton>
+            )}
           </div>
         </div>
 
@@ -80,9 +97,12 @@ const RegisterListSectionContainer = () => {
             </div>
           </div>
           <div>
-            <CustomButton variant="disabled" className=" bg-stone-200">
-              <Link to="" className=" px-2">
-                Hoàn tất đăng kí
+            <CustomButton
+              variant={sectionStatus < 3 ? "disabled" : "contained"}
+              className={sectionStatus < 3 ?"bg-stone-200":"bg-sky-600"}
+            >
+              <Link to="/host/register-finished" className="px-2">
+                Hoàn tất đăng ký
               </Link>
             </CustomButton>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./RegisterHost5.module.scss";
+import styles from "./AddRoomImage.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import IcXmark from "../../../components/icons/home-icons/IcXmark";
 import IcCamera from "../../../components/icons/home-icons/IcCamera";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { FormLabel } from "@mui/material";
 import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
 
-const RegisterHost5Container = () => {
+const AddRoomImageContainer = () => {
   const [previewImages, setPreviewImages] = useState([]);
 
   const handleFileChange = (event) => {
@@ -29,23 +29,17 @@ const RegisterHost5Container = () => {
 
 
   return (
-    <div className={` ${styles["register-5"]}`}>
+    <div className={` ${styles["add-room-image"]}`}>
       <div className={`${styles["content"]}`}>
-        <div className="title">
-          <h2 className="text-3xl overflow-hidden">
-            Đăng chỗ nghỉ của Quý vị trên InnSight và bắt đầu đón tiếp khách
-            thật nhanh chóng!
-          </h2>
-          <p className="text-xl py-4">
-            Cho chúng tôi biết thêm về chỗ nghỉ của Quý vị
-          </p>
+      <div className="title">
+          <h2 className="text-3xl overflow-hidden pb-4">Phòng này của Quý vị ra sao?</h2>
         </div>
         <div className="block lg:flex lg:justify-between lg:space-x-3 ">
           <div className={`flex-1 `}>
             <div className={`px-5 flex flex-col py-5 ${styles["form"]} `}>
               <FormLabel>
-                Đăng tải ít nhất 5 ảnh của chỗ nghỉ. Càng đăng nhiều, Quý vị
-                càng có cơ hội nhận đặt phòng. Quý vị có thể thêm ảnh sau.
+                Đăng tải ít nhất 5 ảnh của phòng loại này. Càng đăng nhiều, Quý vị
+                càng có cơ hội nhận đặt phòng này. Quý vị có thể thêm ảnh sau.
               </FormLabel>
               <div className={`border-dashed border-2 items-center flex justify-center  ${styles['container-upload-image']}`}>
                 
@@ -102,7 +96,7 @@ const RegisterHost5Container = () => {
                 </button>
               </Link>
               <Link
-                to="/host/register-list-section/2"
+                to="/host/register-list-section/3"
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
               >
                 <button className="h-full">Tiếp tục</button>
@@ -159,4 +153,4 @@ const RegisterHost5Container = () => {
   );
 };
 
-export default RegisterHost5Container;
+export default AddRoomImageContainer;

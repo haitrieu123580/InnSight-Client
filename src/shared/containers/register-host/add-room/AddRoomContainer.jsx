@@ -6,10 +6,19 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { ConstructionOutlined, Label } from "@mui/icons-material";
-import { Button, Checkbox, FormControlLabel, FormGroup, FormLabel, TextField } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  GlobalStyles,
+  TextField,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft"
-import BedroomChildIcon from '@mui/icons-material/BedroomChild';
+import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
+import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 const AddRoomContainer = () => {
   const roomTypes = [
     {
@@ -72,11 +81,12 @@ const AddRoomContainer = () => {
     infoAmenity.classList.toggle("hidden");
   };
   const [roomType, setRoomType] = useState("");
-  const [bedType, setBedType] = useState("");
+  // const [bedType, setBedType] = useState("");
 
   const handleChangeRoomType = (event) => {
     setRoomType(event.target.value);
   };
+  const handleClickChangeRoomType = (event) => {};
 
   const [roomCount, setRoomCount] = useState(0);
   const handleChangeRoomCount = (event) => {
@@ -110,6 +120,13 @@ const AddRoomContainer = () => {
     setBathroomCount(event.target.value);
   };
 
+  const themeSelect = createTheme({
+    sx: {
+      body: {
+        paddingRight: 0,
+      },
+    },
+  });
   return (
     <div className={` ${styles["add-room"]}`}>
       <div className={`${styles["content"]}`}>
@@ -121,21 +138,26 @@ const AddRoomContainer = () => {
             <div className="flex-1 flex-col justify-between border-2 my-4 px-5 rounded-md">
               <div className={`my-3  ${styles["room-type"]}`}>
                 <h3 className="font-bold">Đây là loại phòng gì?</h3>
-                <Box sx={{ minWidth: 120 }}>
+                <Box sx={{ minWidth: 100 }}>
                   <FormControl fullWidth>
-                    <Select
-                      id="select-room-type"
-                      value={roomType}
-                      onChange={handleChangeRoomType}
-                      className="my-2 h-10"
-                    >
-                      {roomTypes?.map((type) => {
-                        return (
-                          <MenuItem value={type.name}>{type.name}</MenuItem>
-                        );
-                      })}
-                      ;
-                    </Select>
+                    <ThemeProvider theme={themeSelect}>
+                      {/* <GlobalStyles styles={{ paddingRight: 0 }}/> */}
+                      <Select
+                        disableInjectingGlobalStyles
+                        id="select-room-type"
+                        value={roomType}
+                        onChange={handleChangeRoomType}
+                        className="my-2 h-10"
+                        // onClick={handleClickChangeRoomType}
+                      >
+                        {roomTypes?.map((type) => {
+                          return (
+                            <MenuItem value={type.name}>{type.name}</MenuItem>
+                          );
+                        })}
+                        ;
+                      </Select>
+                    </ThemeProvider>
                   </FormControl>
                 </Box>
               </div>
@@ -179,17 +201,6 @@ const AddRoomContainer = () => {
                   );
                 })}
               </div>
-              {/* <div className={`mb-3 ${styles["room-count"]}`}>
-                <h3 className="font-bold">
-                  Quý khách có bao nhiêu phòng loại này?
-                </h3>
-                <input
-                  type="number"
-                  value={roomCount}
-                  onChange={handleChangeRoomCount}
-                  className="border-2 p-2 my-2"
-                />
-              </div> */}
             </div>
           </div>
           <div className="xl:flex-1 xl:pl-10">
@@ -261,9 +272,7 @@ const AddRoomContainer = () => {
             <div
               className={`border-2 my-4 px-5 rounded-md  flex flex-col   ${styles[""]}  `}
             >
-              <h3 className="font-bold mt-3">
-                  Tiện ích chung?
-                </h3>
+              <h3 className="font-bold mt-3">Tiện ích chung?</h3>
 
               <div className={`flex flex-col px-6  ${styles[""]}`}>
                 <FormGroup>
@@ -301,23 +310,18 @@ const AddRoomContainer = () => {
           </div>
         </div>
         <div className={`w-1/2 flex pt-7`}>
-              <Link to="/host/register-list-section">
-
-                <button
-                  className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}
-                  >
-                  <IcChevronLeft />
-                </button>
-              </Link>
-              <Link  to="/host/add-room-price"
-                  className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                  >
-                <button className="h-full"
-                >
-                  Tiếp tục
-                </button>
-              </Link>
-            </div>
+          <Link to="/host/register-list-section">
+            <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
+              <IcChevronLeft />
+            </button>
+          </Link>
+          <Link
+            to="/host/add-room-price"
+            className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+          >
+            <button className="h-full">Tiếp tục</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

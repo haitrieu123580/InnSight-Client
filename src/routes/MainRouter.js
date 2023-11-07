@@ -17,7 +17,8 @@ import RegisterListSection from "../pages/host-pages/register-list-section/Regis
 import AddRoom from "../pages/host-pages/add-room/AddRoom";
 import AddRoomPrice from "../pages/host-pages/add-room-price/AddRoomPrice";
 import AddCancelPolicy from "../pages/host-pages/add-cancel-policy/AddCancelPolicy";
-
+import AddRoomImage from "../pages/host-pages/add-room-image/AddRoomImage"
+import RegisterFinished from "../pages/host-pages/register-finished/RegisterFinished";
 const publicRoutes = [
     {
         path: '/',
@@ -88,7 +89,7 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
-    path: "/host/register-list-section",
+    path: "/host/register-list-section/:sectionStatus",
     component: RegisterListSection,
     layout: HostLayout,
   },
@@ -105,6 +106,16 @@ const protectedRoutes = [
   {
     path: "/host/add-cancel-policy",
     component: AddCancelPolicy,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-image",
+    component: AddRoomImage,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/register-finished",
+    component: RegisterFinished,
     layout: HostLayout,
   },
 ];

@@ -1,4 +1,4 @@
-import RegisterListSectionContainer from "../../../shared/containers/register-host/register-list-section/RegisterListSection"
+import RegisterListSectionContainer from "../../../shared/containers/register-host/register-list-section/RegisterListSectionContainer"
 
 const RegisterListSection = () => {
 
