@@ -11,6 +11,7 @@ import './Pagination.scss'
 
 const ResultContainer = () => {
     const { result } = useSelector(state => state.Home) || {}
+    console.log('rs-con', result)
     const [page, setPage] = useState(1);
     const handleChange = (event, value) => {
         setPage(value);

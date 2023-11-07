@@ -1,0 +1,16 @@
+@import '../../../../../Common.scss';
+
+.navbar {
+    width: 100%;
+    background-color: $blue-light !important;
+    height: 70px;
+    padding: 12px 0;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+
+    .logo-text {
+        font-size: 40px;
+        color: $blue-dark;
+        font-weight: $font-weight-bold;
+    }
+}
