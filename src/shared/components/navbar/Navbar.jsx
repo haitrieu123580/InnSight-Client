@@ -6,7 +6,9 @@ import IcSell from '../icons/header-icons/IcSell'
 import IcGroup from '../icons/header-icons/IcGroup'
 import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
+import { useSelector } from 'react-redux'
 const Navbar = () => {
+    const { isLogin, userProfile } = useSelector(state => state.Auth)
     return (
         <div className={`hidden lg:flex  ${styles['navbar']}`}>
             <Link
@@ -41,6 +43,7 @@ const Navbar = () => {
             </nav>
 
             <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
+<<<<<<< HEAD
 
                 <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                     <IcAvatar />
@@ -50,6 +53,31 @@ const Navbar = () => {
                     <IcPencil />
                     <span>Đăng ký</span>
                 </Link>
+=======
+                {!isLogin ?
+                    <>
+                        <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
+                            <IcAvatar />
+                            <span>Đăng nhập</span>
+                        </Link>
+                        <Link to={'sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
+                            <IcPencil />
+                            <span>Đăng ký</span>
+                        </Link>
+                    </> :
+                    <>
+                        <div className="pr-10">
+                            <button
+                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                            >
+                                <IcAvatar />
+                                <span>{userProfile?.name || "User"}</span>
+                            </button>
+                        </div>
+                    </>
+                }
+
+>>>>>>> e15826128844c8e8a0f3541dfeaddf95d55a20aa
 
             </div>
         </div>

@@ -1,29 +1,28 @@
-import HomePage from "../pages/home-page/HomePage";
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
-import ResultPage from "../pages/result-page/ResultPage";
-import HotelPage from "../pages/hotel/HotelPage";
-import SigninPage from "../pages/signin-page/SigninPage";
-import SinginLayout from "../shared/components/layout/SigninLayout";
-import SignupPage from "../pages/signup-page/SignupPage";
-import SettingPage from "../pages/user-settings-page/SettingPage";
-import RegisterHost1 from "../pages/host-pages/register-1/RegisterHost1";
-import RegisterHost2 from "../pages/host-pages/register-2/RegisterHost2";
-import RegisterHost3 from "../pages/host-pages/register-3/RegisterHost3";
-import RegisterHost4 from "../pages/host-pages/register-4/RegisterHost4";
-import RegisterHost5 from "../pages/host-pages/register-5/RegisterHost5";
+import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
 import HostRegisterHomePage from "../pages/host-pages/register-home-page/HostRegisterHomePage";
-import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
-import QLTaiKhoan from "../pages/qltaikhoan/QLTaiKhoan";
-import DetailUser from "../pages/qltaikhoan/DetailUser";
-import QLDichVu from "../pages/qldichvu/QLDichVu";
-import QLLoaiPhong from "../pages/qldanhmuc/QLLoaiPhong";
-import QLLoaiGiuong from "../pages/qldanhmuc/QLLoaiGiuong";
-import QLTamNhin from "../pages/qldanhmuc/QLTamNhin";
-import Thongke from "../pages/admin-thongke/Thongke";
-import Setting from "../pages/admin-setting/Setting";
-import AddAdmin from "../pages/admin-addAdmin/AddAdmin";
-import Changepw from "../pages/admin-ChangePW/Changepw";
+import SigninLayout from "../shared/components/layout/SigninLayout";
+import { lazy } from 'react';
+const HomePage = lazy(() => import('../pages/home-page/HomePage'))
+const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
+const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
+const SigninPage = lazy(() => import('../pages/signin-page/SigninPage'))
+const SignupPage = lazy(() => import('../pages/signup-page/SignupPage'))
+const SettingPage = lazy(() => import('../pages/user-settings-page/SettingPage'))
+const RegisterHost1 = lazy(() => import('../pages/host-pages/register-1/RegisterHost1'))
+const RegisterHost2 = lazy(() => import('../pages/host-pages/register-2/RegisterHost2'))
+const RegisterHost3 = lazy(() => import('../pages/host-pages/register-3/RegisterHost3'))
+const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/RegisterHost4'))
+const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
+const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
+const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
+const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
+const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
+const  AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
+const  AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
+const  RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
+
 const publicRoutes = [
     {
         path: '/',
@@ -31,63 +30,8 @@ const publicRoutes = [
         layout: MainLayout,
     },
     {
-        path: '/admin',
-        component: QLTaiKhoan,
-        layout: MainLayoutAdmin,
-    },
-    // {
-    //     path: '/qltaikhoan',
-    //     component: QLTaiKhoan,
-    //     layout: MainLayoutAdmin,
-    // },
-    {
-        path: '/qltaikhoan/detail',
-        component: DetailUser,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/qldichvu',
-        component: QLDichVu,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/qldanhmuc/loai_phong',
-        component: QLLoaiPhong,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/qldanhmuc/loai_giuong',
-        component: QLLoaiGiuong,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/qldanhmuc/tam_nhin',
-        component: QLTamNhin,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/admin_thongke',
-        component: Thongke,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/admin_setting',
-        component: Setting,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/addAdmin',
-        component: AddAdmin,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/admin_changepw',
-        component:Changepw,
-        layout: MainLayoutAdmin,
-    },
-    {
-        path: '/hotel/:id',
-        component: HotelPage,
+        path: '/home',
+        component: HomePage,
         layout: MainLayout,
     },
     {
@@ -100,32 +44,36 @@ const publicRoutes = [
         component: HotelPage,
         layout: MainLayout,
     },
-    
-    {
-        path: '/hotel/:id',
-        component: HotelPage,
-        layout: MainLayout,
-    },
     {
         path: '/sign-in',
         component: SigninPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/sign-up',
         component: SignupPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/mysettings',
         component: SettingPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
 
   {
     path: "/host",
-    component:HostRegisterHomePage ,
+    component: HostRegisterHomePage,
     layout: HostLayout,
+  },
+  {
+    path: '/book',
+    component: BookingPage,
+    layout: BookingLayout,
+  },
+  {
+    path: '/book/check',
+    component: BookingPage2,
+    layout: BookingLayout,
   },
 ];
 const protectedRoutes = [
@@ -154,7 +102,41 @@ const protectedRoutes = [
     component: RegisterHost5,
     layout: HostLayout,
   },
+  {
+    path: "/host/register-list-section/:sectionStatus",
+    component: RegisterListSection,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room",
+    component: AddRoom,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-price",
+    component: AddRoomPrice,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-cancel-policy",
+    component: AddCancelPolicy,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-image",
+    component: AddRoomImage,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/register-finished",
+    component: RegisterFinished,
+    layout: HostLayout,
+  },
+  {
+    path: '/mysettings',
+    component: SettingPage,
+    layout: SigninLayout,
+  },
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes, protectedRoutes }
-

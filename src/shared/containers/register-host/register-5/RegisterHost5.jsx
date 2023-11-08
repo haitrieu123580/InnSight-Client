@@ -102,7 +102,7 @@ const RegisterHost5Container = () => {
                 </button>
               </Link>
               <Link
-                to="/host/register-5"
+                to="/host/register-list-section/2"
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
               >
                 <button className="h-full">Tiếp tục</button>

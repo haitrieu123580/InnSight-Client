@@ -1,5 +1,5 @@
 
-const SinginLayout = ({ children }) => {
+const SigninLayout = ({ children }) => {
     return (
         <>
             {children}
@@ -7,4 +7,4 @@ const SinginLayout = ({ children }) => {
     )
 }
 
-export default SinginLayout
+export default SigninLayout
