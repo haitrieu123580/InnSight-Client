@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3846480148e353183a41250fee1fedc342c62d7a
 import React from 'react'
 import SearchResultItem from './SearchResultItem'
 
@@ -30,9 +25,4 @@ ResultList.defaultProps = {
   }
 }
 
-<<<<<<< HEAD
 export default ResultList
->>>>>>> e15826128844c8e8a0f3541dfeaddf95d55a20aa
-=======
-export default ResultList
->>>>>>> 3846480148e353183a41250fee1fedc342c62d7a
