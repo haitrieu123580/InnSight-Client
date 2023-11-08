@@ -1,5 +1,7 @@
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
+import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
+import HostRegisterHomePage from "../pages/host-pages/register-home-page/HostRegisterHomePage";
 import SigninLayout from "../shared/components/layout/SigninLayout";
 import { lazy } from 'react';
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
@@ -60,8 +62,18 @@ const publicRoutes = [
 
   {
     path: "/host",
-    component:HostRegisterHomePage ,
+    component: HostRegisterHomePage,
     layout: HostLayout,
+  },
+  {
+    path: '/book',
+    component: BookingPage,
+    layout: BookingLayout,
+  },
+  {
+    path: '/book/check',
+    component: BookingPage2,
+    layout: BookingLayout,
   },
 ];
 const protectedRoutes = [

@@ -29,6 +29,7 @@ const SigninContainer = () => {
     };
 
     const onSubmit = (data) => {
+        console.log('is loging')
         dispath({
             type: AuthAction.SIGNIN,
             data: data,
