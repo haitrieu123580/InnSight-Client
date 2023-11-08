@@ -20,10 +20,8 @@ function* watchGetHotel() {
 function* watchSearchHotel() {
     yield takeEvery(actions.SEARCH_HOTELS, function* (payload) {
         const { filter } = payload
-        console.log('filter', filter)
         try {
             const response = yield call(searchHotels, filter);
-            console.log(response)
             if (response?.Data) {
 
                 yield put(result(response?.Data))

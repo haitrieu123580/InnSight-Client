@@ -9,7 +9,7 @@ function* watchSignIn() {
             const response = yield call(SignIn, data);
             if (response?.Data !== "") {
                 localStorage.setItem("Token", JSON.stringify(response?.Data))
-                localStorage.setItem("role", JSON.stringify(response?.role || 'host'))
+                localStorage.setItem("role", JSON.stringify(response?.role || 'client'))
                 yield put(signin({
                     profile: response?.Profile,
                     role: "host"

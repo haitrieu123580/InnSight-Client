@@ -4,7 +4,9 @@ import { Button } from '@mui/material'
 import ReservationBlock from '../../../components/booking/booking1/reservation-block/ReservationBlock'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
+import { useNavigate } from 'react-router';
 const BookingContainer1 = () => {
+    const navigate = useNavigate();
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14'>
@@ -123,6 +125,7 @@ const BookingContainer1 = () => {
                             Khi nhấn vào nút này bạn công nhận mình đã đọc và đồng ý với các <span className='text-blue-500'>Điều khoản & Điều kiện</span> và <span className='text-blue-500'>Chính sách quyền riêng tư</span> của InnSight
                         </div>
                         <Button className='w-fit h-fit bg-orange-600 text-white font-semibold text-xl'
+                            onClick={() => { navigate("/book/check") }}
                         >Tiếp tục</Button>
                     </div>
 
