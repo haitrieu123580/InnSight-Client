@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import styles from "./RegisterFinished.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
@@ -16,23 +16,28 @@ const RegisterFinishedContainer = () => {
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
+
+  console.log("isFinished", isFinished);
+
   const handleChangeGuaranteeChecked = (event) => {
     setGuaranteeChecked(event.target.checked);
-    handleCheckFinishedForm(guaranteeChecked,agreeChecked)
-    console.log("guarantee",guaranteeChecked)
   };
+
   const handleChangeAgreeChecked = (event) => {
     setAgreeChecked(event.target.checked);
-    handleCheckFinishedForm(guaranteeChecked,agreeChecked)
 
   };
-  const handleCheckFinishedForm=()=>{
-    console.log("agree",agreeChecked,"gua",guaranteeChecked)
-      if ((guaranteeChecked)&&(agreeChecked) ){
-        console.log(isFinished)
-        setFinished(true)
-      }
-  }
+  useEffect(() => {
+    if (guaranteeChecked && agreeChecked) {
+      setFinished(true);
+    } else {
+      setFinished(false);
+    }
+  }, [guaranteeChecked, agreeChecked]);
+
+
+  console.log("guaranteeChecked:", guaranteeChecked);
+  console.log("agreeChecked:", agreeChecked);
   return (
     <div className={` ${styles["register-finished"]}`}>
       <div className={`${styles["content"]}`}>
@@ -96,11 +101,11 @@ const RegisterFinishedContainer = () => {
                 </button>
               </Link>
               <Link
-                to={isFinished?"/host/dashboard":""}
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                to={isFinished?"/host/dashboard":""}
               >
                 <button className="h-full">
-                  Hoàn tất đăng nhập và mở phòng cho khách đặt{" "}
+                  Hoàn tất đăng nhập và mở phòng cho khách đặt
                 </button>
               </Link>
             </div>
