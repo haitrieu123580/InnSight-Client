@@ -1,7 +1,6 @@
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
-import SinginLayout from "../shared/components/layout/SigninLayout";
-import HostRegisterHomePage from "../pages/host-pages/register-home-page/HostRegisterHomePage";
+import SigninLayout from "../shared/components/layout/SigninLayout";
 import { lazy } from 'react';
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
@@ -14,6 +13,14 @@ const RegisterHost2 = lazy(() => import('../pages/host-pages/register-2/Register
 const RegisterHost3 = lazy(() => import('../pages/host-pages/register-3/RegisterHost3'))
 const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/RegisterHost4'))
 const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
+const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
+const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
+const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
+const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
+const  AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
+const  AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
+const  RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
+
 const publicRoutes = [
     {
         path: '/',
@@ -38,17 +45,17 @@ const publicRoutes = [
     {
         path: '/sign-in',
         component: SigninPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/sign-up',
         component: SignupPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/mysettings',
         component: SettingPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
 
   {
@@ -84,9 +91,39 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
+    path: "/host/register-list-section/:sectionStatus",
+    component: RegisterListSection,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room",
+    component: AddRoom,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-price",
+    component: AddRoomPrice,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-cancel-policy",
+    component: AddCancelPolicy,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-image",
+    component: AddRoomImage,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/register-finished",
+    component: RegisterFinished,
+    layout: HostLayout,
+  },
+  {
     path: '/mysettings',
     component: SettingPage,
-    layout: SinginLayout,
+    layout: SigninLayout,
   },
 ];
 const privateRoutes = [];
