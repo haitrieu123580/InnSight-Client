@@ -1,24 +1,26 @@
-import HomePage from "../pages/home-page/HomePage";
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
-import ResultPage from "../pages/result-page/ResultPage";
-import HotelPage from "../pages/hotel/HotelPage";
-import SigninPage from "../pages/signin-page/SigninPage";
 import SigninLayout from "../shared/components/layout/SigninLayout";
-import SignupPage from "../pages/signup-page/SignupPage"; 
-import SettingPage from "../pages/user-settings-page/SettingPage";
-import RegisterHost1 from "../pages/host-pages/register-1/RegisterHost1";
-import RegisterHost2 from "../pages/host-pages/register-2/RegisterHost2";
-import RegisterHost3 from "../pages/host-pages/register-3/RegisterHost3";
-import RegisterHost4 from "../pages/host-pages/register-4/RegisterHost4";
-import RegisterHost5 from "../pages/host-pages/register-5/RegisterHost5";
-import HostRegisterHomePage from "../pages/host-pages/register-home-page/HostRegisterHomePage";
-import RegisterListSection from "../pages/host-pages/register-list-section/RegisterListSection";
-import AddRoom from "../pages/host-pages/add-room/AddRoom";
-import AddRoomPrice from "../pages/host-pages/add-room-price/AddRoomPrice";
-import AddCancelPolicy from "../pages/host-pages/add-cancel-policy/AddCancelPolicy";
-import AddRoomImage from "../pages/host-pages/add-room-image/AddRoomImage"
-import RegisterFinished from "../pages/host-pages/register-finished/RegisterFinished";
+import { lazy } from 'react';
+const HomePage = lazy(() => import('../pages/home-page/HomePage'))
+const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
+const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
+const SigninPage = lazy(() => import('../pages/signin-page/SigninPage'))
+const SignupPage = lazy(() => import('../pages/signup-page/SignupPage'))
+const SettingPage = lazy(() => import('../pages/user-settings-page/SettingPage'))
+const RegisterHost1 = lazy(() => import('../pages/host-pages/register-1/RegisterHost1'))
+const RegisterHost2 = lazy(() => import('../pages/host-pages/register-2/RegisterHost2'))
+const RegisterHost3 = lazy(() => import('../pages/host-pages/register-3/RegisterHost3'))
+const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/RegisterHost4'))
+const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
+const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
+const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
+const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
+const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
+const  AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
+const  AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
+const  RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
+
 const publicRoutes = [
     {
         path: '/',
@@ -117,6 +119,11 @@ const protectedRoutes = [
     path: "/host/register-finished",
     component: RegisterFinished,
     layout: HostLayout,
+  },
+  {
+    path: '/mysettings',
+    component: SettingPage,
+    layout: SigninLayout,
   },
 ];
 const privateRoutes = [];

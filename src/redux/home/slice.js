@@ -12,7 +12,6 @@ const homeSlice = createSlice({
     initialState,
     reducers: {
         result: (state, { payload }) => {
-            console.log(payload)
             state.result = payload
         },
         getHotel: (state, { payload }) => {
