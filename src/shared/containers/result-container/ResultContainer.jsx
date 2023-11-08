@@ -11,6 +11,7 @@ import './Pagination.scss'
 
 const ResultContainer = () => {
     const { result } = useSelector(state => state.Home) || {}
+    console.log('rs-con', result)
     const [page, setPage] = useState(1);
     const handleChange = (event, value) => {
         setPage(value);
@@ -24,9 +25,8 @@ const ResultContainer = () => {
                 </div>
                 <div className={`col-span-12 rounded-lg borderp-32 sm:col-span-8 ${styles['container-item']}`}>
                     <ResultList result={result} />
-
                 </div>
-                <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
+                 <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
                     <div className='flex flex-row-reverse'>
                         <Stack spacing={2}>
                             <Pagination

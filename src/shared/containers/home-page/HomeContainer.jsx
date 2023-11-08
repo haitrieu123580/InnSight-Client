@@ -105,7 +105,6 @@ const HomeContainer = () => {
                     <div className={styles['content-title']}>Top các khách sạn được yêu thích nhất</div>
                     <div className={`${styles['content']}`}>
                         <div className="grid grid-cols-4 gap-4">
-
                             {cityFav?.map((cityItem, index) => (
 
                                 <div key={index}

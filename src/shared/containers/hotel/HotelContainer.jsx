@@ -40,7 +40,6 @@ function Map({ lat, lng }) {
     </GoogleMap>
 }
 const HotelContainer = () => {
-
     const { hotel } = useSelector(state => state.Home) || {}
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
@@ -97,7 +96,6 @@ const HotelContainer = () => {
                     <div className={`grid grid-cols-12 `}>
                         <div className='col-span-10'>
                             <div className={styles['title']}>
-
                                 {hotel?.hotelName}
                             </div>
                             <div>
@@ -107,7 +105,6 @@ const HotelContainer = () => {
                             </div>
                             <p className='text-sm font-semibold'>
                                 <PlaceIcon />
-
                                 <span>{hotel?.address}</span>
                                 <button className='text-xs text-cyan-500 ml-2' onClick={handleOpen}>Xem bản đồ</button>
                             </p>
@@ -115,7 +112,6 @@ const HotelContainer = () => {
                         <div className='col-span-2'>
                             <div className='flex flex-col justify-center items-center'>
                                 <div className='font-semibold mb-2' >Giá phòng mỗi đêm từ</div>
-
                                 <div className='text-lg text-red-500 font-semibold mb-2'>{hotel?.priceByNight?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</div>
                                 <div>
                                     <Button variant='contained mb-2' className={styles['button-orange']}>
@@ -130,7 +126,6 @@ const HotelContainer = () => {
 
                 <div className={styles['content-block']}>
                     <div className='grid grid-cols-10 gap-2'>
-
                         <div className='col-span-6'><img src={hotel?.hotelImage?.[0]} alt="" /></div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
@@ -141,7 +136,6 @@ const HotelContainer = () => {
                         </div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
-
                                 <div className='row-span-1'><img src={hotel?.hotelImage?.[4]} alt="" /></div>
                                 <div className='row-span-1'><img src={hotel?.hotelImage?.[5]} alt="" /></div>
                                 <div className='row-span-1'><img src={hotel?.hotelImage?.[6]} alt="" /></div>
@@ -152,7 +146,6 @@ const HotelContainer = () => {
 
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
                     <div className={styles['block-title']}>Giới thiệu nơi cư trú</div>
-
                     <div >{hotel?.description}</div>
                 </div>
                 <div className={`w-full`}>
@@ -160,7 +153,6 @@ const HotelContainer = () => {
                         <div className={`col-span-4 ${styles['content-bg-gray']} ${styles['content-block']}`}>
                             <div className={styles['block-title']}>Tiện ích</div>
                             <div className='flex flex-wrap w-full'>
-
                                 {Array.from({ length: hotel?.hotelAmenities?.length || 0 })?.map((_, index) => (
                                     <div key={index} className='w-1/2'>
                                         {hotel?.hotelAmenities[index]}
@@ -170,7 +162,6 @@ const HotelContainer = () => {
                         </div>
                         <div className={`col-span-8 ${styles['content-bg-gray']} ${styles['content-block']}`}>
                             <div className={styles['block-title']}>Khách nói gì về kì nghỉ của họ</div>
-
                             <div>
                                 <Slider {...settings}>
                                     {hotel?.reviews?.map((review, index) => (
@@ -188,7 +179,6 @@ const HotelContainer = () => {
                     </div>
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
-
                     {hotel?.roomsList?.map((room, index) => (
                         <>
                             <Room key={room.id} room={room} />
@@ -208,7 +198,6 @@ const HotelContainer = () => {
         </div>
     );
 }
-
 HotelContainer.defaultProps = {
     hotel: {}
 }

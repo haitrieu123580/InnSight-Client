@@ -13,8 +13,9 @@ const SelectMenu = ({ onSelectChange }) => {
         className={styles.menu}
       >
         <option value="Tất cả">Tất cả </option>
-        <option value="Chủ khách sạn">Chủ khách sạn</option>
-        <option value="Khách hàng">Khách hàng</option>
+        <option value="Host">Host</option>
+        <option value="Client">Client</option>
+        <option value="Admin">Admin</option>
       </select>
     );
 };

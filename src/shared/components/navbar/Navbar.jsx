@@ -8,7 +8,11 @@ import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 import { useSelector } from 'react-redux'
 const Navbar = () => {
+<<<<<<< HEAD
     const { isLogin, userProfile } = useSelector(state => state.Auth)
+=======
+    const currentUser = true;
+>>>>>>> 3846480148e353183a41250fee1fedc342c62d7a
     return (
         <div className={`hidden lg:flex  ${styles['navbar']}`}>
             <Link
@@ -44,6 +48,7 @@ const Navbar = () => {
 
             <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                 <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                     <IcAvatar />
@@ -55,6 +60,20 @@ const Navbar = () => {
                 </Link>
 =======
                 {!isLogin ?
+=======
+                {currentUser ? (
+                    <>
+                        <div className="pr-10">
+                        <button
+                            className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                        >
+                            <IcAvatar />
+                            <span>Tài khoản của bạn</span>
+                        </button>
+                        </div>
+                    </>
+                ) : (
+>>>>>>> 3846480148e353183a41250fee1fedc342c62d7a
                     <>
                         <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcAvatar />
@@ -64,6 +83,7 @@ const Navbar = () => {
                             <IcPencil />
                             <span>Đăng ký</span>
                         </Link>
+<<<<<<< HEAD
                     </> :
                     <>
                         <div className="pr-10">
@@ -79,6 +99,10 @@ const Navbar = () => {
 
 >>>>>>> e15826128844c8e8a0f3541dfeaddf95d55a20aa
 
+=======
+                    </>
+                )}
+>>>>>>> 3846480148e353183a41250fee1fedc342c62d7a
             </div>
         </div>
     )

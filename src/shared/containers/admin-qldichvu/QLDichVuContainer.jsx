@@ -1,18 +1,19 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { Button } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
-import { message, Popconfirm } from 'antd';
+import { styled } from '@mui/material/styles';
+import { Popconfirm, message } from 'antd';
+import * as React from 'react';
+import Amentity from '../../components/admin-qldichvu/Amentity';
+import Service from '../../components/admin-qldichvu/Service';
 import IcDelete from '../../components/icons/qldichvu-icons/IcDelete';
 import IcUpdate from '../../components/icons/qldichvu-icons/IcUpdate';
-import Service from '../../components/admin-qldichvu/Service'
-import Amentity from '../../components/admin-qldichvu/Amentity'
+import styles from './QLDichVuContainer.module.scss'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -140,8 +141,8 @@ const QLDichVuContainer = () => {
   };
 
   return (
-    <div className="flex justify-between">
-      <div>
+    <div className={`${styles['home']} flex justify-between`}>
+      <div >
         <h2 className="ml-80 text-2xl font-bold text-sky-900 mb-2">Dịch vụ</h2>
         <TableContainer component={Paper} className="mr-10">
           <Table sx={{ minWidth: 650 }}>

@@ -151,7 +151,7 @@ const SettingContainer = () => {
                     </button>
                     <button
                       className="flex justify-center rounded border-green-600 border py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark "
-                      type="submit"
+                      type="button"
                       onClick={''}
                     >
                       Lưu
