@@ -75,6 +75,7 @@ const Room = ({ room }) => {
             <div className='col-span-2 p-2 h-full'>
               <div className='font-bold mb-5 flex w-full justify-between'>Số lượng phòng <span>
                 <select name="" id="" className='border-2 border-solid border-gray-500 font-semibold rounded-md hover:border-gray-500 hover:outline-none'>
+
                   <option value={0}></option>
                   {Array.from({ length: room?.quatity || 0 }).map((_, index) => (
                     <option key={index}>{index + 1}</option>

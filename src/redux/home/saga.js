@@ -1,5 +1,6 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
+
 import { getHotelById, searchHotels } from '../../api/ApiCore';
 import { getHotel, result } from './slice';
 function* watchGetHotel() {
@@ -20,8 +21,10 @@ function* watchGetHotel() {
 function* watchSearchHotel() {
     yield takeEvery(actions.SEARCH_HOTELS, function* (payload) {
         const { filter } = payload
+        console.log('filter', filter)
         try {
             const response = yield call(searchHotels, filter);
+            console.log(response)
             if (response?.Data) {
 
                 yield put(result(response?.Data))

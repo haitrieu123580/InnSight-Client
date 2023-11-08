@@ -1,0 +1,18 @@
+@import "../../../Common.scss";
+
+.home {
+    min-height: 90vh;
+    
+}
+.text{
+    font-size: 14px;
+}
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
+    color: #fff !important;
+    background-color: #4096ff !important;
+}
+
+.ant-btn.ant-btn-sm {
+    color: #fff !important;
+    background-color: #4096ff !important;
+}
