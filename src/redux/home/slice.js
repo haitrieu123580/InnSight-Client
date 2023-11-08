@@ -1,21 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    data: [],
+    result: {},
+    hotel: {},
+    room: {},
     message: 'halo'
 }
 
 const homeSlice = createSlice({
-    name: 'home',
+    name: 'HOME',
     initialState,
     reducers: {
-        sample: (state, { payload }) => {
-            state.data = [1, 2, 3]
+        result: (state, { payload }) => {
+            state.result = payload
+        },
+        getHotel: (state, { payload }) => {
+            state.hotel = payload
+
         }
     },
 
 })
 
-export const { sample } = homeSlice.actions
+export const { result, getHotel } = homeSlice.actions
+
 
 export default homeSlice.reducer

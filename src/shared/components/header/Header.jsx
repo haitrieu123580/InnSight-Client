@@ -6,14 +6,15 @@ import { useState, useRef } from 'react';
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import useOnClickOutside from '../../../hooks/use-click-outside'
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import imgBg from '../../../assets/images/header-background.png'
-import { useDispatch, useSelector } from 'react-redux';
 import HomeAction from '../../../redux/home/action';
 const Header = () => {
-  const { data, message } = useSelector(state => state.HomeToolkit)
+
   const dispatch = useDispatch();
   const dateRef = useRef(null);
   const optionRef = useRef(null);
@@ -41,7 +42,7 @@ const Header = () => {
       }
     })
   }
-  console.log(data, message)
+
   const handleSubmit = () => {
     const filter = {
       destination: destination,
@@ -51,10 +52,12 @@ const Header = () => {
       },
       options: options
     }
-    navigate('/searchresults')
     dispatch({
-      type: HomeAction.SAMPLE_ACTION
+      type: HomeAction.SEARCH_HOTELS,
+      filter: filter
     })
+    navigate('/searchresults')
+
   }
   useOnClickOutside(dateRef, () => {
     setOpenDate(false);

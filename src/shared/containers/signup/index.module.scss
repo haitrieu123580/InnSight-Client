@@ -1,0 +1,67 @@
+@import "../../../Common.scss";
+
+.wrapper {
+    background: #D5F0F9;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .box {
+        width: 770px;
+        min-height: 741px;
+        background: #FFF;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        margin: auto;
+
+        .box-content {
+            width: 100%;
+            height: 100%;
+            padding: 10% !important;
+
+            .title {
+                color: #3A1568;
+                text-align: center;
+                font-size: 40px;
+                font-weight: $font-weight-bold;
+            }
+
+            .semi-title {
+                color: #0735D6;
+                text-align: center;
+                font-size: 24px;
+                font-weight: $font-weight-bold;
+                margin: 10px 0;
+            }
+
+            .box-form {
+                display: flex;
+                flex-direction: column;
+            }
+
+            label {
+                font-size: 16px;
+                font-weight: $font-weight-bold;
+            }
+
+            input {
+                width: 100%;
+                padding: 20px;
+                border-radius: 15px;
+                border: 1px solid #1B395B;
+                background: #FFF;
+                margin-top: 10px;
+                // margin: 27px 0;
+            }
+
+            button {
+                padding: 20px;
+                border-radius: 15px;
+                border: 1px solid #23456C;
+                background: #5973FF;
+                font-size: 20px;
+            }
+        }
+    }
+}

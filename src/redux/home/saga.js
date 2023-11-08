@@ -1,26 +1,41 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
-import { SampleApi } from '../../api/ApiCore';
-import { sample } from './slice';
-function* watchSample() {
-    yield takeEvery(actions.SAMPLE_ACTION, function* (payload) {
+import { getHotelById, searchHotels } from '../../api/ApiCore';
+import { getHotel, result } from './slice';
+function* watchGetHotel() {
+    yield takeEvery(actions.GET_HOTEL, function* (payload) {
+        const { hotelId } = payload
         try {
-            const response = yield call(SampleApi, payload);
-            const data = response || []
-            // yield put(sample({ data }))
-            yield put({
-                type: actions.FETCH_SAMPLE_1_SUCCESS,
-                payload: response.Data.Suppliers,
-            });
+            const response = yield call(getHotelById, hotelId);
+            if (response?.Data) {
+                yield put(getHotel(response?.Data))
+            }
+
         } catch (error) {
 
         } finally {
         }
     });
 }
+function* watchSearchHotel() {
+    yield takeEvery(actions.SEARCH_HOTELS, function* (payload) {
+        const { filter } = payload
+        try {
+            const response = yield call(searchHotels, filter);
+            if (response?.Data) {
+
+                yield put(result(response?.Data))
+            }
+        } catch (error) {
+
+        }
+    });
+}
 
 export default function* HomeSaga() {
     yield all([
-        fork(watchSample),
+        fork(watchGetHotel),
+        fork(watchSearchHotel),
+
     ]);
 }
