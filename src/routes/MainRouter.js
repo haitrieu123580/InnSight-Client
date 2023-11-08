@@ -15,7 +15,7 @@ const RegisterHost2 = lazy(() => import('../pages/host-pages/register-2/Register
 const RegisterHost3 = lazy(() => import('../pages/host-pages/register-3/RegisterHost3'))
 const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/RegisterHost4'))
 const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
-const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
+// const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
 const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
 const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
 const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
