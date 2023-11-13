@@ -35,7 +35,6 @@ const SearchBox = () => {
         setSelectedRate(rate);
     }
     const search = () => {
-        console.log(selectedPrice, selectedRoomType, selectedRate)
     }
     return (
         <div className={`${styles['box-wrapper']} box-wrapper`}>

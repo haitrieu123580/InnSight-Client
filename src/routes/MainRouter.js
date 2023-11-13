@@ -1,7 +1,6 @@
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
 import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
-import HostRegisterHomePage from "../pages/host-pages/register-home-page/HostRegisterHomePage";
 import SigninLayout from "../shared/components/layout/SigninLayout";
 import { lazy } from 'react';
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
@@ -17,48 +16,49 @@ const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/Register
 const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
 const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
 const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
-const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
-const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
-const  AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
-const  AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
-const  RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
-
+const AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
+const AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
+const AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
+const AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
+const RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
+const BookingPage = lazy(() => import('../pages/booking-pages/BookingPage1'))
+const BookingPage2 = lazy(() => import('../pages/booking-pages/BookingPage2'))
 const publicRoutes = [
-    {
-        path: '/',
-        component: HomePage,
-        layout: MainLayout,
-    },
-    {
-        path: '/home',
-        component: HomePage,
-        layout: MainLayout,
-    },
-    {
-        path: '/searchresults',
-        component: ResultPage,
-        layout: MainLayout,
-    },
-    {
-        path: '/hotel/:id',
-        component: HotelPage,
-        layout: MainLayout,
-    },
-    {
-        path: '/sign-in',
-        component: SigninPage,
-        layout: SigninLayout,
-    },
-    {
-        path: '/sign-up',
-        component: SignupPage,
-        layout: SigninLayout,
-    },
-    {
-        path: '/mysettings',
-        component: SettingPage,
-        layout: SigninLayout,
-    },
+  {
+    path: '/',
+    component: HomePage,
+    layout: MainLayout,
+  },
+  {
+    path: '/home',
+    component: HomePage,
+    layout: MainLayout,
+  },
+  {
+    path: '/searchresults',
+    component: ResultPage,
+    layout: MainLayout,
+  },
+  {
+    path: '/hotel/:id',
+    component: HotelPage,
+    layout: MainLayout,
+  },
+  {
+    path: '/sign-in',
+    component: SigninPage,
+    layout: SigninLayout,
+  },
+  {
+    path: '/sign-up',
+    component: SignupPage,
+    layout: SigninLayout,
+  },
+  {
+    path: '/mysettings',
+    component: SettingPage,
+    layout: SigninLayout,
+  },
 
   {
     path: "/host",
@@ -76,7 +76,7 @@ const publicRoutes = [
     layout: BookingLayout,
   },
 ];
-const protectedRoutes = [
+const protectedRoutes =  [
   {
     path: "/host/register-1",
     component: RegisterHost1,
@@ -138,6 +138,10 @@ const protectedRoutes = [
     layout: SigninLayout,
   },
 ];
-const privateRoutes = [];
+const privateRoutes = [
+  {
+    
+  }
+];
 export { publicRoutes, privateRoutes, protectedRoutes }
 

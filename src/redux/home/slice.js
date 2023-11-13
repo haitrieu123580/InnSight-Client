@@ -4,7 +4,9 @@ const initialState = {
     result: {},
     hotel: {},
     room: {},
-    message: 'halo'
+    message: '',
+    selectedHotel:{},
+    reservation:{}
 }
 
 const homeSlice = createSlice({
@@ -16,7 +18,6 @@ const homeSlice = createSlice({
         },
         getHotel: (state, { payload }) => {
             state.hotel = payload
-
         }
     },
 
