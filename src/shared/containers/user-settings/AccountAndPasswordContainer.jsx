@@ -2,11 +2,7 @@ import { useState } from 'react';
 import styles from './AccountAndPasswordContainer.module.scss';
 import * as React from 'react';
 import { Input } from 'antd';
-import SettingAction from '../../../redux/user-settings/action';
-import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
-import ShowToastify from '../../../utils/ShowToastify';
+import Axios from 'axios'; // Import Axios
 
 const account = [
   {
@@ -21,8 +17,6 @@ const AccountAndPasswordContainer = () => {
   const [newPassword, setNewPassword] = useState("")
   const [confirmationPassword, setConfirmationPassword] = useState("")
   const [error, setError] = useState('');
-  const dispath = useDispatch();
-  const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
 
   const handleClickChange = () => {
@@ -34,30 +28,35 @@ const AccountAndPasswordContainer = () => {
   const handleClickDelete = () => {
     setIsDelete(!isDelete);
   };
+  
+  const apiUrl = 'http://localhost:8001/api/user/changePassword';
+
   const handleSubmit = async () => {
     try {
-      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHV5ZW5uZ3V5ZW4wMjA1MTdAZ21haWwuY29tIiwiaWF0IjoxNjk5OTYwOTYxLCJleHAiOjE3MDAwNDczNjF9.lVBvPHCzeFJmO36DmTiA_bWnqk7mjWKdW-NQlXBkvfw';
-      const response = await fetch('http://localhost:8001/api/user/changePassword', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ currentPassword, newPassword, confirmationPassword }),
-      });
+      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHV5ZW5uZ3V5ZW4wMjA1MTdAZ21haWwuY29tIiwiaWF0IjoxNjk5OTgwNjE2LCJleHAiOjE3MDAwNjcwMTZ9.GH6SXzU8hm6oZMQacPS-l5_S-coB9DsN1dMZUOQkgdM';
+      const response = await Axios.post(
+        apiUrl,
+        { currentPassword, newPassword, confirmationPassword },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      if (response.ok) {
-        console.log('Login successful');
+      if (response.status === 200) {
+        console.log('Password changed successfully');
       } else {
-        const data = await response.json();
-        setError(data.message || 'Login failed');
+        const data = response.data;
+        setError(data.message || '');
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      setError('An error occurred during login');
+      console.error('Error changing password:', error);
+      setError('');
     }
   };
-  
+
   return (
     <>
       <div className={`${styles['content']} ml-10 border`}>
@@ -146,3 +145,36 @@ const AccountAndPasswordContainer = () => {
 };
 
 export default AccountAndPasswordContainer;
+
+// import React, { useState } from 'react';
+// import axios from 'axios';
+
+// const Login = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
+//   const apiUrl = 'http://localhost:8001/api/v1/auth/authenticate';
+
+//   const handleLogin = async () => {
+//     try {
+//       const response = await axios.post(apiUrl, { email, password });
+//       console.log('Đăng nhập thành công:', response.data);
+//     } catch (error) {
+//       console.error('Đăng nhập thất bại:', error.response.data);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <label>Email:</label>
+//       <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+//       <label>Password:</label>
+//       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+
+//       <button onClick={handleLogin}>Đăng nhập</button>
+//     </div>
+//   );
+// };
+
+// export default Login;
