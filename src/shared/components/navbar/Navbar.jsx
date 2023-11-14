@@ -6,8 +6,13 @@ import IcSell from '../icons/header-icons/IcSell'
 import IcGroup from '../icons/header-icons/IcGroup'
 import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
+import { useSelector } from 'react-redux'
 const Navbar = () => {
+<<<<<<< HEAD
     const currentUser = true;
+=======
+    const { isLogin, userProfile } = useSelector(state => state.Auth)
+>>>>>>> ad6574d94b707e19bc718ce9deae02ffcbd5aecd
     return (
         <div className={`hidden lg:flex  ${styles['navbar']}`}>
             <Link
@@ -42,6 +47,7 @@ const Navbar = () => {
             </nav>
 
             <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
+<<<<<<< HEAD
                 {currentUser ? (
                     <>
                         <div className="pr-10">
@@ -54,17 +60,41 @@ const Navbar = () => {
                         </div>
                     </>
                 ) : (
+=======
+                {!isLogin ?
+>>>>>>> ad6574d94b707e19bc718ce9deae02ffcbd5aecd
                     <>
                         <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcAvatar />
                             <span>Đăng nhập</span>
                         </Link>
+<<<<<<< HEAD
                         <Link to={'sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcPencil />
                             <span>Đăng ký</span>
                         </Link>
                     </>
                 )}
+=======
+                        <Link to={'/sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
+                            <IcPencil />
+                            <span>Đăng ký</span>
+                        </Link>
+                    </> :
+                    <>
+                        <div className="pr-10">
+                            <button
+                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                            >
+                                <IcAvatar />
+                                <span>{userProfile?.name}</span>
+                            </button>
+                        </div>
+                    </>
+                }
+
+
+>>>>>>> ad6574d94b707e19bc718ce9deae02ffcbd5aecd
             </div>
         </div>
     )

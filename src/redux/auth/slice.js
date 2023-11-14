@@ -1,20 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-
+    isLogin: false,
+    userProfile: {},
+    userRole: ""
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // login: (state, { payload }) => {
-        //     state.hotelList = payload
-        // },
+        signin: (state, { payload }) => {
+            state.isLogin = true;
+            state.userProfile = payload?.profile;
+            state.userRole = payload?.role
+        },
     },
 
 })
 
-export const { searchHotel, getHotel } = authSlice.actions
+export const { signin } = authSlice.actions
 
 export default authSlice.reducer

@@ -19,7 +19,7 @@ import "./SlickSlider.scss"
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import HomeAction from '../../../redux/home/action';
-
+import ShowToastify from '../../../utils/ShowToastify';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -49,8 +49,15 @@ const HotelContainer = () => {
         if (id) {
             dispatch({
                 type: HomeAction.GET_HOTEL,
-                payload: id,
-            })
+                hotelId: id,
+                onSuccess: () => {
+
+                },
+                onError: () => {
+                    ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+                }
+            });
+
         }
     }, [id])
     const handleOpen = async () => {
@@ -69,11 +76,10 @@ const HotelContainer = () => {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY
     })
     const settings = {
-        dots: true,
-        arrows: true,
+        dots: false,
+        arrows: false,
         infinite: true,
         speed: 500,
-        // slidesPerRow: 2,
         slidesToShow: 2,
         slidesToScroll: 1,
         autoplay: true,
@@ -112,7 +118,7 @@ const HotelContainer = () => {
                         <div className='col-span-2'>
                             <div className='flex flex-col justify-center items-center'>
                                 <div className='font-semibold mb-2' >Giá phòng mỗi đêm từ</div>
-                                <div className='text-lg text-red-500 font-semibold mb-2'>{hotel?.priceByNight?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</div>
+                                <div className='text-lg text-red-500 font-semibold mb-2'>{hotel?.minPrice} VNĐ</div>
                                 <div>
                                     <Button variant='contained mb-2' className={styles['button-orange']}>
                                         Chọn phòng
@@ -126,19 +132,19 @@ const HotelContainer = () => {
 
                 <div className={styles['content-block']}>
                     <div className='grid grid-cols-10 gap-2'>
-                        <div className='col-span-6'><img src={hotel?.hotelImage?.[0]} alt="" /></div>
+                        <div className='col-span-6'><img src={hotel?.hotelImages?.[0]} alt="" /></div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[1]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[2]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[3]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[1]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[2]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[3]} alt="" /></div>
                             </div>
                         </div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[4]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[5]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImage?.[6]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[4]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[5]} alt="" /></div>
+                                <div className='row-span-1'><img src={hotel?.hotelImages?.[6]} alt="" /></div>
                             </div>
                         </div>
                     </div>
@@ -162,15 +168,21 @@ const HotelContainer = () => {
                         </div>
                         <div className={`col-span-8 ${styles['content-bg-gray']} ${styles['content-block']}`}>
                             <div className={styles['block-title']}>Khách nói gì về kì nghỉ của họ</div>
-                            <div>
+                            <div className={styles['slider-list']}>
                                 <Slider {...settings}>
                                     {hotel?.reviews?.map((review, index) => (
-                                        <div className='shadow-md bg-white'>
-                                            <div key={index} className='text-xl'>
-                                                <span><EmojiEmotionsIcon style={{ color: "#C9CC2C" }} className='text-xl' /> <span>{review?.rate}</span></span>
-                                                <span className='text-xl text-gray-400'>/10</span>
+                                        <div className={styles['slider-wrapper']}>
+                                            <div key={index} className={`shadow-md bg-white ${styles['slider-item']}`}>
+                                                <div >
+                                                    <span><EmojiEmotionsIcon style={{ color: "#C9CC2C" }} className='text-xl' /> <span className='text-xl text-blue-600'>{review?.rate}</span></span>
+                                                    <span className='text-xl text-gray-400'>/10</span>
+                                                </div>
+                                                <div>
+                                                    {review?.review}
+                                                </div>
                                             </div>
                                         </div>
+
                                     ))}
 
                                 </Slider>
@@ -179,18 +191,29 @@ const HotelContainer = () => {
                     </div>
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
-                    {hotel?.roomsList?.map((room, index) => (
+                    {hotel?.roomList?.map((room, index) => (
                         <>
-                            <Room key={room.id} room={room} />
+                            <Room key={index} room={room} />
                         </>
                     ))}
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
                     <div className={styles['block-title']}>Quy tắc chung</div>
+                    <div className='flex flex-nowrap w-full m-4 '>
+                        <div className='w-1/6 whitespace-wrap font-bold text-base '>{`Nhận phòng`}</div>
+                        <div className='w-5/6 font-bold'>{`Từ ${hotel?.checkIn}`}</div>
+                    </div>
+                    <div className='flex flex-nowrap w-full m-4 '>
+                        <div className='w-1/6 whitespace-wrap font-bold text-base '>{`Trả phòng`}</div>
+                        <div className='w-5/6 font-bold'>{`Từ ${hotel?.checkOut}`}</div>
+                    </div>
+                    <div className='flex flex-nowrap w-full m-4 '>
+                        <div className='w-1/6 whitespace-wrap font-bold text-base '>{`Các quy tắc khác`}</div>
+                    </div>
                     {hotel?.rules?.map((rule, index) => (
                         <div key={index} className='flex flex-nowrap w-full m-4 '>
-                            <div className='w-1/6 whitespace-wrap font-bold text-base '>{rule?.name}</div>
-                            <div className='w-5/6'>{rule?.describe}</div>
+                            <div className='w-1/6 whitespace-wrap font-bold text-base '></div>
+                            <div className='w-5/6 font-bold'>{rule}</div>
                         </div>
                     ))}
                 </div>
@@ -199,6 +222,32 @@ const HotelContainer = () => {
     );
 }
 HotelContainer.defaultProps = {
-    hotel: {}
+    hotel: {
+        id: null,
+        hotelName: "",
+        address: "",
+        checkIn: "",
+        checkOut: "",
+        minPrice: null,
+        description: '',
+        hotelImages: [
+           
+        ],
+        hotelAmenities: [
+           
+        ],
+        extraServices: [
+           
+        ],
+        roomList: [
+            
+        ],
+        reviews: [
+          
+        ],
+        rules: [
+        
+        ]
+    }
 }
 export default HotelContainer;

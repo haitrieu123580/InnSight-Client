@@ -1,0 +1,16 @@
+@import "../../../../Common.scss";
+.register-list-section {
+  background-color: white;
+  min-height: 90vh;
+
+  .content {
+    // height: 100vh;
+    padding: 0 350px;
+    padding-top: 50px;
+    margin-bottom: 100px;
+
+    .box-section{
+      margin: 40px 0;
+    }
+  }
+}

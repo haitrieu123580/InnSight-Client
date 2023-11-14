@@ -1,5 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+<<<<<<< HEAD
 package-lock.json
+=======
+/package-lock.json
+>>>>>>> ad6574d94b707e19bc718ce9deae02ffcbd5aecd
 # dependencies
 /node_modules
 /.pnp
@@ -23,3 +27,5 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+package-lock.json
