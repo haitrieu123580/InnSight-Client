@@ -55,12 +55,14 @@ const Navbar = () => {
                     </> :
                     <>
                         <div className="pr-10">
-                            <button
-                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
-                            >
-                                <IcAvatar />
-                                <span>{userProfile?.name || "User"}</span>
-                            </button>
+                            <Link to={'/mysettings/info'}>
+                                <button
+                                    className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                                >
+                                    <IcAvatar />
+                                    <span>{userProfile?.name || "Tài khoản của bạn"}</span>
+                                </button>
+                            </Link>
                         </div>
                     </>
                 }

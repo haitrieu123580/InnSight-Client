@@ -1,31 +1,158 @@
 import styles from './SettingsContainer.module.scss';
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import { DatePicker, Input, Select} from 'antd';
+import { useState } from 'react';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+const info = [
+  {
+    fullname: 'xxxxxxxxxxx',
+    email: 'abc@gmail.com',
+    phone_number:'',
+    date_of_birth:'',
+    gender: 'Female'
+  },
+];
+
 
 const SettingsContainer = () => {
-  return (
-    <div className={styles['content']}>
-      <Grid container spacing={2}>
-        <Grid item xs={4}>
-          <Item>xs=4</Item>
-        </Grid>
-        <Grid item xs={8}>
-          <Item>xs=8</Item>
-        </Grid>
-      </Grid>
-    </div>
-  )
-}
+  const [isEditing, setIsEditing] = useState(false);
 
-export default SettingsContainer
+  const handleClickEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const [selectedDate, setSelectedDate] = useState(
+    info[0].date_of_birth ? info[0].date_of_birth : null
+  );
+
+  const onChangeDate = (date, dateString) => {
+    setSelectedDate(dateString);
+  };
+
+  const handleSelectChangeGender = (value) => {
+    console.log(`selected ${value}`);
+  };
+
+  return (
+    <>
+      <div className={`${styles['content']} ml-10 border`}>
+        <h1 className="text-3xl font-bold my-3">Thông tin cá nhân</h1>
+        <h2>Cập nhật thông tin của bạn và tìm hiểu các thông tin này được sử dụng ra sao.</h2>
+          {info.map((item, index) => (
+            <div>
+              <div className='flex text-lg mt-4 my-2 items-center'>
+                <h2 className={`${styles['name']} font-semibold`}>Họ và tên:</h2>
+                {!isEditing ? (
+                  item.fullname ? (
+                    <h2>{item.fullname}</h2>
+                  ) : (
+                    <h2 className='text-slate-500'>Vui lòng nhập họ và tên đầy đủ của bạn</h2>
+                  )
+                ) : (
+                  <Input
+                    type="text"
+                    placeholder="Vui lòng nhập họ và tên đầy đủ của bạn"
+                    style={{
+                      width: '500px',
+                      height: '35px',
+                      fontSize: '16px'
+                    }}
+                    name="fullname"
+                    id="fullname"
+                    value={item.fullname}
+                    onChange={''}
+                  />
+                )}
+              </div>
+              <div className='flex text-lg my-2 font-semibold  items-center'>
+                <h2>Địa chỉ email:</h2>
+                <h2 className='ml-16'>{item.email}</h2>
+              </div>
+              <div className='flex text-lg my-2 items-center'>
+                <h2 className={`${styles['sdt']} font-semibold`}>Số điện thoại:</h2>
+                <div>
+                {!isEditing ? (
+                  item.phone_number ? (
+                    <h2>{item.phone_number}</h2>
+                  ):(
+                    <h2 className=" text-slate-500">Nhập số điện thoại của bạn</h2>
+                  )
+                ) : (
+                  <Input
+                    type="text"
+                    placeholder="Vui lòng nhập số điện thoại của bạn"
+                    style={{
+                      width: '500px',
+                      height: '35px',
+                      fontSize: '16px'
+                    }}
+                    name="phone_number"
+                    id="phone_number"
+                    value={item.phone_number}
+                    onChange={''}
+                  />
+                )}
+                
+                </div>
+              </div>
+              <h3 className={`${styles['note']} text-slate-600 text-base`}>Chỗ nghỉ bạn đặt sẽ liên hệ với bạn qua số điện thoại này</h3>
+              <div className='flex text-lg my-2 items-center'>
+                <h2 className={`${styles['date']} font-semibold`}>Ngày sinh:</h2>
+                {!isEditing ? (
+                  item.date_of_birth ? (
+                    <h2>{item.date_of_birth}</h2>
+                  ):(
+                    <h2 className='text-slate-500'>Nhập ngày sinh của bạn</h2>
+                  )
+                ) : (
+                  <DatePicker 
+                    onChange={onChangeDate} 
+                    // value={selectedDate ? moment(selectedDate) : null}
+                    placeholder='Nhập ngày sinh của bạn'
+                    style={{
+                      width: '500px',
+                      height: '35px',
+                      fontSize: '16px'
+                    }}
+                  />
+                )}
+              </div>
+              <div className='flex text-lg my-2 items-center'>
+                <h2 className={`${styles['gender']} font-semibold`}>Giới tính:</h2>
+                {!isEditing ? (
+                  item.gender ? (
+                    <h2>{item.gender === 'Female' ? 'Nữ' : 'Nam'}</h2>
+                  ):(
+                    <h2 className='text-slate-500'>Chọn giới tính của bạn</h2>
+                  )
+                ) : (
+                  <Select
+                    defaultValue={item.gender}
+                    onChange={handleSelectChangeGender}
+                    style={{
+                      width: '500px',
+                      height: '35px',
+                      fontSize: '16px'
+                    }}
+                    options={[
+                      {
+                        value: 'Male',
+                        label: 'Nam',
+                      },
+                      {
+                        value: 'Female',
+                        label: 'Nữ',
+                      }
+                    ]}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+      </div>
+      <button className='mt-3 border bg-sky-700 w-48 h-10 text-white text-base rounded-lg float-right mr-5' onClick={handleClickEdit}>{isEditing ? 'Lưu thay đổi' : 'Chỉnh sửa'}</button>
+    </>
+  );
+};
+
+export default SettingsContainer;
