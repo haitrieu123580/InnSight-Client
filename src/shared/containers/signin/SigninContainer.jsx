@@ -23,13 +23,13 @@ const SigninContainer = () => {
             })
         }
         else {
-            clearErrors('email'); 
+            clearErrors('email');
             setTypedEmail(true);
         }
     };
 
     const onSubmit = (data) => {
-        console.log('is loging')
+        console.log(data)
         dispath({
             type: AuthAction.SIGNIN,
             data: data,
@@ -41,13 +41,12 @@ const SigninContainer = () => {
                 ShowToastify.showErrorToast("Đăng nhập thất bại")
             }
         })
-
     }
     return (
         <div className={`${styles['wrapper']}`}>
             <div className={`${styles['box']}`}>
                 <div className={`${styles['box-content']}`}>
-                    <div className={`${styles['title']}`}>InnSight</div>
+                    <div onClick={() => { navigate('/') }} style={{ cursor: "pointer" }} className={`${styles['title']}`}>InnSight</div>
                     <div className={`${styles['semi-title']}`}>
                         {!typedEmail ? (<>Đăng nhập hoặc tạo tài khoản</>) :
                             (<div style={{ textAlign: "left" }}>

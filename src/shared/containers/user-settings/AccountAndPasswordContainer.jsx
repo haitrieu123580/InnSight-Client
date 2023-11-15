@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AccountAndPasswordContainer.module.scss';
 import * as React from 'react';
 import { Input } from 'antd';
-import Axios from 'axios'; // Import Axios
+import Axios from 'axios';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import ShowToastify from '../../../utils/ShowToastify';
+import SettingAction from '../../../redux/user-settings/action';
 
 const account = [
   {
@@ -11,51 +16,43 @@ const account = [
   },
 ];
 
-
 const AccountAndPasswordContainer = () => {
-  const [currentPassword, setCurrentPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmationPassword, setConfirmationPassword] = useState("")
-  const [error, setError] = useState('');
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmationPassword, setConfirmationPassword] = useState("");
+  // const [error, setError] = useState('');
   const [isChange, setIsChange] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [renderCount, setRenderCount] = useState(0);
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
 
   const handleClickChange = () => {
     setIsChange(!isChange);
   };
 
-  const [isDelete, setIsDelete] = useState(false);
-
   const handleClickDelete = () => {
     setIsDelete(!isDelete);
   };
-  
-  const apiUrl = 'http://localhost:8001/api/user/changePassword';
 
-  const handleSubmit = async () => {
-    try {
-      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aHV5ZW5uZ3V5ZW4wMjA1MTdAZ21haWwuY29tIiwiaWF0IjoxNjk5OTgwNjE2LCJleHAiOjE3MDAwNjcwMTZ9.GH6SXzU8hm6oZMQacPS-l5_S-coB9DsN1dMZUOQkgdM';
-      const response = await Axios.post(
-        apiUrl,
-        { currentPassword, newPassword, confirmationPassword },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
+  const { handleSubmit, register, setError, setValue, clearErrors, formState: { errors } } = useForm({
+    criteriaMode: "all"
+  });
+
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch({
+        type: SettingAction.CHANGEPASS,
+        data: data,
+        onSuccess: () => {
+          console.log("Thanh cong")
+            navigate("/")
+        },
+        onError: () => {
+          console.log("That bai")
         }
-      );
-
-      if (response.status === 200) {
-        console.log('Password changed successfully');
-      } else {
-        const data = response.data;
-        setError(data.message || '');
-      }
-    } catch (error) {
-      console.error('Error changing password:', error);
-      setError('');
-    }
-  };
+    })
+  } 
 
   return (
     <>
@@ -76,7 +73,7 @@ const AccountAndPasswordContainer = () => {
                   </div>
                 ) : (
                   <div className='flex items-center'>
-                    {/* <form onSubmit={handleSubmit}> */}
+                    <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
                       <h3 className={`${styles['pass']} mt-0`}>Nhập mật khẩu cũ</h3>
                       <Input
@@ -115,10 +112,9 @@ const AccountAndPasswordContainer = () => {
                         id="confirmationPassword"
                         onChange={(e) => setConfirmationPassword(e.target.value)}
                       />
-                      {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>
-                    <button onClick={handleSubmit} className='ml-10 border bg-sky-700 w-24 h-10 text-white text-base rounded-lg float-right mr-5' >Lưu</button>
-                    {/* </form> */}
+                    <button type='submit' className='ml-10 border bg-sky-700 w-24 h-10 text-white text-base rounded-lg float-right mr-5' >Lưu</button>
+                    </form>
                   </div>
                 )}
               </div>

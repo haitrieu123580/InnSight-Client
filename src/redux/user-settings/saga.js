@@ -11,26 +11,19 @@ function* watchChangePassword() {
       const response = yield call(changePassword, data);
 
       if (response?.Data !== "") {
-        // Handle success
         yield put(changePasswordSuccess(response?.Data));
-
-        // You can perform additional actions here if needed
         onSuccess && onSuccess();
       } else {
-        // Handle unexpected empty response data
         yield put(changePasswordFailure("Unexpected response data"));
         onError && onError();
       }
     } catch (error) {
-      // Handle error
       yield put(changePasswordFailure(error));
-
-      // You can perform additional actions here if needed
       onError && onError();
     }
   });
 }
 
-export default function* AuthSaga() {
+export default function* SettingSaga() {
   yield all([fork(watchChangePassword)]);
 }
