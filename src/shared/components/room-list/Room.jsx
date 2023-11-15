@@ -50,7 +50,7 @@ const Room = ({ room }) => {
             </div>
             <div className='col-span-1 p-2 border-gray-200 border-solid border-r-2 h-full'>
               <div className='font-bold mb-5'>Sức chứa</div>
-              <div className='flex items-end'>
+              <div className='flex items-end flex-wrap'>
                 {Array.from({ length: room?.adult || 0 }).map((_, index) => (
                   <PersonIcon key={index} className='mr-1 text-2xl text-gray-400' />
                 ))}

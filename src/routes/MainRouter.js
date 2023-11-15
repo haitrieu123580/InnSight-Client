@@ -89,16 +89,7 @@ const publicRoutes = [
       layout: BookingLayout,
     },
     
-    {
-      path: '/mysettings/password',
-      component: AccountAndPassword,
-      layout: SettingLayout,
-    },
-    {
-      path: '/admin',
-      component: QLTaiKhoan,
-      layout: MainLayoutAdmin,
-    },
+    
 ];
 const protectedRoutes = [
   {
@@ -156,14 +147,28 @@ const protectedRoutes = [
     component: RegisterFinished,
     layout: HostLayout,
   },
-  
+  {
+    path: '/mysettings/password',
+    component: AccountAndPassword,
+    layout: SettingLayout,
+  },
+  {
+    path: '/mysettings/info',
+    component: SettingPage,
+    layout: SettingLayout,
+  },
+  {
+    path: '/mysettings/history',
+    component: BookingHistory,
+    layout: SettingLayout,
+  },
 ];
 const privateRoutes = [
-  // {
-  //   path: '/admin',
-  //   component: QLTaiKhoan,
-  //   layout: MainLayoutAdmin,
-  // },
+  {
+    path: '/admin',
+    component: QLTaiKhoan,
+    layout: MainLayoutAdmin,
+  },
   {
     path: '/qltaikhoan/detail',
     component: DetailUser,
@@ -229,21 +234,6 @@ const privateRoutes = [
     component: Cancel4,
     layout: MainLayout,
   },
-  {
-    path: '/mysettings/info',
-    component: SettingPage,
-    layout: SettingLayout,
-  },
-  {
-    path: '/mysettings/history',
-    component: BookingHistory,
-    layout: SettingLayout,
-  },
-  // {
-  //   path: '/mysettings/password',
-  //   component: AccountAndPassword,
-  //   layout: SettingLayout,
-  // },
+ 
 ];
 export { publicRoutes, privateRoutes, protectedRoutes }
-

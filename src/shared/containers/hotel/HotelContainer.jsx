@@ -191,9 +191,9 @@ const HotelContainer = () => {
                     </div>
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
-                    {hotel?.roomList?.map((room, index) => (
+                    {hotel?.roomsList?.map((room, index) => (
                         <>
-                            <Room key={index} room={room} />
+                            <Room key={room.id} room={room} />
                         </>
                     ))}
                 </div>
@@ -222,32 +222,6 @@ const HotelContainer = () => {
     );
 }
 HotelContainer.defaultProps = {
-    hotel: {
-        id: null,
-        hotelName: "",
-        address: "",
-        checkIn: "",
-        checkOut: "",
-        minPrice: null,
-        description: '',
-        hotelImages: [
-           
-        ],
-        hotelAmenities: [
-           
-        ],
-        extraServices: [
-           
-        ],
-        roomList: [
-            
-        ],
-        reviews: [
-          
-        ],
-        rules: [
-        
-        ]
-    }
+    hotel: {}
 }
 export default HotelContainer;

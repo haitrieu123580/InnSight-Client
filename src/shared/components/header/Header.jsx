@@ -63,7 +63,6 @@ const Header = () => {
         adultCount: options?.adult,
         childrenCount: options?.children
       }
-      console.log(filter)
       dispatch({
         type: HomeAction.SEARCH_HOTELS,
         filter: filter,
@@ -97,17 +96,12 @@ const Header = () => {
       <div className={` ${styles['header-image']}`}>
         <img src={imgBg} alt="" />
       </div>
-      <div className={`hidden md:flex ${styles['header-search']}`}>
+      <div className={`flex ${styles['header-search']}`}>
         <div className={`${styles['header-search-item']} flex items-center`}>
           <IcLocation />
           <div className={`${styles['search-item-right']} flex flex-col ml-2`}>
             <span className={styles['item-label']}>Điểm đến</span>
             <ProvinceDropdown selectProvince={(text) => { setDestination(text) }} />
-            {/* <input
-              className='focus:outline-none border-none'
-              placeholder={filter.province || 'Nhập tên Tỉnh/Thành phố'}
-              onChange={(e) => setDestination(e.target.value)}
-              type="text" /> */}
           </div>
         </div>
         <div className={`${styles['header-search-item']}`} ref={dateRef}>

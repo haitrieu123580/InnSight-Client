@@ -2,6 +2,10 @@ import styles from './SettingsContainer.module.scss';
 import * as React from 'react';
 import { DatePicker, Input, Select} from 'antd';
 import { useState } from 'react';
+import SettingAction from '../../../redux/user-settings/action';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ShowToastify from '../../../utils/ShowToastify';
 
 const info = [
   {
@@ -13,9 +17,29 @@ const info = [
   },
 ];
 
-
 const SettingsContainer = () => {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useDispatch();
+  const {data} = useSelector((state) => state.setting) || {}
+  const id = JSON.parse(localStorage.getItem('id'));
+
+  useEffect(() => {
+    if (id) {
+      dispatch({
+        type: SettingAction.GET_PROFILE,
+        id: id,
+          onSuccess: () => {
+            console.log('Data after success:',data);
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+    }
+  }, [id]);
+
+  console.log('id: ',id);
+  // const info = data && data.length > 0 ? data[0] : null;
 
   const handleClickEdit = () => {
     setIsEditing(!isEditing);
@@ -38,13 +62,13 @@ const SettingsContainer = () => {
       <div className={`${styles['content']} ml-10 border`}>
         <h1 className="text-3xl font-bold my-3">Thông tin cá nhân</h1>
         <h2>Cập nhật thông tin của bạn và tìm hiểu các thông tin này được sử dụng ra sao.</h2>
-          {info.map((item, index) => (
+          {info && (
             <div>
               <div className='flex text-lg mt-4 my-2 items-center'>
                 <h2 className={`${styles['name']} font-semibold`}>Họ và tên:</h2>
                 {!isEditing ? (
-                  item.fullname ? (
-                    <h2>{item.fullname}</h2>
+                  info.fullname ? (
+                    <h2>{info.fullname}</h2>
                   ) : (
                     <h2 className='text-slate-500'>Vui lòng nhập họ và tên đầy đủ của bạn</h2>
                   )
@@ -59,21 +83,21 @@ const SettingsContainer = () => {
                     }}
                     name="fullname"
                     id="fullname"
-                    value={item.fullname}
+                    value={info.fullname}
                     onChange={''}
                   />
                 )}
               </div>
               <div className='flex text-lg my-2 font-semibold  items-center'>
                 <h2>Địa chỉ email:</h2>
-                <h2 className='ml-16'>{item.email}</h2>
+                <h2 className='ml-16'>{info.email}</h2>
               </div>
               <div className='flex text-lg my-2 items-center'>
                 <h2 className={`${styles['sdt']} font-semibold`}>Số điện thoại:</h2>
                 <div>
                 {!isEditing ? (
-                  item.phone_number ? (
-                    <h2>{item.phone_number}</h2>
+                  info.phone_number ? (
+                    <h2>{info.phone_number}</h2>
                   ):(
                     <h2 className=" text-slate-500">Nhập số điện thoại của bạn</h2>
                   )
@@ -88,7 +112,7 @@ const SettingsContainer = () => {
                     }}
                     name="phone_number"
                     id="phone_number"
-                    value={item.phone_number}
+                    value={info.phone_number}
                     onChange={''}
                   />
                 )}
@@ -99,8 +123,8 @@ const SettingsContainer = () => {
               <div className='flex text-lg my-2 items-center'>
                 <h2 className={`${styles['date']} font-semibold`}>Ngày sinh:</h2>
                 {!isEditing ? (
-                  item.date_of_birth ? (
-                    <h2>{item.date_of_birth}</h2>
+                  info.date_of_birth ? (
+                    <h2>{info.date_of_birth}</h2>
                   ):(
                     <h2 className='text-slate-500'>Nhập ngày sinh của bạn</h2>
                   )
@@ -120,14 +144,14 @@ const SettingsContainer = () => {
               <div className='flex text-lg my-2 items-center'>
                 <h2 className={`${styles['gender']} font-semibold`}>Giới tính:</h2>
                 {!isEditing ? (
-                  item.gender ? (
-                    <h2>{item.gender === 'Female' ? 'Nữ' : 'Nam'}</h2>
+                  info.gender ? (
+                    <h2>{info.gender === 'Female' ? 'Nữ' : 'Nam'}</h2>
                   ):(
                     <h2 className='text-slate-500'>Chọn giới tính của bạn</h2>
                   )
                 ) : (
                   <Select
-                    defaultValue={item.gender}
+                    defaultValue={info.gender}
                     onChange={handleSelectChangeGender}
                     style={{
                       width: '500px',
@@ -148,7 +172,7 @@ const SettingsContainer = () => {
                 )}
               </div>
             </div>
-          ))}
+          )}
       </div>
       <button className='mt-3 border bg-sky-700 w-48 h-10 text-white text-base rounded-lg float-right mr-5' onClick={handleClickEdit}>{isEditing ? 'Lưu thay đổi' : 'Chỉnh sửa'}</button>
     </>

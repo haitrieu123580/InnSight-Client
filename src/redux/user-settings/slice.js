@@ -9,8 +9,8 @@ const initialState = {
   error: null,
 };
 
-const authSlice = createSlice({
-  name: 'settings',
+const settingSlice = createSlice({
+  name: 'setting',
   initialState,
   reducers: {
     changePasswordSuccess: (state) => {
@@ -24,15 +24,18 @@ const authSlice = createSlice({
     resetPasswordChangeStatus: (state) => {
       state.isPasswordChanged = false;
     },
+    getProfile: (state, { payload }) => {
+      state.userProfile = payload
+  }
   },
 });
 
 export const {
-  signin,
   changePasswordSuccess,
   changePasswordFailure,
   resetPasswordChangeStatus,
-  updateToken, // Export the new action
-} = authSlice.actions;
+  getProfile,
 
-export default authSlice.reducer;
+} = settingSlice.actions;
+
+export default settingSlice.reducer;
