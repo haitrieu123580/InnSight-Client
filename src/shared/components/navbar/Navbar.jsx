@@ -10,13 +10,13 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
     const { isLogin, userProfile } = useSelector(state => state.Auth)
     return (
-        <div className={`hidden lg:flex  ${styles['navbar']}`}>
+        <div className={`flex  ${styles['navbar']}`}>
             <Link
                 to={'/'}
                 className={`flex-shrink-0 flex items-center justify-center px-4 lg:px-6 xl:px-8 ${styles['logo-text']}`}>
                 InnSight
             </Link>
-            <nav className="contents text-base md:text-sm lg:text-lg mr-auto">
+            <nav className="hidden md:block text-base md:text-sm lg:text-lg mr-auto">
                 <div className={`grid grid-cols-3 gap-1 items-center`}>
                     <Link
                         className={`${styles['nav-item']}`}

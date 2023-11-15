@@ -192,9 +192,7 @@ const HotelContainer = () => {
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
                     {hotel?.roomList?.map((room, index) => (
-                        <>
-                            <Room key={index} room={room} />
-                        </>
+                        <Room key={index} room={room} />
                     ))}
                 </div>
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
@@ -231,22 +229,22 @@ HotelContainer.defaultProps = {
         minPrice: null,
         description: '',
         hotelImages: [
-           
+
         ],
         hotelAmenities: [
-           
+
         ],
         extraServices: [
-           
+
         ],
         roomList: [
-            
+
         ],
         reviews: [
-          
+
         ],
         rules: [
-        
+
         ]
     }
 }

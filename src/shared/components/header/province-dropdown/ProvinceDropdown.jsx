@@ -14,25 +14,10 @@ import './CustomAutocomplete.scss'
 // });
 const ProvinceDropdown = ({ selectProvince }) => {
   const [selectedOption, setSelectedOption] = useState(null);
-  function trimProvinceOrCityName(inputString) {
-    const cityKeyword = "Thành phố";
-    const provinceKeyword = "Tỉnh";
-
-    if (inputString?.includes(cityKeyword)) {
-      return inputString?.replace(cityKeyword, "").trim();
-    }
-
-    if (inputString?.includes(provinceKeyword)) {
-      return inputString?.replace(provinceKeyword, "").trim();
-    }
-
-    return inputString?.trim();
-  }
 
   const handleOptionChange = (event, newValue) => {
     setSelectedOption(newValue);
-    selectProvince(trimProvinceOrCityName(newValue?.name))
-    // selectProvince(newValue?.name)
+    selectProvince(newValue?.name)
   };
 
   return (
@@ -42,13 +27,9 @@ const ProvinceDropdown = ({ selectProvince }) => {
         getOptionLabel={(option) => option.name}
         value={selectedOption}
         onChange={handleOptionChange}
-        clearIcon={true}
-        className={`border-none py-0`}
         renderInput={(params) => (
           <TextField
             {...params}
-            // label="Tỉnh/Thành phố"
-            // variant="outlined"
             fullWidth
           />
         )}

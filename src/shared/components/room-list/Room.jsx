@@ -50,7 +50,7 @@ const Room = ({ room }) => {
             </div>
             <div className='col-span-1 p-2 border-gray-200 border-solid border-r-2 h-full'>
               <div className='font-bold mb-5'>Sức chứa</div>
-              <div className='flex items-end'>
+              <div className='flex items-end flex-wrap'>
                 {Array.from({ length: room?.adult || 0 }).map((_, index) => (
                   <PersonIcon key={index} className='mr-1 text-2xl text-gray-400' />
                 ))}
@@ -65,12 +65,13 @@ const Room = ({ room }) => {
                 {/* {room?.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} */}
               </div>
               <div className='text-lg font-bold'>
-                {room?.price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
+                {room?.price}
               </div>
             </div>
             <div className='col-span-2 p-2 h-full'>
               <div className='font-bold mb-5 flex w-full justify-between'>Số lượng phòng <span>
                 <select name="" id="" className='border-2 border-solid border-gray-500 font-semibold rounded-md hover:border-gray-500 hover:outline-none'>
+
                   <option value={0}></option>
                   {Array.from({ length: room?.quantity || 0 }).map((_, index) => (
                     <option key={index}>{index + 1}</option>

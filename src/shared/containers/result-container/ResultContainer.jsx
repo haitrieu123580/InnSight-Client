@@ -24,9 +24,8 @@ const ResultContainer = () => {
                 </div>
                 <div className={`col-span-12 rounded-lg borderp-32 sm:col-span-8 ${styles['container-item']}`}>
                     <ResultList result={result} />
-
                 </div>
-                <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
+                 <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
                     <div className='flex flex-row-reverse'>
                         <Stack spacing={2}>
                             <Pagination

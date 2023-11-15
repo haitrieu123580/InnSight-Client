@@ -96,7 +96,7 @@ const Header = () => {
       <div className={` ${styles['header-image']}`}>
         <img src={imgBg} alt="" />
       </div>
-      <div className={`hidden md:flex ${styles['header-search']}`}>
+      <div className={`flex ${styles['header-search']}`}>
         <div className={`${styles['header-search-item']} flex items-center`}>
           <IcLocation />
           <div className={`${styles['search-item-right']} flex flex-col ml-2`}>

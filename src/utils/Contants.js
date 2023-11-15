@@ -4,6 +4,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import WifiIcon from '@mui/icons-material/Wifi';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import BathtubIcon from '@mui/icons-material/Bathtub';
+
 import IcStar from "../shared/components/icons/home-icons/IcStar";
 
 
@@ -32,6 +33,7 @@ const Constants = {
         { name: 'wifi', icon: <WifiIcon /> },
         { name: 'lễ tân', icon: <LocalLibraryIcon /> },
         { name: 'nhà tắm riêng', icon: <BathtubIcon /> },
+
 
 
     ],
