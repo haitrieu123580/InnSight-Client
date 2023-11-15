@@ -7,8 +7,25 @@ const config = {
 };
 export const SignIn = async (data) => {
     const response = await axios.post(`${BASE_URL}/authenticate`, JSON.stringify(data), config);
-    return response?.data?.access_token ? { Data: response?.data?.access_token } : { Data: "" }
+    if (response.status === 200) {
+        return {
+            Data: response?.data
+        }
+    }
+    else {
+        return {
+            Message: "Error"
+        }
+    }
 }
-export const SignUp = (data) => {
-    return { Message: 'OK' }
+export const SignUp = async (data) => {
+    const response = await axios.post(`${BASE_URL}/register`, JSON.stringify(data), config);
+    if (response.status === 200) {
+        return { Data: true }
+    }
+    else {
+        return {
+            Data: false
+        }
+    }
 }

@@ -61,7 +61,6 @@ const cityFav = [
     },
 ]
 const getHotelInCity = (city) => {
-    console.log(city)
 }
 const HomeContainer = () => {
 
