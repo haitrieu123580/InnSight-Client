@@ -6,11 +6,12 @@ const initialState = {
   userRole: JSON.parse(localStorage.getItem('role')) || '',
   token: JSON.parse(localStorage.getItem('Token')) || '', // Include the token in the initial state
   isPasswordChanged: false,
+  isUpdateProfile: false,
   error: null,
 };
 
 const settingSlice = createSlice({
-  name: 'setting',
+  name: 'SETTING',
   initialState,
   reducers: {
     changePasswordSuccess: (state) => {
@@ -26,7 +27,15 @@ const settingSlice = createSlice({
     },
     getProfile: (state, { payload }) => {
       state.userProfile = payload
-  }
+    },
+    updateProfileSuccess: (state) => {
+      state.isUpdateProfile = true;
+      state.error = null;
+    },
+    updateProfileFailure: (state, { payload }) => {
+      state.isUpdateProfile = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -35,7 +44,8 @@ export const {
   changePasswordFailure,
   resetPasswordChangeStatus,
   getProfile,
-
+  updateProfileSuccess,
+  updateProfileFailure
 } = settingSlice.actions;
 
 export default settingSlice.reducer;
