@@ -310,7 +310,7 @@ const AddRoomContainer = () => {
           </div>
         </div>
         <div className={`w-1/2 flex pt-7`}>
-          <Link to="/host/register-list-section">
+          <Link to="/host/dashboard">
             <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
               <IcChevronLeft />
             </button>
