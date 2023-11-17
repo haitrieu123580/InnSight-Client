@@ -5,8 +5,10 @@ import ReservationBlock from '../../../components/booking/booking1/reservation-b
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 const BookingContainer1 = () => {
     const navigate = useNavigate();
+    const { cart } = useSelector(state => state.Booking);
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14'>
@@ -56,24 +58,6 @@ const BookingContainer1 = () => {
                                         <input className='w-full' type='email'></input>
 
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`${styles['box-wrapper']}`}>
-                        <div className={`${styles['box-block']}`}>
-                            <div className='font-bold text-xl mb-3'>
-                                Tên khách
-                            </div>
-                            <div className={styles['box']}>
-                                <div className={styles['box-block']}>
-                                    <div className='font-bold text-base'>
-                                        Họ và tên khách
-                                        <span className='text-sm text-gray-400 font-normal'>
-                                            {'(Không dấu)'}
-                                        </span>
-                                    </div>
-                                    <input className='w-full'></input>
                                 </div>
                             </div>
                         </div>
