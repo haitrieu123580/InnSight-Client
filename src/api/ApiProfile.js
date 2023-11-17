@@ -12,7 +12,11 @@ const config = {
 };
 
 export const getProfileById = async (id) => {
-  const response = await axios.get(`${BASE_URL}/${id}`);
+  console.log('token:',token)
+  const response = await axios.get(
+    `${BASE_URL}/${id}`,
+    config
+    );
   console.log('data',response.data);
   return { Data: response?.data };
 }

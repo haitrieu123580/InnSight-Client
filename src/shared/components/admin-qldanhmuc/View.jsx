@@ -1,8 +1,18 @@
 import React from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  customInput: {
+      '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
+          height: '50px',
+      },
+  },
+}));
 
 const View = ({ open, onClose, onAddView, onUpdateView, view, setView }) => {
-    
+  const classes = useStyles();
+  
   return (
     <Dialog open={open} onClose={onClose}>
       {view ? (
@@ -18,6 +28,7 @@ const View = ({ open, onClose, onAddView, onUpdateView, view, setView }) => {
             label="Tầm nhìn hướng đi đâu?"
             value={view ? view.name : ''}
             onChange={(e) => setView({ ...view, name: e.target.value })}
+            className={classes.customInput}
           />
           <br />
           <TextField
@@ -25,6 +36,7 @@ const View = ({ open, onClose, onAddView, onUpdateView, view, setView }) => {
             label="Mô tả"
             value={view ? view.description : ''}
             onChange={(e) => setView({ ...view, description: e.target.value })}
+            className={classes.customInput}
           />
         </DialogContentText>
       </DialogContent>

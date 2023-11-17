@@ -91,7 +91,8 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    isLogin && userRole === Roles.host ? (
+                    // isLogin && userRole === Roles.host ? (
+                    isLogin || true ? (
                       <Layout>
                         <ProtectedRoute user={user}>
                           <Suspense fallback={<div>Loading...</div>}>

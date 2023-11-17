@@ -39,6 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function handleDelete() {
   // Xử lý xóa
 }
+const token = JSON.parse(localStorage.getItem('Token'));
+const config = {
+  headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+  },
+};
 
 const QLTaiKhoanContainer = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,7 +61,10 @@ const QLTaiKhoanContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8001/api/user/all');
+        const response = await axios.get(
+          'http://localhost:8001/api/user/all',
+          config
+          );
         setData(response.data);
       } catch (error) {
         setError(error.message);

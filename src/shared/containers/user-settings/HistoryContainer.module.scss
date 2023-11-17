@@ -9,8 +9,18 @@
     padding-bottom: 20px;
     background-color: #F9FAFB;
     .image{
-        border-radius: 5%;
-        width: 110px;
-        height: 110px;
+        border-radius: 5px;
+        width: 400px;
+        height: 250px;
+    }
+    .left{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 450px;
+    }
+    .right{
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: 250px;
     }
 }

@@ -26,7 +26,7 @@ const SettingsContainer = () => {
         type: SettingAction.GET_PROFILE,
         id: id,
           onSuccess: () => {
-            console.log('Data after success:',userProfile);
+            console.log('Data after success:', userProfile);
           },
           onError: () => {
               ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
@@ -35,6 +35,7 @@ const SettingsContainer = () => {
     }
   }, []);
 
+  console.log('id', id)
   const item = userProfile;
 
   const handleClickEdit = () => {
