@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './ResultContainer.module.scss'
 import Header from '../../components/header/Header'
 import ResultList from '../../components/result-list/ResultList'
@@ -15,6 +15,9 @@ const ResultContainer = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
+    // useEffect(() => {
+
+    // }, [result])
     return (
         <div>
             <Header />

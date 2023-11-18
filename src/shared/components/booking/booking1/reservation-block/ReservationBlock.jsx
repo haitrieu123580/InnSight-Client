@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import Constants from '../../../../../utils/Contants';
 const ReservationBlock = ({ props }) => {
   const { cart } = useSelector(state => state.Booking);
-  console.log(cart)
   return (
     <div className={styles['box']}>
       <div className='font-bold text-2xl px-10'>

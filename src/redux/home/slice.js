@@ -10,7 +10,6 @@ const initialState = {
     message: '',
     // selectedHotel:{},
     reservation: {
-
     },
 
 }
