@@ -23,6 +23,7 @@ function* watchSearchHotel() {
         const { filter, onSuccess, onError } = payload
         try {
             const response = yield call(searchHotels, filter);
+            console.log(response)
             yield put(result(response?.Data))
             onSuccess && onSuccess();
         } catch (error) {

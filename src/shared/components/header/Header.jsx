@@ -24,7 +24,11 @@ const Header = () => {
     checkoutDay: searchParams.get('checkoutDay') ? new Date(searchParams.get('checkoutDay')) : new Date().setDate(new Date().getDate() + 1),
     room: searchParams.get('count') || 1,
     adultCount: searchParams.get('adultCount') || 2,
-    childrenCount: searchParams.get('childrenCount') || 0
+    childrenCount: searchParams.get('childrenCount') || 0,
+    fromPrice: searchParams.get('fromPrice') || 0,
+    toPrice: searchParams.get('toPrice') || 0,
+    rate: searchParams.get('rate') || 0,
+    review: searchParams.get('review') || 0,
   };
   const dateRef = useRef(null);
   const optionRef = useRef(null);
@@ -101,7 +105,7 @@ const Header = () => {
           <IcLocation />
           <div className={`${styles['search-item-right']} flex flex-col ml-2`}>
             <span className={styles['item-label']}>Điểm đến</span>
-            <ProvinceDropdown selectProvince={(text) => { setDestination(text) }} />
+            <ProvinceDropdown selectProvince={(text) => { setDestination(text) }} defaultOption={filter?.province} />
           </div>
         </div>
         <div className={`${styles['header-search-item']}`} ref={dateRef}>

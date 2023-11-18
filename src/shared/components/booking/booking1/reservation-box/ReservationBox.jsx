@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import IcWarning from '../../../../components/icons/booking/IcWarning'
+import { useSelector, useDispatch } from 'react-redux';
+import Constants from '../../../../../utils/Contants';
 
 const ReservationBox = () => {
+    const { cart } = useSelector(state => state.Booking);
+    const [vat, setVat] = useState(null);
+    useEffect(() => {
+        if (cart?.rooms?.length) {
+            const total = cart.rooms.reduce((acc, room) => (
+                acc + (room?.price * parseInt(room?.count || 0, 10))
+            ), 0);
+            const totalWithTax = total + total * Constants.tax / 100;
+            setVat(parseFloat(totalWithTax.toFixed(3)));
+        }
+    }, [cart]);
+
     return (
         <>
             <div className='font-bold text-xl mb-3'>
@@ -11,7 +25,7 @@ const ReservationBox = () => {
             <div className={styles['box']}>
                 <div className='flex justify-between'>
                     <div className=' font-bold text-xl'>Thành tiền</div>
-                    <div className='font-bold text-xl text-red-800'>........VND</div>
+                    <div className='font-bold text-xl text-red-800'>{`${vat}VND`}</div>
                 </div>
                 <div className='text-blue-800 font-semibold flex'>
                     <span><IcWarning /></span>
@@ -19,21 +33,24 @@ const ReservationBox = () => {
                 </div>
                 <div className='border border-solid border-gray-200 my-5'></div>
                 <div className='text-base'>
-                    <div className='flex justify-between justify-items-center'>
-                        <div >
-                            <span>{`(1x) `}</span>
-                            Phòng Superior Giường Đôi
+                    {cart?.rooms?.map((room, idx) => (
+                        <div key={idx} className='flex justify-between justify-items-center'>
+                            <div >
+                                <span>{`(${room?.count}x) `}</span>
+                                {room?.roomName}
+                            </div>
+                            <div>
+                                {room?.count * room?.price}VND
+                            </div>
                         </div>
-                        <div>
-                            ......VND
-                        </div>
-                    </div>
+                    ))}
+
                     <div className='flex justify-between justify-items-center'>
                         <div >
                             Thuế và phí
                         </div>
                         <div>
-                            ......VND
+                            {`${Constants.tax}%`}
                         </div>
                     </div>
 

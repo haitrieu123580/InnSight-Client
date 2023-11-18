@@ -2,8 +2,8 @@ import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
 import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
 import SigninLayout from "../shared/components/layout/SigninLayout";
-import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayout";
+import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import { lazy } from 'react';
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
@@ -18,11 +18,11 @@ const RegisterHost4 = lazy(() => import('../pages/host-pages/register-4/Register
 const RegisterHost5 = lazy(() => import('../pages/host-pages/register-5/RegisterHost5'))
 const HostRegisterHomePage = lazy(() => import('../pages/host-pages/register-home-page/HostRegisterHomePage'))
 const RegisterListSection = lazy(() => import('../pages/host-pages/register-list-section/RegisterListSection'))
-const  AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
-const  AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
-const  AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
-const  AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
-const  RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
+const AddRoom = lazy(() => import('../pages/host-pages/add-room/AddRoom'))
+const AddRoomPrice = lazy(() => import('../pages/host-pages/add-room-price/AddRoomPrice'))
+const AddCancelPolicy = lazy(() => import('../pages/host-pages/add-cancel-policy/AddCancelPolicy'))
+const AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRoomImage'))
+const RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
 const BookingPage = lazy(() => import('../pages/booking-pages/BookingPage1'))
 const BookingPage2 = lazy(() => import('../pages/booking-pages/BookingPage2'))
 const QLTaiKhoan = lazy(() => import('../pages/qltaikhoan/QLTaiKhoan'))
@@ -41,7 +41,6 @@ const Cancel3 = lazy(() => import('../pages/cancel/Cancel3'))
 const Cancel4 = lazy(() => import('../pages/cancel/Cancel4'))
 const BookingHistory = lazy(() => import('../pages/user-settings-page/BookingHistory'))
 const AccountAndPassword = lazy(() => import('../pages/user-settings-page/AccountAndPassword'))
-
 const publicRoutes = [
     {
         path: '/',
