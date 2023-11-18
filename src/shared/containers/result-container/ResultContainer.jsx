@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './ResultContainer.module.scss'
 import Header from '../../components/header/Header'
 import ResultList from '../../components/result-list/ResultList'
@@ -6,7 +6,7 @@ import SearchBox from '../../components/search-box/SearchBox'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { useSelector } from 'react-redux';
 import './Pagination.scss'
 
 const ResultContainer = () => {
@@ -15,6 +15,9 @@ const ResultContainer = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
+    // useEffect(() => {
+
+    // }, [result])
     return (
         <div>
             <Header />
@@ -25,11 +28,11 @@ const ResultContainer = () => {
                 <div className={`col-span-12 rounded-lg borderp-32 sm:col-span-8 ${styles['container-item']}`}>
                     <ResultList result={result} />
                 </div>
-                 <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
+                <div className={`col-span-12 rounded-lg borderp-32 ${styles['container-item']}`}>
                     <div className='flex flex-row-reverse'>
                         <Stack spacing={2}>
                             <Pagination
-                                count={10}
+                                count={result?.pageTotal || 1}
                                 defaultPage={1}
                                 page={page}
                                 variant="outlined"

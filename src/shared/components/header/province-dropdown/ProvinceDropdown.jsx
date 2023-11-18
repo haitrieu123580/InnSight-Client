@@ -12,8 +12,8 @@ import './CustomAutocomplete.scss'
 //     }
 //   }
 // });
-const ProvinceDropdown = ({ selectProvince }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+const ProvinceDropdown = ({ selectProvince = () => { }, defaultOption }) => {
+  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const handleOptionChange = (event, newValue) => {
     setSelectedOption(newValue);
@@ -24,12 +24,13 @@ const ProvinceDropdown = ({ selectProvince }) => {
     <div className={`custom-autocomplete`}>
       <Autocomplete
         options={data}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => option?.name || ''}
         value={selectedOption}
         onChange={handleOptionChange}
         renderInput={(params) => (
           <TextField
             {...params}
+            placeholder={defaultOption || 'Nhập tỉnh/thành phố'}
             fullWidth
           />
         )}

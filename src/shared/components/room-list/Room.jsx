@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './RoomList.module.scss'
 import { Card } from '@mui/material'
 import CardContent from '@mui/material/CardContent';
@@ -7,9 +7,36 @@ import Button from '@mui/material/Button';
 import DoneIcon from '@mui/icons-material/Done';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PersonIcon from '@mui/icons-material/Person';
-;
+import { useSelector, useDispatch } from 'react-redux';
+// import BookingAction from '../../../redux/booking/action';
+import { addRoomToCart } from '../../../redux/booking/slice'
+import ShowToastify from '../../../utils/ShowToastify';
 const Room = ({ room }) => {
-
+  const { hotel } = useSelector(state => state.Home);
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(null);
+  const [hotelId, setHotelId] = useState(null);
+  const handleAddRoomToCart = () => {
+    dispatch({
+      type: addRoomToCart,
+      payload: {
+        hotel: hotel,
+        room: room,
+        count: quantity,
+        onSuccess: () => {
+          ShowToastify.showSuccessToast("Đã thêm!")
+        }
+      }
+    })
+  }
+  const handleSelectQuantity = (number) => {
+    setQuantity(number);
+  }
+  useEffect(() => {
+    if (hotel?.id) {
+      setHotelId(hotel?.id)
+    }
+  }, [hotel])
   return (
     <div className={styles['room']}>
       <div className={styles['room-title']}>
@@ -18,13 +45,13 @@ const Room = ({ room }) => {
       <div className='grid grid-cols-10 gap-6'>
         <div className='col-span-2'>
           <div>
-            {/* <img src={room?.roomImage} /> */}
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 sx={{ height: 140 }}
-                image={room?.roomImage}
-                title="green iguana"
+                image={room?.roomImage || ""}
+                title="hotel image"
               />
+
               <CardContent>
                 <div className='text-xs text-cyan-400 text-center mb-1'>Xem ảnh và chi tiết</div>
                 {Array?.from({ length: 3 })?.map((_, index) => (
@@ -70,17 +97,25 @@ const Room = ({ room }) => {
             </div>
             <div className='col-span-2 p-2 h-full'>
               <div className='font-bold mb-5 flex w-full justify-between'>Số lượng phòng <span>
-                <select name="" id="" className='border-2 border-solid border-gray-500 font-semibold rounded-md hover:border-gray-500 hover:outline-none'>
+                <select
+                  onChange={(e) => handleSelectQuantity(e.target.value)}
+                  className='border-2 border-solid border-gray-500 font-semibold rounded-md hover:border-gray-500 hover:outline-none'
+                >
 
                   <option value={0}></option>
                   {Array.from({ length: room?.quantity || 0 }).map((_, index) => (
-                    <option key={index}>{index + 1}</option>
+                    <option key={index} value={index + 1}>{index + 1}</option>
                   ))}
                 </select>
               </span>
               </div>
               <div>
-                <Button variant='contained' style={{ backgroundColor: "#3182D3" }} className='text-black font-bold'>
+                <Button
+                  variant='contained'
+                  style={{ backgroundColor: "#3182D3" }}
+                  className='text-black font-bold'
+                  onClick={handleAddRoomToCart}
+                >
                   Tôi sẽ đặt
                 </Button>
               </div>

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SearchResultItem from './SearchResultItem'
 
 const ResultList = ({ result }) => {
+  useEffect(() => {
+
+  }, [result])
   return (
     <div>
       {result && <>
