@@ -1,0 +1,26 @@
+@import "../../../Common.scss";
+
+.content {
+    min-width: 800px;
+    margin-left: 20px ;
+    padding: 50px;
+    margin-right: 20px ;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #F9FAFB;
+    .image{
+        border-radius: 5px;
+        width: 400px;
+        height: 250px;
+    }
+    .left{
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 450px;
+    }
+    .right{
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: 250px;
+    }
+}

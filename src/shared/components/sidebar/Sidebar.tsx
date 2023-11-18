@@ -39,7 +39,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     };
     document.addEventListener('click', clickHandler);
     return () => document.removeEventListener('click', clickHandler);
-  });
+  },[]);
 
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
