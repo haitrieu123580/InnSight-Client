@@ -21,9 +21,9 @@ const Navbar = () => {
                 InnSight
             </Link>
             <nav className="hidden md:block text-base md:text-sm lg:text-lg mr-auto">
-                <div className={`grid grid-cols-3 gap-1 items-center`}>
+                <div className={`grid grid-cols-3 gap-1 items-center pt-3`}>
                     <Link
-                        className={`${styles['nav-item']}`}
+                        className={`${styles['nav-item']} pl-44`}
                         to={'/home'}>
                         <IcHotel />
                         <span className='ml-1'>Lưu trú</span>
