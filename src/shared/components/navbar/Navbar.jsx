@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import IcHotel from '../icons/header-icons/IcHotel'
@@ -8,7 +8,11 @@ import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 import { useSelector } from 'react-redux'
 const Navbar = () => {
-    const { isLogin, userProfile } = useSelector(state => state.Auth)
+    const { userProfile } = useSelector(state => state.Auth)
+    const isLogin = localStorage.getItem('isLogin')||false;
+
+    useEffect(()=>{
+    },[isLogin])
     return (
         <div className={`hidden lg:flex  ${styles['navbar']}`}>
             <Link
@@ -60,14 +64,12 @@ const Navbar = () => {
                                     className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
                                 >
                                     <IcAvatar />
-                                    <span>{userProfile?.name || "Tài khoản của bạn"}</span>
+                                    <span>{userProfile?.name||userProfile?.email}</span>
                                 </button>
                             </Link>
                         </div>
                     </>
                 }
-
-
             </div>
         </div>
     )

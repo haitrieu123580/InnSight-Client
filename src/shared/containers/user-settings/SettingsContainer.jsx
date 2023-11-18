@@ -61,12 +61,16 @@ const SettingsContainer = () => {
         onSuccess: () => {
           console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
-          window.location.href = '/mysettings/info';
+          setTimeout(() => {
+            window.location.href = '/mysettings/info';
+          }, 1000);
         },
         onError: () => {
           console.log("That bai")
           // ShowToastify.showErrorToast("Thất bại")
-          Navigate("/mysettings/info")
+          setTimeout(() => {
+            window.location.href = '/mysettings/info';
+          }, 1000);
         }
     })
   }
@@ -135,7 +139,7 @@ const SettingsContainer = () => {
                       placeholder="Vui lòng nhập họ và tên đầy đủ của bạn"
                       className={styles.input}
                       defaultValue={item.fullName}
-                      {...register("fullName")}
+                      {...register("fullName", {required:''})}
                     />
                   </div>
                   <div className='flex text-lg my-2 font-semibold  items-center'>
@@ -193,6 +197,7 @@ const SettingsContainer = () => {
                   </div>
                 </div>
                 <button type='submit' className='mt-3 border bg-sky-700 w-48 h-10 text-white text-base rounded-lg float-right mr-5'>Lưu thay đổi</button>
+                <button onClick={handleClickEdit} className='mt-3 border bg-slate-500 w-32 h-10 text-white text-base rounded-lg float-right mr-5'>Hủy</button>
               </form>
             </>
           )}

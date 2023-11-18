@@ -75,7 +75,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         <ul className="mb-6 flex flex-col gap-1.5">
           <NavLink
             to="/mysettings/password"
-            className={`mt-6 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
+            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
               pathname.includes('password') && 'bg-slate-300'
             }`}
           >
@@ -83,7 +83,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             Tài khoản và mật khẩu
           </NavLink>
         </ul>
-        <ul className="mb-7 flex flex-col gap-1.5">
+        {/* <ul className="mb-7 flex flex-col gap-1.5">
           <NavLink
             to="/mysettings/pay"
             className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
@@ -93,7 +93,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <CreditCardIcon />
             Thông tin thanh toán
           </NavLink>
-        </ul>
+        </ul> */}
       </div>
     </aside>
   );

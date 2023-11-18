@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import SettingAction from '../../../redux/user-settings/action';
 import ShowToastify from '../../../utils/ShowToastify';
 import { Navigate } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 const AccountAndPasswordContainer = () => {
   const [isChange, setIsChange] = useState(false);
@@ -32,12 +33,14 @@ const AccountAndPasswordContainer = () => {
         onSuccess: () => {
           console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
-          window.location.href = '/mysettings/password';
+          setTimeout(() => {
+            window.location.href = '/mysettings/password';
+          }, 1500);
         },
         onError: () => {
           console.log("That bai")
-          // ShowToastify.showErrorToast("Thất bại")
-          Navigate("/mysettings/password")
+          ShowToastify.showErrorToast("Thất bại")
+          // Navigate("/mysettings/password")
         }
     })
   } 
@@ -67,14 +70,14 @@ const AccountAndPasswordContainer = () => {
                         type="password"
                         className={styles.input}
                         id="currentPassword"
-                        {...register("currentPassword")}
+                        {...register("currentPassword", {required:''})}
                       />
                       <h3 className={`${styles['pass']}`}>Nhập mật khẩu mới</h3>
                       <input
                         type="password"
                         className={styles.input}
                         id="newPassword"
-                        {...register("newPassword")}
+                        {...register("newPassword", {required:''})}
                       />
                       <h3 className={`${styles['pass']}`}>Nhập lại mật khẩu mới</h3>
                       <input
@@ -84,9 +87,10 @@ const AccountAndPasswordContainer = () => {
                           marginBottom: '15px'
                         }}
                         id="confirmationPassword"
-                        {...register("confirmationPassword")}
+                        {...register("confirmationPassword", {required:''})}
                       />
                     </div>
+                    <button onClick={handleClickChange} className='ml-10 border bg-slate-500 w-24 h-10 text-white text-base rounded-lg float-right mr-5' >Hủy</button>
                     <button type='submit' className='ml-10 border bg-sky-700 w-24 h-10 text-white text-base rounded-lg float-right mr-5' >Lưu</button>
                     </form>
                   </div>
