@@ -2,25 +2,23 @@
     color: #40AEF6 !important;
 }
 
-.slick-list {
-    // position: unset !important;
-}
-
 .slick-dots {
-    position: relative !important;
-    width: 50% !important;
-    margin: 0 auto !important;
+    // position: relative !important;
+    // width: 50% !important;
+    // margin: 0 auto !important;
 
     li.slick-active button:before {
         color: #40AEF6 !important;
     }
 
 }
-.slick-next{
+
+.slick-next {
     top: 140%;
     left: 57%;
 }
-.slick-prev{
+
+.slick-prev {
     top: 140%;
     left: 40%;
 }

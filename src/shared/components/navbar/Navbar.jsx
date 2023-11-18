@@ -10,13 +10,13 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
     const { isLogin, userProfile } = useSelector(state => state.Auth)
     return (
-        <div className={`hidden lg:flex  ${styles['navbar']}`}>
+        <div className={`flex  ${styles['navbar']}`}>
             <Link
                 to={'/'}
                 className={`flex-shrink-0 flex items-center justify-center px-4 lg:px-6 xl:px-8 ${styles['logo-text']}`}>
                 InnSight
             </Link>
-            <nav className="contents text-base md:text-sm lg:text-lg mr-auto">
+            <nav className="hidden md:block text-base md:text-sm lg:text-lg mr-auto">
                 <div className={`grid grid-cols-3 gap-1 items-center`}>
                     <Link
                         className={`${styles['nav-item']}`}
@@ -48,21 +48,19 @@ const Navbar = () => {
                             <IcAvatar />
                             <span>Đăng nhập</span>
                         </Link>
-                        <Link to={'sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
+                        <Link to={'/sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcPencil />
                             <span>Đăng ký</span>
                         </Link>
                     </> :
                     <>
                         <div className="pr-10">
-                            <Link to={'/mysettings/info'}>
-                                <button
-                                    className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
-                                >
-                                    <IcAvatar />
-                                    <span>{userProfile?.name || "Tài khoản của bạn"}</span>
-                                </button>
-                            </Link>
+                            <button
+                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                            >
+                                <IcAvatar />
+                                <span>{userProfile?.name}</span>
+                            </button>
                         </div>
                     </>
                 }

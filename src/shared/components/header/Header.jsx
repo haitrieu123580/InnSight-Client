@@ -2,37 +2,51 @@ import styles from './Header.module.scss';
 import IcLocation from '../icons/header-icons/IcLocation';
 import IcCalendar from '../icons/header-icons/IcCalendar';
 import IcGlass from '../icons/header-icons/IcGlass'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import useOnClickOutside from '../../../hooks/use-click-outside'
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import imgBg from '../../../assets/images/header-background.png'
 import HomeAction from '../../../redux/home/action';
+import ShowToastify from '../../../utils/ShowToastify';
+import ProvinceDropdown from './province-dropdown/ProvinceDropdown';
 const Header = () => {
-
   const dispatch = useDispatch();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const filter = {
+    province: searchParams.get('province') || '',
+    checkinDay: searchParams.get('checkinDay') ? new Date(searchParams.get('checkinDay')) : new Date(),
+    checkoutDay: searchParams.get('checkoutDay') ? new Date(searchParams.get('checkoutDay')) : new Date().setDate(new Date().getDate() + 1),
+    room: searchParams.get('count') || 1,
+    adultCount: searchParams.get('adultCount') || 2,
+    childrenCount: searchParams.get('childrenCount') || 0,
+    fromPrice: searchParams.get('fromPrice') || 0,
+    toPrice: searchParams.get('toPrice') || 0,
+    rate: searchParams.get('rate') || 0,
+    review: searchParams.get('review') || 0,
+  };
   const dateRef = useRef(null);
   const optionRef = useRef(null);
   const navigate = useNavigate();
-  const [destination, setDestination] = useState('')
+  const [destination, setDestination] = useState(filter.province)
   const [openDate, setOpenDate] = useState(false)
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: filter.checkinDay,
+      endDate: filter.checkoutDay,
       key: 'selection'
     }
   ]);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
-    adult: 2,
-    children: 0,
-    room: 1,
+    adult: filter?.adultCount,
+    children: filter?.childrenCount,
+    room: filter.room
   });
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -44,42 +58,54 @@ const Header = () => {
   }
 
   const handleSubmit = () => {
-    const filter = {
-      destination: destination,
-      date: {
-        startDate: date[0].startDate,
-        endDate: date[0].endDate,
-      },
-      options: options
+    if (destination !== "") {
+      const filter = {
+        province: destination,
+        checkinDay: format(date[0].startDate, 'yyyy-MM-dd'),
+        checkoutDay: format(date[0].endDate, 'yyyy-MM-dd'),
+        count: options?.room,
+        adultCount: options?.adult,
+        childrenCount: options?.children
+      }
+      dispatch({
+        type: HomeAction.SEARCH_HOTELS,
+        filter: filter,
+        onSuccess: () => {
+          const queryParams = new URLSearchParams(filter).toString();
+          navigate(`/searchresults?${queryParams}`);
+        },
+        onError: () => {
+          ShowToastify.showErrorToast("Có lỗi xảy ra, vui lòng thử lại")
+        }
+      })
+
     }
-    dispatch({
-      type: HomeAction.SEARCH_HOTELS,
-      filter: filter
-    })
-    navigate('/searchresults')
+    else {
+      ShowToastify.showWarningToast('Vui lòng địa điểm muốn đến')
+    }
 
   }
+
   useOnClickOutside(dateRef, () => {
     setOpenDate(false);
   });
   useOnClickOutside(optionRef, () => {
     setOpenOptions(false);
   });
+
+
+
   return (
     <header >
       <div className={` ${styles['header-image']}`}>
         <img src={imgBg} alt="" />
       </div>
-      <div className={`hidden md:flex ${styles['header-search']}`}>
+      <div className={`flex ${styles['header-search']}`}>
         <div className={`${styles['header-search-item']} flex items-center`}>
           <IcLocation />
           <div className={`${styles['search-item-right']} flex flex-col ml-2`}>
             <span className={styles['item-label']}>Điểm đến</span>
-            <input
-              className='focus:outline-none border-none'
-              placeholder='Nhập điểm đến'
-              onChange={(e) => setDestination(e.target.value)}
-              type="text" />
+            <ProvinceDropdown selectProvince={(text) => { setDestination(text) }} defaultOption={filter?.province} />
           </div>
         </div>
         <div className={`${styles['header-search-item']}`} ref={dateRef}>
@@ -89,11 +115,11 @@ const Header = () => {
               className={`flex justify-between w-full`}>
               <div className={`${styles['search-item-right']} flex flex-col justify-center ml-2 mr-2 ${styles['border-right']}`}>
                 <span className={styles['item-label']}>Nhận phòng</span>
-                <span>{`${format(date[0].startDate, 'MM/dd/yyyy')}`}</span>
+                <span>{`${format(date[0].startDate, 'yyyy-MM-dd')}`}</span>
               </div>
               <div className={`${styles['search-item-right']} flex flex-col ml-2`}>
                 <span className={styles['item-label']}>Trả phòng</span>
-                <span>{`${format(date[0].endDate, 'MM/dd/yyyy')}`}</span>
+                <span>{`${format(date[0].endDate, 'yyyy-MM-dd')}`}</span>
               </div>
             </div>
           </div>

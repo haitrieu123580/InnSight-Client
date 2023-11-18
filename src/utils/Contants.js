@@ -10,21 +10,14 @@ import IcStar from "../shared/components/icons/home-icons/IcStar";
 
 const Constants = {
     price: [
-        100000,
-        300000,
-        500000,
-        1000000,
-        2000000,
-        5000000,
+        '100.000', '200.000', '300.000', '400.000', '500.000', '1.000.000'
     ],
-    roomType: [
-        'Tất cả',
-        'Phòng đôi',
-        'Phòng tổng thống',
-        'Phòng đơn'
+
+    review: [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     ],
     rate: [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+        1, 2, 3, 4, 5, 6
     ],
     amenities: [
         { name: 'máy lạnh', icon: <AirIcon /> },
@@ -33,9 +26,6 @@ const Constants = {
         { name: 'wifi', icon: <WifiIcon /> },
         { name: 'lễ tân', icon: <LocalLibraryIcon /> },
         { name: 'nhà tắm riêng', icon: <BathtubIcon /> },
-
-
-
     ],
     rates: [
         { id: 1, value: 1, name: "1 sao", icon: <IcStar /> },
@@ -44,6 +34,7 @@ const Constants = {
         { id: 4, value: 4, name: "4 sao", icon: (<><IcStar /><IcStar /><IcStar /><IcStar /></>) },
         { id: 5, value: 5, name: "5 sao", icon: (<><IcStar /><IcStar /><IcStar /><IcStar /><IcStar /></>) },
 
-    ]
+    ],
+    tax: 10,
 }
 export default Constants;

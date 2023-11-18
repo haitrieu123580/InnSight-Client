@@ -2,10 +2,16 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
 
-    result: {},
+    result: {
+
+    },
     hotel: {},
     room: {},
-    message: 'halo'
+    message: '',
+    // selectedHotel:{},
+    reservation: {
+    },
+
 }
 
 const homeSlice = createSlice({
@@ -17,7 +23,6 @@ const homeSlice = createSlice({
         },
         getHotel: (state, { payload }) => {
             state.hotel = payload
-
         }
     },
 
