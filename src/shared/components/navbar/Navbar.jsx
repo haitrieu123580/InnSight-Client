@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import IcHotel from '../icons/header-icons/IcHotel'
@@ -8,11 +8,19 @@ import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 import { useSelector } from 'react-redux'
 const Navbar = () => {
-    const { userProfile } = useSelector(state => state.Auth)
     const isLogin = localStorage.getItem('isLogin')||false;
+    console.log('isLogin', isLogin)
+    const [name, setName] = useState('');
 
     useEffect(()=>{
+        const name = JSON.parse(localStorage.getItem('name'));
+        setName(name || '');
     },[isLogin])
+
+    const email = JSON.parse(localStorage.getItem('email'));
+
+    console.log('name', name);
+    console.log('email', email);
     return (
         <div className={`flex  ${styles['navbar']}`}>
             <Link
@@ -46,7 +54,7 @@ const Navbar = () => {
             </nav>
 
             <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
-                {!isLogin ?
+                {!isLogin ? (
                     <>
                         <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcAvatar />
@@ -56,7 +64,7 @@ const Navbar = () => {
                             <IcPencil />
                             <span>Đăng ký</span>
                         </Link>
-                    </> :
+                    </> ):(
                     <>
                         <div className="pr-10">
                             <Link to={'/mysettings/info'}>
@@ -64,12 +72,12 @@ const Navbar = () => {
                                     className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
                                 >
                                     <IcAvatar />
-                                    <span>{userProfile?.name||userProfile?.email}</span>
+                                    <span>{name || email}</span>
                                 </button>
                             </Link>
                         </div>
                     </>
-                }
+                )}
             </div>
         </div>
     )

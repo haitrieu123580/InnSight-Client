@@ -164,7 +164,7 @@ const protectedRoutes = [
 ];
 const privateRoutes = [
   {
-    path: '/admin',
+    path: '/qltaikhoan',
     component: QLTaiKhoan,
     layout: MainLayoutAdmin,
   },
