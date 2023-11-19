@@ -5,16 +5,20 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Link } from "react-router-dom";
 const NavHost = () => {
   return (
     <header className={`hidden md:flex justify-between  ${styles["nav-host"]}` }>
       <div className="">
+        <Link to='/host/price-room' >
+
         <button
           class={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between  `}
-        >
+          >
           <PriceChangeIcon />
           <span className="pl-3 text-xl">Giá phòng</span>
         </button>
+          </Link>
       </div>
 
       <div className="">

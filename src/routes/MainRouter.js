@@ -2,6 +2,7 @@ import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
 import SigninLayout from "../shared/components/layout/SigninLayout";
 import { lazy } from "react";
+import AddNewRoom from "../pages/host-pages/add-new-room/AddRoom";
 const HomePage = lazy(() => import("../pages/home-page/HomePage"));
 const ResultPage = lazy(() => import("../pages/result-page/ResultPage"));
 const HotelPage = lazy(() => import("../pages/hotel/HotelPage"));
@@ -84,11 +85,7 @@ const publicRoutes = [
     component: HostRegisterHomePage,
     layout: HostLayout,
   },
-  {
-    path: "/host/dashboard",
-    component: PriceRoom,
-    layout: HostLayout
-  }
+  
 ];
 const protectedRoutes = [
   {
@@ -151,6 +148,21 @@ const protectedRoutes = [
     component: SettingPage,
     layout: SigninLayout,
   },
+  {
+    path: "/host/dashboard",
+    component: PriceRoom,
+    layout: HostLayout
+  },
+  {
+    path: "/host/price-room",
+    component: PriceRoom,
+    layout: HostLayout
+  },
+  {
+    path: "/host/add-new-room",
+    component: AddNewRoom,
+    layout: HostLayout
+  }
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes, protectedRoutes };
