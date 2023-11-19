@@ -6,11 +6,12 @@ const initialState = {
   userRole: JSON.parse(localStorage.getItem('role')) || '',
   token: JSON.parse(localStorage.getItem('Token')) || '', // Include the token in the initial state
   isPasswordChanged: false,
+  isUpdateProfile: false,
   error: null,
 };
 
-const authSlice = createSlice({
-  name: 'settings',
+const settingSlice = createSlice({
+  name: 'SETTING',
   initialState,
   reducers: {
     changePasswordSuccess: (state) => {
@@ -24,15 +25,27 @@ const authSlice = createSlice({
     resetPasswordChangeStatus: (state) => {
       state.isPasswordChanged = false;
     },
+    getProfile: (state, { payload }) => {
+      state.userProfile = payload
+    },
+    updateProfileSuccess: (state) => {
+      state.isUpdateProfile = true;
+      state.error = null;
+    },
+    updateProfileFailure: (state, { payload }) => {
+      state.isUpdateProfile = false;
+      state.error = payload;
+    },
   },
 });
 
 export const {
-  signin,
   changePasswordSuccess,
   changePasswordFailure,
   resetPasswordChangeStatus,
-  updateToken, // Export the new action
-} = authSlice.actions;
+  getProfile,
+  updateProfileSuccess,
+  updateProfileFailure
+} = settingSlice.actions;
 
-export default authSlice.reducer;
+export default settingSlice.reducer;

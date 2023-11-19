@@ -14,6 +14,8 @@ import imgBg from '../../../assets/images/header-background.png'
 import HomeAction from '../../../redux/home/action';
 import ShowToastify from '../../../utils/ShowToastify';
 import ProvinceDropdown from './province-dropdown/ProvinceDropdown';
+import { setCheckInOut } from '../../../redux/booking/slice';
+import BookingAction from '../../../redux/booking/action';
 const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -78,7 +80,7 @@ const Header = () => {
           ShowToastify.showErrorToast("Có lỗi xảy ra, vui lòng thử lại")
         }
       })
-
+      dispatch(setCheckInOut({ checkIn: filter.checkinDay, checkOut: filter.checkoutDay }))
     }
     else {
       ShowToastify.showWarningToast('Vui lòng địa điểm muốn đến')

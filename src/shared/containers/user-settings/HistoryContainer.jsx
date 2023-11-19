@@ -1,82 +1,102 @@
 import { Col, Row } from 'antd';
 import styles from './HistoryContainer.module.scss';
 import * as React from 'react';
+import PlaceIcon from '@mui/icons-material/Place';
+import moment from 'moment';
 
 const info = [
   {
-    name_hotel:'abc Hotel',
-    img_path_hotel:'',
-    date_start: '2023-12-23',
-    date_end: '2023-12-24',
-    city:'Đà Nẵng',
+    id: '1',
+    name_hotel: 'Monalisa Luxury Hotel',
+    img_path_hotel: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/480056968.jpg?k=3c175fc7e631a33bf4909cd2343e8d2a27786966d5c9c77b5fb91e576f81d1b0&o=&hp=1',
+    date_start: '23-12-2023',
+    date_end: '24-12-2023',
+    address: '27 đường An Thượng 34, phường Mỹ An, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam',
     state: 'Đã xác nhận',
-    amount: '1000000'
-  },
-  {
-    name_hotel:'abc Hotel',
-    img_path_hotel:'',
-    date_start: '2023-12-23',
-    date_end: '2023-12-24',
-    city:'Đà Nẵng',
-    state: 'Đã xác nhận',
-    amount: '1000000'
-  },
-  {
-    name_hotel:'Shark Hotel',
-    img_path_hotel:'',
-    date_start: '2023-12-23',
-    date_end: '2023-12-24',
-    city:'Huế',
-    state: 'Đã Hủy',
-    amount: '9888888'
-  },
-];
+    amount: '1000000',
+    countDate:'1',
+    countRoom:'1',
 
-const cities = [
-  {
-    name:'Đà Nẵng',
   },
   {
-    name:'Huế',
+    id: '1',
+    name_hotel: 'Monalisa Luxury Hotel',
+    img_path_hotel: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/480056968.jpg?k=3c175fc7e631a33bf4909cd2343e8d2a27786966d5c9c77b5fb91e576f81d1b0&o=&hp=1',
+    date_start: '23-12-2023',
+    date_end: '24-12-2023',
+    address: '27 đường An Thượng 34, phường Mỹ An, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam',
+    amount: '1000000',
+    countDate:'1',
+    countRoom:'1',
+
+  },
+  {
+    id: '1',
+    name_hotel: 'Monalisa Luxury Hotel',
+    img_path_hotel: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/480056968.jpg?k=3c175fc7e631a33bf4909cd2343e8d2a27786966d5c9c77b5fb91e576f81d1b0&o=&hp=1',
+    date_start: '23-12-2023',
+    date_end: '24-12-2023',
+    address: '27 đường An Thượng 34, phường Mỹ An, quận Ngũ Hành Sơn, Đà Nẵng, Việt Nam',
+    state: 'Đã xác nhận',
+    amount: '1000000',
+    countDate:'1',
+    countRoom:'1',
+
   },
 ];
 
 const SettingsContainer = () => {
-  
-
   return (
     <>
       <div className={`${styles['content']} ml-10 border`}>
-        <h1 className="text-3xl font-bold my-3">Đặt chỗ & Chuyến đi</h1>
-          {cities.map((city, cityIndex) => (
-            <div>
-              <img src="" alt="" />
-              <h2 className="text-xl font-semibold my-2">{city.name}</h2>
-              <ul>
-                {info.map((item, infoIndex) => {
-                  if (item.city === city.name) {
-                    return (
-                      <li key={infoIndex} className='flex border-b py-6'>
-                        <img src="https://bstatic.com/xdata/images/hotel/300x300/502024660.jpg?k=1cc08102bdbc70a756994031472da90aedf4f01fa45c4d80161faa78eacaf662&o=" 
-                          alt="" 
-                          className={`${styles.image}`}
-                        />
-                        <div className='ml-5'>
-                          <div className='flex mb-2'>
-                            <h1 className='text-xl font-bold w-96'>{item.name_hotel}</h1>
-                            <h1 className=' text-xl font-bold'>{item.amount} VND</h1>
-                          </div>
-                          <span className='text-base py-52'>{item.date_start} - {item.date_end}, {item.city}</span>
-                          <h2 className='text-green-500 mt-3'>{item.state}</h2>
-                        </div>
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
-              </ul>
+        <h1 className="text-3xl font-bold my-2">Lịch sử đặt phòng</h1>
+        <h3 className="mb-3 text-gray-600">
+          Lịch sử tất cả các đơn đặt phòng của bạn trên nền tảng của chúng tôi
+        </h3>
+        {info.map((item, infoIndex) => (
+          <div key={infoIndex} className={`flex my-6 text-base`}>
+            <div className={`${styles['left']} border px-7 py-4 bg-white`}>
+              <div className='mb-3 '>
+                <span>Mã đặt chỗ: </span>
+                <span className='font-bold ml-5'>{item.id}</span>
               </div>
-          ))}
+              <img
+                src={item.img_path_hotel}
+                alt=""
+                className={`${styles.image}`}
+              />
+              <div className='mt-3'>
+                <PlaceIcon className='text-sky-600 mb-1'/>
+                <span>{item.address}</span>
+              </div>
+            </div>
+            <div className={`${styles['right']} border px-7 py-4 bg-white`}>
+              <div className='text-lg font-bold mb-2 text-sky-800'>{item.name_hotel}</div>
+              <div >
+                <h2 className='text-gray-700'>Nhận phòng</h2>
+                <h1 className='font-bold'>{moment(item.date_start, 'DD-MM-YYYY').format('DD [tháng] MM [năm] YYYY')}</h1>
+                <h2>14:00 - 00:00</h2>
+              </div>
+              <div className='my-6'>
+                <h2 className='text-gray-700'>Trả phòng</h2>
+                <h1 className='font-bold'>{moment(item.date_end, 'DD-MM-YYYY').format('DD [tháng] MM [năm] YYYY')}</h1>
+                <h2>00:00 - 12:00</h2>
+              </div>
+              <div className='border mb-4'></div>
+              <div className='mt-2 mb-2'>Giá</div>
+              <div className='font-bold mb-2'>
+                <span>{item.countDate}</span>
+                <span className='ml-1'>đêm,</span>
+                <span className='ml-1'>{item.countRoom}</span>
+                <span className='ml-1'>phòng</span>
+              </div>
+              <div className='font-bold text-2xl'>
+                <span className='text-green-600'>{item.amount}</span>
+                <span className='ml-1'>VND</span>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );

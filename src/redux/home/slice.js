@@ -8,10 +8,6 @@ const initialState = {
     hotel: {},
     room: {},
     message: '',
-    // selectedHotel:{},
-    reservation: {
-    },
-
 }
 
 const homeSlice = createSlice({

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
 import IcHotel from '../icons/header-icons/IcHotel'
@@ -8,7 +8,11 @@ import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 import { useSelector } from 'react-redux'
 const Navbar = () => {
-    const { isLogin, userProfile } = useSelector(state => state.Auth)
+    const { userProfile } = useSelector(state => state.Auth)
+    const isLogin = localStorage.getItem('isLogin')||false;
+
+    useEffect(()=>{
+    },[isLogin])
     return (
         <div className={`flex  ${styles['navbar']}`}>
             <Link
@@ -17,9 +21,9 @@ const Navbar = () => {
                 InnSight
             </Link>
             <nav className="hidden md:block text-base md:text-sm lg:text-lg mr-auto">
-                <div className={`grid grid-cols-3 gap-1 items-center`}>
+                <div className={`grid grid-cols-3 gap-1 items-center pt-3`}>
                     <Link
-                        className={`${styles['nav-item']}`}
+                        className={`${styles['nav-item']} pl-44`}
                         to={'/home'}>
                         <IcHotel />
                         <span className='ml-1'>Lưu trú</span>
@@ -55,17 +59,17 @@ const Navbar = () => {
                     </> :
                     <>
                         <div className="pr-10">
-                            <button
-                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
-                            >
-                                <IcAvatar />
-                                <span>{userProfile?.name}</span>
-                            </button>
+                            <Link to={'/mysettings/info'}>
+                                <button
+                                    className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                                >
+                                    <IcAvatar />
+                                    <span>{userProfile?.name||userProfile?.email}</span>
+                                </button>
+                            </Link>
                         </div>
                     </>
                 }
-
-
             </div>
         </div>
     )
