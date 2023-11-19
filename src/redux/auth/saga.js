@@ -8,11 +8,16 @@ function* watchSignIn() {
         try {
             const response = yield call(SignIn, data);
             if (response?.Data !== "") {
-                localStorage.setItem("Token", JSON.stringify(response?.Data))
-                localStorage.setItem("role", JSON.stringify(response?.role || 'host'))
+                localStorage.setItem("Token", JSON.stringify(response?.Data?.access_token))
+                localStorage.setItem("role", JSON.stringify(response?.Data?.role))
+                localStorage.setItem("id", JSON.stringify(response?.Data?.id))
+                localStorage.setItem('isLogin', true)
                 yield put(signin({
-                    profile: response?.Profile,
-                    role: "host"
+                    profile: {
+                        email:response?.Data?.email,
+                        name:response?.Data?.name
+                    },
+                    role: response?.Data?.role
                 }))
                 onSuccess && onSuccess();
             }
@@ -27,10 +32,9 @@ function* watchSignUp() {
         const { data, onSuccess, onError } = payload
         try {
             const response = yield call(SignUp, data);
-            // if (response?.Token) {
-            //     localStorage.setItem("Token", JSON.stringify(response?.Token))
-            // }
-            onSuccess && onSuccess();
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
 
         } catch (error) {
             onError && onError();

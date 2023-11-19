@@ -10,10 +10,14 @@ import {
   Select,
 } from "@mui/material";
 import { MenuItem } from "@mui/material";
-import { cancelTimes, feeCancels } from "../../../../api/mock-data/host";
 
 const AddCancelPolicyContainer = () => {
-  
+  const cancelTimes = [
+    "18h trước thời gian nhận phòng",
+    "24h trước thời gian nhận phòng",
+    "12h trước thời gian nhận phòng",
+  ];
+  const feeCancels = ["Giá cho đêm đầu tiên", "100% tổng giá"];
   const [cancelTime, setCancelTime] = useState(cancelTimes[0]);
   const [feeCancel, setFeeCancel] = useState(feeCancels[0]);
   const handleChangeCancelTime = (event) => {

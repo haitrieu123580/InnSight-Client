@@ -4,16 +4,17 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import AuthAction from '../../../redux/auth/action';
+import ShowToastify from '../../../utils/ShowToastify';
+import { useNavigate } from 'react-router';
 const SignupContainer = () => {
     const dispath = useDispatch();
+    const navigate = useNavigate();
     const [typedEmail, setTypedEmail] = useState(false);
     const [email, setEmail] = useState("")
-    // const [password, setPassword] = useState("")
-    const { handleSubmit, register, setError, setValue, clearErrors, formState: { errors } } = useForm({
+    const { handleSubmit, register, setError, clearErrors, formState: { errors } } = useForm({
         criteriaMode: "all"
     });
     const isEmailValid = (email) => {
-        // Check if the email is valid and set validation error if it's not
         const emailRegex = /^\S+@\S+$/i;
         if (!emailRegex.test(email)) {
             setError('email', {
@@ -32,10 +33,11 @@ const SignupContainer = () => {
             type: AuthAction.SIGN_UP,
             data: data,
             onSuccess: () => {
-                window.alert("Đăng kí thành công, mời bạn đăng nhập lại!")
+                ShowToastify.showSuccessToast("Đăng kí thành công, mời bạn đăng nhập lại!")
+                navigate('/sign-in')
             },
-            onError : () =>{
-                window.alert("Đăng kí thất bại, xin hãy đăng kí lại")
+            onError: () => {
+                ShowToastify.showErrorToast("Đăng kí thất bại")
             }
         })
 
@@ -44,9 +46,9 @@ const SignupContainer = () => {
         <div className={`${styles['wrapper']}`}>
             <div className={`${styles['box']}`}>
                 <div className={`${styles['box-content']}`}>
-                    <div className={`${styles['title']}`}>InnSight</div>
+                    <div onClick={() => { navigate('/') }} style={{ cursor: "pointer" }} className={`${styles['title']}`}>InnSight</div>
                     <div className={`${styles['semi-title']}`}>
-                        {!typedEmail ? (<>Đăng nhập hoặc tạo tài khoản</>) :
+                        {!typedEmail ? (<>Tạo tài khoản</>) :
                             (<div style={{ textAlign: "left" }}>
                                 Nhập mật khẩu của bạn
                                 <div style={{ color: "gray", fontSize: "16px", fontWeight: "300" }}>
@@ -103,21 +105,6 @@ const SignupContainer = () => {
                             (<>
                             </>)}
                     </form>
-                    {/* {!typedEmail &&
-                        <>
-                            <div className="flex md:justify-between justify-center items-center mt-10">
-                                <div style={{ height: 1 }} className="bg-gray-300 md:block hidden w-4/12" />
-                                <p className="md:mx-2 text-sm font-light text-gray-400">
-                                    {" "}
-                                    Hoặc{" "}
-                                </p>
-                                <div style={{ height: 1 }} className="bg-gray-300 md:block hidden w-4/12" />
-                            </div>
-                            <div className="flex justify-center items-center mt-10">
-                                <FacebookIcon style={{ color: "#4267B2", marginRight: "45px" }} fontSize='large' />
-                                <IcGoogle />
-                            </div>
-                        </>} */}
                     <div className="flex md:justify-between justify-center items-center mt-10">
                         <div style={{ height: 1 }} className="bg-gray-300 md:block hidden w-full" />
                     </div>

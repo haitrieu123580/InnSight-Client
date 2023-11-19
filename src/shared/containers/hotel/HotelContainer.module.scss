@@ -46,3 +46,19 @@
         border-radius: 5px;
     }
 }
+
+
+.slider-list {
+    .slider-wrapper {
+        padding-right: 20px;
+        height: 90px;
+    }
+
+    .slider-item {
+        height: 100%;
+        padding: 10px;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: start;
+    }
+}
