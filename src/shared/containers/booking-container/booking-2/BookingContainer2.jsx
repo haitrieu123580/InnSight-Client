@@ -9,8 +9,9 @@ import { Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import BookingAction from '../../../../redux/booking/action';
 import ShowToastify from '../../../../utils/ShowToastify';
+import useReloadAlert from '../../../../hooks/use-reload-alert';
 const BookingContainer2 = () => {
-    const { reservation, checkIn, checkOut, cart } = useSelector(state => state.Booking);
+    const { reservation, cart } = useSelector(state => state.Booking);
     const dispatch = useDispatch();
     const handleSubmitReservation = () => {
         dispatch({
@@ -24,6 +25,7 @@ const BookingContainer2 = () => {
             }
         })
     }
+    useReloadAlert();
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14 font-bold'>
