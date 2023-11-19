@@ -6,28 +6,26 @@ import ClientInfoBlock from '../../../components/booking/booking2/client-info-bl
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
 import HotelPolicyBox from '../../../components/booking/booking2/hotel-policy/HotelPolicyBox';
 import { Button } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import BookingAction from '../../../../redux/booking/action';
+import ShowToastify from '../../../../utils/ShowToastify';
+import useReloadAlert from '../../../../hooks/use-reload-alert';
 const BookingContainer2 = () => {
-    const props = {
-        hotelName: "Muong Thanh Grand Da Nang Hotel",
-        hotelImg: `https://s3-alpha-sig.figma.com/img/1cbb/8932/6e02294b8066d7cdba49dff8115ca949?Expires=1699833600&Signature=So5mY9cy8JpMrtkXkQiU5m6VKaHspGK9pdyLXu4pehoESvFPe9EY4TSs6Ih69LSa8ScUkfPTMwBQQzWqhktrT6IthVZkV6cPgbFKPlmw1Ltwbbw~s79tZTw3xeV~PxHIUeCeOAaM3wdL0guT-jzWfepNkfKICp0KvsZd4d96Uqw~95F4U-1PkiIrm-WrOCesdr-o8pFGlb2M0k1VWQB2~XunVwUrKq4EK92bZg1LfCVJ~2Ji70SP0lkcD3saRuDMjy80DrySf4Ol9hMx2eTwQV1VLtg2NaXuOycmmE6LO8P2QfesfUggnlbwaNCGk3~ls0hs16YaxK6AHq8EW1yQ8w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4`,
-        checkIn: 'today',
-        checkOut: "today",
-        checkInTime: "now",
-        checkOutTime: "now",
-        days: "1 đêm",
-        roomList: [
-            {
-                roomName: 'A',
-                people: "B",
-                bedTye: 'C',
+    const { reservation, cart } = useSelector(state => state.Booking);
+    const dispatch = useDispatch();
+    const handleSubmitReservation = () => {
+        dispatch({
+            type: BookingAction.BOOKING_START,
+            reservation: reservation,
+            onSuccess: () => {
+                ShowToastify.showSuccessToast("Xác nhận!")
             },
-            {
-                roomName: 'AA',
-                people: "BB",
-                bedTye: 'CC',
+            onError: () => {
+                ShowToastify.showErrorToast("Xảy ra lỗi, xin hãy thử lại")
             }
-        ]
+        })
     }
+    useReloadAlert();
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14 font-bold'>
@@ -41,7 +39,7 @@ const BookingContainer2 = () => {
                     <div className={styles['box-wrapper']}>
                         <div className='w-full h-fit grid grid-cols-8 gap-2'>
                             <div className='col-span-2'>
-                                <img src={props?.hotelImg} className='rounded'></img>
+                                <img src={cart?.hotel?.hotelImages[0]} className='rounded'></img>
                             </div>
                             <div className='col-span-6'>
                                 <div>
@@ -49,41 +47,36 @@ const BookingContainer2 = () => {
                                         <span>
                                             <ApartmentIcon className='text-blue-900' />
                                         </span>
-                                        {props?.hotelName}
+                                        {cart?.hotel?.hotelName}
                                     </div>
-                                    <div className={`${styles['line']} my-3`}></div>
+                                    <div className={`${styles['line']} my-2`}></div>
                                     <div className='flex justify-between'>
                                         <div className='w-fit flex flex-col text-center'>
                                             <div className='text-sm text-gray-400'>Ngày nhận phòng</div>
-                                            <div className='font-semibold text-lg my-1'>{props?.checkIn}</div>
-                                            <div>{props?.checkInTime}</div>
+                                            <div className='font-semibold text-lg my-1'>{reservation?.startDay}</div>
+                                            <div>{reservation?.checkInTime}</div>
                                         </div>
                                         <div className='w-fit flex flex-col text-center'>
-                                            <div className='text-sm text-gray-400'>Ngày nhận phòng</div>
-                                            <div className='font-semibold text-lg my-1'>{props?.checkIn}</div>
-                                            <div>{props?.checkInTime}</div>
-                                        </div>
-                                        <div className='w-fit flex flex-col text-center'>
-                                            <div className='text-sm text-gray-400'>Ngày nhận phòng</div>
-                                            <div className='font-semibold text-lg my-1'>{props?.checkIn}</div>
-                                            <div>{props?.checkInTime}</div>
+                                            <div className='text-sm text-gray-400'>Ngày trả phòng</div>
+                                            <div className='font-semibold text-lg my-1'>{reservation?.endDay}</div>
+                                            <div>{reservation?.checkInTime}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className={`${styles['line']} my-3`}></div>
-                        {props?.roomList?.map((room, index) => (
-                            <div className='mb-3'>
+                        {cart?.rooms?.map((room, index) => (
+                            <div className='mb-3' key={index}>
                                 <div className='font-bold mb-2'>
                                     {room?.roomName}
                                 </div>
                                 <div className='w-full flex justify-between gap-2 mb-1'>
-                                    <span className='w-1/6 text-gray-400'>{`Khách/Phòng`}</span> <span className='w-5/6'>{room?.people}</span>
+                                    <span className='w-1/6 text-gray-400'>{`Khách/Phòng`}</span> <span className='w-5/6'>{`${room?.adult} Người lớn ${room?.children || 0} trẻ em`}</span>
                                 </div>
-                                <div className='w-full flex justify-between gap-2 mb-1'>
+                                {/* <div className='w-full flex justify-between gap-2 mb-1'>
                                     <span className='w-1/6 text-gray-400'>{`Kiểu giường`}</span> <span className='w-5/6'>{room?.bedTye}</span>
-                                </div>
+                                </div> */}
                             </div>
                         ))}
                     </div>
@@ -97,16 +90,15 @@ const BookingContainer2 = () => {
                         <div className='w-7/12'>
                             Khi nhấn vào nút này bạn công nhận mình đã đọc và đồng ý với các <span className='text-blue-500'>Điều khoản & Điều kiện</span> và <span className='text-blue-500'>Chính sách quyền riêng tư</span> của InnSight
                         </div>
-                        <Button className='w-fit h-fit bg-orange-600 text-white font-semibold text-base'
+                        <Button
+                            onClick={handleSubmitReservation}
+                            className='w-fit h-fit bg-orange-600 text-white font-semibold text-base'
                         >Tiếp tục đến thanh toán</Button>
                     </div>
                 </div>
                 <div className='col-span-4'>
                     <div className='mb-3'>
                         <ContactBlock />
-                    </div>
-                    <div className='mb-3'>
-                        <ClientInfoBlock />
                     </div>
                 </div>
             </div>

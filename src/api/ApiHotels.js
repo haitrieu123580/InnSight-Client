@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/${process.env.REACT_APP_HOTEL_URL}`
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/hotel'
 
 const config = {
     headers: {
@@ -12,7 +12,7 @@ export const getHotelById = async (id) => {
 }
 export const searchHotels = async (filter) => {
     try {
-        const response = await axios.post(`${BASE_URL}/search`, JSON.stringify(filter), config);
+        const response = await axios.post(`${BASE_URL}/filter/search`, JSON.stringify(filter), config);
         return { Data: response?.data };
     } catch (error) {
         return { Error: error };
