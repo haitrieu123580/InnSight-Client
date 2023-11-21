@@ -8,6 +8,8 @@ const initialState = {
   isPasswordChanged: false,
   isUpdateProfile: false,
   error: null,
+  userHistoryReservations: {},
+
 };
 
 const settingSlice = createSlice({
@@ -36,6 +38,9 @@ const settingSlice = createSlice({
       state.isUpdateProfile = false;
       state.error = payload;
     },
+    getHistoryReservations: (state, { payload }) => {
+      state.userHistoryReservations = payload
+    },
   },
 });
 
@@ -45,7 +50,8 @@ export const {
   resetPasswordChangeStatus,
   getProfile,
   updateProfileSuccess,
-  updateProfileFailure
+  updateProfileFailure,
+  getHistoryReservations,
 } = settingSlice.actions;
 
 export default settingSlice.reducer;

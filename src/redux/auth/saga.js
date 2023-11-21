@@ -11,12 +11,10 @@ function* watchSignIn() {
                 localStorage.setItem("Token", JSON.stringify(response?.Data?.access_token))
                 localStorage.setItem("role", JSON.stringify(response?.Data?.role))
                 localStorage.setItem("id", JSON.stringify(response?.Data?.id))
+                localStorage.setItem("email", JSON.stringify(response?.Data?.email))
+                localStorage.setItem("name", JSON.stringify(response?.Data?.name))
                 localStorage.setItem('isLogin', true)
                 yield put(signin({
-                    profile: {
-                        email:response?.Data?.email,
-                        name:response?.Data?.name
-                    },
                     role: response?.Data?.role
                 }))
                 onSuccess && onSuccess();

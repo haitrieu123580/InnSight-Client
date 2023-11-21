@@ -203,7 +203,7 @@ const HotelContainer = () => {
                 <div className={`${styles['content-block']} w-full flex justify-end`}>
                     {showButton &&
                         <Button variant='contained mb-2' className={styles['button-orange']}
-                            onClick={() => { navigate('/book') }}
+                            onClick={() => { navigate('/book/fill-info') }}
                         >
                             Tiến hành đặt phòng
                         </Button>
