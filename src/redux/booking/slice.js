@@ -9,7 +9,9 @@ const initialState = {
     },
     checkIn: "",
     checkOut: "",
-    bookingReserved: {}
+    bookingReserved: {},
+    linkVnpay: "",
+    invoice:{}
 }
 
 const bookingSlice = createSlice({
@@ -47,10 +49,16 @@ const bookingSlice = createSlice({
             const { onSuccess, reservation } = payload;
             state.reservation = reservation;
             onSuccess && onSuccess();
-        }
+        },
+        pay: (state, { payload }) => {
+            state.linkVnpay = payload
+        },
+        invoice: (state, { payload }) => {
+            state.invoice = payload
+        },
     },
 },)
 
-export const { booking, addRoomToCart, setCheckInOut, saveReservation } = bookingSlice.actions
+export const { booking, addRoomToCart, setCheckInOut, saveReservation, pay, invoice } = bookingSlice.actions
 
 export default bookingSlice.reducer

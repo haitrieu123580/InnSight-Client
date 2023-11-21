@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const token = JSON.parse(localStorage.getItem('Token'));
-// const BASE_URL = 'http://localhost:8001/api/user'
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/user'
+const BASE_URL = 'http://localhost:8001/api/user'
+// const BASE_URL = `${process.env.REACT_APP_SERVER_URL}/api/user`;
 
 const config = {
     headers: {
@@ -12,7 +12,7 @@ const config = {
 };
 
 export const getProfileById = async (id) => {
-  console.log('token:', token)
+  console.log('token:',token)
   const response = await axios.get(
     `${BASE_URL}/${id}`,
     config

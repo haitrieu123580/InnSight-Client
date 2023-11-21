@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8001/api/reservation/history?userId='
+// const BASE_URL = 'http://localhost:8001/api/reservation/history?userId='
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/reservation/history'
 
 const config = {
     headers: {
@@ -8,10 +9,12 @@ const config = {
     },
 };
 
-export const getHistoryById = async (id) => {
-  console.log('id:', id)
-  const response = await axios.get(
-    `${BASE_URL}${id}`,
+export const getHistoryById = async (requestData) => {
+  console.log('requestData:', requestData)
+  
+  const response = await axios.post(
+    BASE_URL,
+    JSON.stringify(requestData),
     config
     );
   console.log('data',response.data);

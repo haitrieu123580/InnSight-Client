@@ -25,6 +25,8 @@ const AddRoomImage = lazy(() => import('../pages/host-pages/add-room-image/AddRo
 const RegisterFinished = lazy(() => import('../pages/host-pages/register-finished/RegisterFinished'))
 const BookingPage = lazy(() => import('../pages/booking-pages/BookingPage1'))
 const BookingPage2 = lazy(() => import('../pages/booking-pages/BookingPage2'))
+const BookingPage3 = lazy(() => import('../pages/booking-pages/BookingPage3'))
+const BookingPage4 = lazy(() => import('../pages/booking-pages/BookingPage4'))
 const QLTaiKhoan = lazy(() => import('../pages/qltaikhoan/QLTaiKhoan'))
 const DetailUser = lazy(() => import('../pages/qltaikhoan/DetailUser'))
 const QLDichVu = lazy(() => import('../pages/qldichvu/QLDichVu'))
@@ -78,7 +80,7 @@ const publicRoutes = [
       layout: HostLayout,
     },
     {
-      path: '/book',
+      path: '/book/fill-info',
       component: BookingPage,
       layout: BookingLayout,
     },
@@ -87,8 +89,21 @@ const publicRoutes = [
       component: BookingPage2,
       layout: BookingLayout,
     },
-    
-    
+    {
+      path: '/book/pay',
+      component: BookingPage3,
+      layout: BookingLayout,
+    },
+    {
+      path: '/book/invoice',
+      component: BookingPage4,
+      layout: BookingLayout,
+    },
+    {
+      path: '/book/invoice/detail',
+      component: BookingPage4,
+      layout: MainLayout,
+    },
 ];
 const protectedRoutes = [
   {

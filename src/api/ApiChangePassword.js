@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const token = JSON.parse(localStorage.getItem('Token'));
-// const BASE_URL = 'http://localhost:8001/api/user/changePassword'
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/user/changePassword'
+const BASE_URL = 'http://localhost:8001/api/user/changePassword'
 const config = {
     headers: {
         'Content-Type': 'application/json',
