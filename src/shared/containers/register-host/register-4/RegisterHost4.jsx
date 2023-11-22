@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { FormLabel } from "@mui/material";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 const RegisterHost4Container = () => {
   const dateRef = useRef(null);
@@ -20,6 +21,9 @@ const RegisterHost4Container = () => {
 
   const [timeCheckoutFrom, setTimeCheckoutFrom] = useState(timeCheckouts[0]);
   const [timeCheckoutTo, setTimeCheckoutTo] = useState(timeCheckouts[1]);
+
+  const { address } = useSelector((state) => state.Host.newHotel);
+  console.log("new1",address);
 
   return (
     <div className={` ${styles["register-4"]}`}>

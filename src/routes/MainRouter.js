@@ -41,6 +41,11 @@ const Cancel3 = lazy(() => import('../pages/cancel/Cancel3'))
 const Cancel4 = lazy(() => import('../pages/cancel/Cancel4'))
 const BookingHistory = lazy(() => import('../pages/user-settings-page/BookingHistory'))
 const AccountAndPassword = lazy(() => import('../pages/user-settings-page/AccountAndPassword'))
+const PriceRoom = lazy(() => import('../pages/host-pages/dashboard/room-price/RoomPrice'))
+const AddNewRoom = lazy(() => import('../pages/host-pages/add-new-room/AddRoom'))
+
+
+
 const publicRoutes = [
     {
         path: '/',
@@ -65,17 +70,17 @@ const publicRoutes = [
     {
         path: '/sign-in',
         component: SigninPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/sign-up',
         component: SignupPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
     {
         path: '/mysettings',
         component: SettingPage,
-        layout: SinginLayout,
+        layout: SigninLayout,
     },
 
   {
@@ -113,7 +118,7 @@ const protectedRoutes = [
   {
     path: '/mysettings',
     component: SettingPage,
-    layout: SinginLayout,
+    layout: SigninLayout,
   },
   {
     path: "/host/dashboard",
