@@ -1,11 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
 import styles from "./RegisterHost2.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
 import Constants from "../../../../utils/Contants";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";

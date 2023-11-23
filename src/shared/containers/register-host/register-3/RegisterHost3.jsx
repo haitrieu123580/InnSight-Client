@@ -6,28 +6,26 @@ import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
-
 import {
   Button,
   FormControl,
   FormLabel,
   Radio,
   RadioGroup,
-  TextField,
   Input,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import {
-  addExtraAmenityHotel,addExtraServiceHotel
+  addExtraAmenityHotel,
+  addExtraServiceHotel,
 } from "../../../../redux/host/slice";
+import { useForm } from "react-hook-form";
 
 const RegisterHost3Container = () => {
   const navigate = useNavigate();
-  const dispath = useDispatch();
-
+  const dispatch = useDispatch();
   let amenities = [
     {
       id: 1,
@@ -101,16 +99,11 @@ const RegisterHost3Container = () => {
       price: 100,
     },
   ];
-
-  const { handleSubmit, register } = useForm({
-    criteriaMode: "all",
-  });
   const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const [extraServices, setExtraServices] = useState();
   const [extraAmenity, setExtraAmenity] = useState();
   const [extraAmenityName, setExtraAmenityName] = useState("");
   const [extraAmenityPrice, setExtraAmenityPrice] = useState(0);
-  const [serveBreakfast,setServeBreakfast] =useState("yes")
+  const [serveBreakfast, setServeBreakfast] = useState("yes");
   const handleServeBreakfastChange = (event) => {
     setServeBreakfast(event.target.value);
   };
@@ -123,19 +116,22 @@ const RegisterHost3Container = () => {
     let infoAmenity = addElement.children[1];
     infoAmenity.classList.toggle("hidden");
   };
+  const { handleSubmit } = useForm({
+    criteriaMode: "all",
+  });
   const onSubmit = () => {
-    console.log("submit")
-    const extraServices={
+    console.log("submit");
+    const extraServices = {
       name: serveBreakfast === "yes" ? "Phục vụ bữa sáng" : "",
       price: breakfastIncluded === "yes" ? 0 : 0,
     };
-    console.log("exAme",extraAmenity)
-    dispath({
+    console.log("exAme", extraAmenity);
+    dispatch({
       type: addExtraAmenityHotel,
       payload: extraAmenity,
     });
-    console.log("exSe",extraServices)
-    dispath({
+    console.log("exSe", extraServices);
+    dispatch({
       type: addExtraServiceHotel,
       payload: extraServices,
     });
@@ -172,6 +168,7 @@ const RegisterHost3Container = () => {
             Cho chúng tôi biết thêm về chỗ nghỉ của Quý vị
           </p>
         </div>
+        <form onSubmit={onSubmit}>
           <div className="block lg:flex lg:justify-between lg:space-x-3 ">
             <div className={`flex-1 `}>
               <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
@@ -201,7 +198,6 @@ const RegisterHost3Container = () => {
                       />
                       <div className={`flex justify-between hidden `}>
                         <Input
-                          // label="Tên tien ich"
                           id="amenity-name"
                           variant="standard"
                           placeholder="Ten tien ich"
@@ -283,22 +279,23 @@ const RegisterHost3Container = () => {
             </div>
           </div>
           <div className={`flex pt-7 w-full lg:w-1/2`}>
-          <Link to="/host/register-2">
-            <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
-              <IcChevronLeft />
-            </button>
-          </Link>
-          <Link
-            // to="/host/register-4"
-            className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-          >
-            <button onClick={onSubmit} className="h-full">
-              Tiếp tục
-            </button>
-          </Link>
-        </div>
-
-        
+            <Link to="/host/register-2">
+              <button
+                className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}
+              >
+                <IcChevronLeft />
+              </button>
+            </Link>
+            <Link
+              // to="/host/register-4"
+              className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+            >
+              <button type="submit" className="h-full">
+                Tiếp tục
+              </button>
+            </Link>
+          </div>
+        </form>
       </div>
     </div>
   );

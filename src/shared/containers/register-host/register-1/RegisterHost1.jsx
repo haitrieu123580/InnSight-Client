@@ -25,9 +25,9 @@ const RegisterHost1Container = () => {
   const [wards, setWards] = useState([]);
   const [street, setStreet] = useState("");
   // default (Hoa Khanh Bac, Lien Chieu, Da Nang)
-  const [selectedProvince, setSelectedProvince] = useState();
-  const [selectedDistrict, setSelectedDistrict] = useState();
-  const [selectedWard, setSelectedWard] = useState();
+  const [selectedProvince, setSelectedProvince] = useState(48);
+  const [selectedDistrict, setSelectedDistrict] = useState(490);
+  const [selectedWard, setSelectedWard] = useState(20197);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchProvince = async () => {
