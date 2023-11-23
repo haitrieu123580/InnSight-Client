@@ -14,15 +14,12 @@ import {
   RadioGroup,
   Input,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import {
   addExtraAmenityHotel,
   addExtraServiceHotel,
 } from "../../../../redux/host/slice";
-import { useForm } from "react-hook-form";
-
 const RegisterHost3Container = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -116,11 +113,8 @@ const RegisterHost3Container = () => {
     let infoAmenity = addElement.children[1];
     infoAmenity.classList.toggle("hidden");
   };
-  const { handleSubmit } = useForm({
-    criteriaMode: "all",
-  });
+
   const onSubmit = () => {
-    console.log("submit");
     const extraServices = {
       name: serveBreakfast === "yes" ? "Phục vụ bữa sáng" : "",
       price: breakfastIncluded === "yes" ? 0 : 0,
@@ -154,8 +148,6 @@ const RegisterHost3Container = () => {
 
     console.log(selectedAmenities);
   };
-  const hotel = useSelector((state) => state.Host.newHotel);
-
   return (
     <div className={` ${styles["register-3"]}`}>
       <div className={`${styles["content"]}`}>
@@ -168,134 +160,128 @@ const RegisterHost3Container = () => {
             Cho chúng tôi biết thêm về chỗ nghỉ của Quý vị
           </p>
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="block lg:flex lg:justify-between lg:space-x-3 ">
-            <div className={`flex-1 `}>
-              <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
-                <FormLabel id="demo-radio-buttons-group-label">
-                  Khách có thể sử dụng dịch vụ gì tại chỗ nghỉ của Quý vị?
-                </FormLabel>
+        <div className="block lg:flex lg:justify-between lg:space-x-3 ">
+          <div className={`flex-1 `}>
+            <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
+              <FormLabel id="demo-radio-buttons-group-label">
+                Khách có thể sử dụng dịch vụ gì tại chỗ nghỉ của Quý vị?
+              </FormLabel>
 
-                <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
-                  <FormGroup>
-                    {amenities?.map((amenity) => {
-                      return (
-                        <FormControlLabel
-                          key={amenity.id}
-                          control={<Checkbox />}
-                          label={amenity.name}
-                          name={amenity.name}
-                          onChange={handleCheckedAmenities}
-                        />
-                      );
-                    })}
-
-                    <div className={`flex flex-col `}>
+              <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
+                <FormGroup>
+                  {amenities?.map((amenity) => {
+                    return (
                       <FormControlLabel
+                        key={amenity.id}
                         control={<Checkbox />}
-                        label={"Thêm dịch vụ (nếu có)"}
-                        onChange={handleToggleAddAmenity}
+                        label={amenity.name}
+                        name={amenity.name}
+                        onChange={handleCheckedAmenities}
                       />
-                      <div className={`flex justify-between hidden `}>
-                        <Input
-                          id="amenity-name"
-                          variant="standard"
-                          placeholder="Ten tien ich"
-                          onChange={(e) => setExtraAmenityName(e.target.value)}
-                        ></Input>
-                        <Input
-                          placeholder="Giá"
-                          id="amenity-price"
-                          variant="standard"
-                          onChange={(e) => setExtraAmenityPrice(e.target.value)}
-                        ></Input>
-                        <Button
-                          onClick={handleAddExtraAmenity}
-                          variant="outlined"
-                        >
-                          Thêm
-                        </Button>
-                      </div>
-                    </div>
-                  </FormGroup>
-                </div>
-              </div>
-            </div>
-            <div className={`xl:flex-1 `}>
-              <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
-                <h3 className="py-3 text-lg border-0">
-                  Bữa sáng tại chỗ nghỉ của Quý vị như thế nào?
-                </h3>
+                    );
+                  })}
 
-                <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
-                  <FormControl>
-                    <FormLabel id="breakfast">
-                      Quý vị có phục vụ bữa sáng cho khách không?
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="breakfast"
-                      defaultValue="yes"
-                      name="group-breakfast"
-                      onChange={handleServeBreakfastChange}
-                    >
-                      <FormControlLabel
-                        value="yes"
-                        control={<Radio />}
-                        label="Có"
-                      />
-                      <FormControlLabel
-                        value="no"
-                        control={<Radio />}
-                        label="Không"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </div>
-                <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
-                  <FormControl>
-                    <FormLabel id="breakfast-included">
-                      Bữa sáng có bao gồm trong giá khách trả không?
-                    </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="breakfast-included"
-                      defaultValue="yes"
-                      name="group-breakfast-included"
-                      onChange={handleBreakfastIncludedChange}
-                    >
-                      <FormControlLabel
-                        value="yes"
-                        control={<Radio />}
-                        label="Có"
-                      />
-                      <FormControlLabel
-                        value="no"
-                        control={<Radio />}
-                        label="Không"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </div>
+                  <div className={`flex flex-col `}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label={"Thêm dịch vụ (nếu có)"}
+                      onChange={handleToggleAddAmenity}
+                    />
+                    <div className={`flex justify-between hidden `}>
+                      <Input
+                        id="amenity-name"
+                        variant="standard"
+                        placeholder="Ten tien ich"
+                        onChange={(e) => setExtraAmenityName(e.target.value)}
+                      ></Input>
+                      <Input
+                        placeholder="Giá"
+                        id="amenity-price"
+                        variant="standard"
+                        onChange={(e) => setExtraAmenityPrice(e.target.value)}
+                      ></Input>
+                      <Button
+                        onClick={handleAddExtraAmenity}
+                        variant="outlined"
+                      >
+                        Thêm
+                      </Button>
+                    </div>
+                  </div>
+                </FormGroup>
               </div>
             </div>
           </div>
-          <div className={`flex pt-7 w-full lg:w-1/2`}>
-            <Link to="/host/register-2">
-              <button
-                className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}
-              >
-                <IcChevronLeft />
-              </button>
-            </Link>
-            <Link
-              // to="/host/register-4"
-              className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-            >
-              <button type="submit" className="h-full">
-                Tiếp tục
-              </button>
-            </Link>
+          <div className={`xl:flex-1 `}>
+            <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
+              <h3 className="py-3 text-lg border-0">
+                Bữa sáng tại chỗ nghỉ của Quý vị như thế nào?
+              </h3>
+
+              <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
+                <FormControl>
+                  <FormLabel id="breakfast">
+                    Quý vị có phục vụ bữa sáng cho khách không?
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="breakfast"
+                    defaultValue="yes"
+                    name="group-breakfast"
+                    onChange={handleServeBreakfastChange}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio />}
+                      label="Có"
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio />}
+                      label="Không"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+              <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
+                <FormControl>
+                  <FormLabel id="breakfast-included">
+                    Bữa sáng có bao gồm trong giá khách trả không?
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="breakfast-included"
+                    defaultValue="yes"
+                    name="group-breakfast-included"
+                    onChange={handleBreakfastIncludedChange}
+                  >
+                    <FormControlLabel
+                      value="yes"
+                      control={<Radio />}
+                      label="Có"
+                    />
+                    <FormControlLabel
+                      value="no"
+                      control={<Radio />}
+                      label="Không"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
+        <div className={`flex pt-7 w-full lg:w-1/2`}>
+          <Link to="/host/register-2">
+            <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
+              <IcChevronLeft />
+            </button>
+          </Link>
+          <button
+            className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+            onClick={onSubmit}
+          >
+            Tiếp tục
+          </button>
+        </div>
       </div>
     </div>
   );

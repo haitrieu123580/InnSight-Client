@@ -5,7 +5,6 @@ import styles from "./Header.module.scss";
 import IcAvatar from "../icons/header-icons/IcAvatar";
 import IcPencil from "../icons/header-icons/IcPencil";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 const Header = () => {
   const { userProfile } = useSelector((state) => state.Auth);

@@ -22,7 +22,7 @@ const RegisterHost4Container = () => {
   const [timeCheckoutFrom, setTimeCheckoutFrom] = useState(timeCheckouts[0]);
   const [timeCheckoutTo, setTimeCheckoutTo] = useState(timeCheckouts[1]);
 
-  const { address } = useSelector((state) => state.Host.newHotel);
+  const address  = useSelector((state) => state.Host.newHotel);
   console.log("new1",address);
 
   return (
@@ -89,12 +89,12 @@ const RegisterHost4Container = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              <Link
-                to="/host/register-5"
-                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-              >
-                <button className="h-full">Tiếp tục</button>
-              </Link>
+              <button
+                  className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                  type="submit"
+                >
+                  Tiếp tục
+                </button>
             </div>
           </div>
           <div className="flex-1"></div>
