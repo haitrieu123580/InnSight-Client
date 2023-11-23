@@ -38,7 +38,6 @@ const RegisterHost1Container = () => {
     };
     fetchProvince();
   }, []);
-
   useEffect(() => {
     setSelectedDistrict(null);
     const fetchDistrict = async () => {
@@ -47,7 +46,6 @@ const RegisterHost1Container = () => {
         setDistricts(response?.data.results);
       }
     };
-
     provinces && fetchDistrict();
     !selectedProvince && setDistricts([]);
   }, [selectedProvince]);

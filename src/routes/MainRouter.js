@@ -1,10 +1,8 @@
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
-import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
 import SigninLayout from "../shared/components/layout/SigninLayout";
-import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayout";
-import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import { lazy } from 'react';
+import RoomPrice from "../pages/host-pages/dashboard/room-price/RoomPrice";
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
 const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
@@ -71,15 +69,18 @@ const publicRoutes = [
         path: '/sign-in',
         component: SigninPage,
         layout: SigninLayout,
+        layout: SigninLayout,
     },
     {
         path: '/sign-up',
         component: SignupPage,
         layout: SigninLayout,
+        layout: SigninLayout,
     },
     {
         path: '/mysettings',
         component: SettingPage,
+        layout: SigninLayout,
         layout: SigninLayout,
     },
 
@@ -122,20 +123,14 @@ const protectedRoutes = [
   },
   {
     path: "/host/dashboard",
-    component: PriceRoom,
-    layout: HostLayout
+    component: RoomPrice,
+    layout: HostLayout,
   },
   {
-    path: "/host/price-room",
-    component: PriceRoom,
-    layout: HostLayout
+    path: '/mysettings',
+    component: SettingPage,
+    layout: SigninLayout,
   },
-  {
-    path: "/host/add-new-room",
-    component: AddNewRoom,
-    layout: HostLayout
-  }
 ];
 const privateRoutes = [];
 export { publicRoutes, privateRoutes, protectedRoutes }
-
