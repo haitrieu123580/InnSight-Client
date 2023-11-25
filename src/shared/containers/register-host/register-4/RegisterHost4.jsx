@@ -9,9 +9,12 @@ import dayjs from "dayjs";
 import { FormLabel } from "@mui/material";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addCheckInCheckOutTime } from "../../../../redux/host/slice";
 const RegisterHost4Container = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const dateRef = useRef(null);
   const timeCheckins = [dayjs("2023-10-17T16:30"), dayjs("2023-10-17T18:30")];
   const timeCheckouts = [dayjs("2023-10-17T15:30"), dayjs("2023-10-17T18:30")];
@@ -21,10 +24,13 @@ const RegisterHost4Container = () => {
 
   const [timeCheckoutFrom, setTimeCheckoutFrom] = useState(timeCheckouts[0]);
   const [timeCheckoutTo, setTimeCheckoutTo] = useState(timeCheckouts[1]);
-
-  const address  = useSelector((state) => state.Host.newHotel);
-  console.log("new1",address);
-
+  const onSubmit = () => { 
+    dispatch({
+      type: addCheckInCheckOutTime,
+      payload: {checkInTime:timeCheckinFrom.format("HH:mm:ss"),checkOutTime:timeCheckoutFrom.format("HH:mm:ss")},
+    });  
+    navigate("/host/register-5");
+  };
   return (
     <div className={` ${styles["register-4"]}`}>
       <div className={`${styles["content"]}`}>
@@ -91,7 +97,7 @@ const RegisterHost4Container = () => {
               </Link>
               <button
                   className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                  type="submit"
+                  onClick={onSubmit}
                 >
                   Tiếp tục
                 </button>

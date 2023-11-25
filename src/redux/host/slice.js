@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isSuccess: false,
+  hotel:[],
   newHotel: {
     province: "",
     description: "",
@@ -12,6 +13,9 @@ const initialState = {
     rate: "",
     amenities: [],
     extraServices: [],
+    checkInTime:"",
+    checkOutTime:"",
+    images:[],
   },
 };
 const hostSlice = createSlice({
@@ -47,21 +51,36 @@ const hostSlice = createSlice({
       ];
       console.log("payload addExtraServiceHotel", state.newHotel.extraServices);
     },
+    addCheckInCheckOutTime: (state, { payload }) => {
+      const {checkInTime,checkOutTime} = payload;
+      state.newHotel.checkInTime = checkInTime
+      state.newHotel.checkOutTime=checkOutTime
+      console.log("payload addCheckInCheckOutTime", state.newHotel.checkInTime,state.newHotel.checkOutTime);
+    },
+    addImagesHotel:(state,{payload})=>{
+      const images = payload;
+      state.newHotel.images = [
+        ...state.newHotel.images,
+        images,
+      ];
+      console.log("payload addImagesHotel", state.newHotel.images);
+    },
 
-    addHotel: (state, { payload }) => {
-      const { hotel, isSuccess } = payload;
-      // const existingHotelIndex = state.host.hotels.findIndex((hotel) => hotel?.hotelId === hotel?.id);
-      // state.isSuccess =isSuccess
-      // state.hotel=[...state.hotels,hotel]
+    addHotel: (state,  payload ) => {
+      const  newHotel  = payload;
+      console.log("ok")
+      state.hotel=[...state.hotel,newHotel]
     },
   },
 });
 export const {
-  addHotel,
+  // addHotel,
   addAddressHotel,
   addNameAndRateHotel,
   addExtraAmenityHotel,
   addAmenitiesHotel,
   addExtraServiceHotel,
+  addCheckInCheckOutTime,
+  addImagesHotel
 } = hostSlice.actions;
 export default hostSlice.reducer;

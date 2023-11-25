@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import {
+  addAmenitiesHotel,
   addExtraAmenityHotel,
   addExtraServiceHotel,
 } from "../../../../redux/host/slice";
@@ -121,9 +122,13 @@ const RegisterHost3Container = () => {
     };
     console.log("exAme", extraAmenity);
     dispatch({
-      type: addExtraAmenityHotel,
-      payload: extraAmenity,
+      type: addAmenitiesHotel,
+      payload: selectedAmenities,
     });
+    // dispatch({
+    //   type: addExtraAmenityHotel,
+    //   payload: extraAmenity,
+    // });
     console.log("exSe", extraServices);
     dispatch({
       type: addExtraServiceHotel,
@@ -133,17 +138,17 @@ const RegisterHost3Container = () => {
   };
   const handleAddExtraAmenity = () => {
     setExtraAmenity({ name: extraAmenityName, price: extraAmenityPrice });
-    setSelectedAmenities([...selectedAmenities, extraAmenityName]);
+    setSelectedAmenities([...selectedAmenities,{ name: extraAmenityName, price: extraAmenityPrice }]);
   };
 
   const handleCheckedAmenities = (e) => {
     const checkedAmenity = selectedAmenities.find(
-      (amenity) => amenity === e.target.name
+      (amenity) => amenity.name === e.target.name
     );
     setSelectedAmenities(
       checkedAmenity
-        ? selectedAmenities.filter((amenity) => amenity !== e.target.name)
-        : [...selectedAmenities, e.target.name]
+        ? selectedAmenities.filter((amenity) => amenity.name !== e.target.name)
+        : [...selectedAmenities, {name:e.target.name,price:0}]
     );
 
     console.log(selectedAmenities);

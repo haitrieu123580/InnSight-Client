@@ -3,6 +3,8 @@ import HomeSaga from './home/saga'
 import AuthSaga from './auth/saga'
 import BookingSaga from './booking/saga'
 import User_settings from './user-settings/saga'
+import HostSaga from './host/saga'
+
 
 export default function* rootSaga() {
     yield all([
@@ -10,5 +12,6 @@ export default function* rootSaga() {
         AuthSaga(),
         BookingSaga(),
         User_settings(),
+        HostSaga()
     ])
 }

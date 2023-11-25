@@ -117,9 +117,14 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
-    path: '/mysettings',
-    component: SettingPage,
-    layout: SigninLayout,
+    path: "/host/register-list-section/:sectionStatus",
+    component: RegisterListSection,
+    layout: HostLayout,
+  },
+  {
+    path: '/host/register-finished',
+    component: RegisterFinished,
+    layout: HostLayout,
   },
   {
     path: "/host/dashboard",
