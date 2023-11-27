@@ -2,13 +2,34 @@ import React from 'react'
 import styles from './SearchResultItem.module.scss'
 import PlaceIcon from '@mui/icons-material/Place';
 import CheckIcon from '@mui/icons-material/Check';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import HomeAction from '../../../redux/home/action';
+import ShowToastify from '../../../utils/ShowToastify';
 
 const SearchResultItem = ({ item }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleSelectItem = () => {
-        navigate(`/hotel/${item?.id}`);
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    
+    const handleSelectItem = (data) => {
+        data={
+            hotelId: `${item?.id}`,
+            checkInDay: searchParams.get('checkinDay'),
+            checkOutDay: searchParams.get('checkoutDay')
+        }
+        console.log('data', data)
+        dispatch({
+            type: HomeAction.GET_HOTEL,
+            data: data,
+            onSuccess: () => {
+                navigate(`/hotel/${item?.id}`);
+            },
+            onError: () => {
+                ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+            }
+        });
         }
     return (
         <div className='border-2 rounded-2xl border-gray-200 p-4 mb-4 h-full'>

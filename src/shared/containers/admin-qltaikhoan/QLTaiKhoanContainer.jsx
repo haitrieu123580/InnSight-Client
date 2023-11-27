@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import IcDetail from '../../components/icons/qltaikhoan-icons/IcDetail.jsx'
 import IcDelete from '../../components/icons/qltaikhoan-icons/IcDelete.jsx'
 import SelectMenu from '../../components/admin-qltaikhoan/SelectMenu.tsx'
@@ -13,8 +13,11 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Pagination, Button, Popconfirm } from 'antd';
-import axios from 'axios';
+import Pagination from '@mui/material/Pagination';
+import { Button, Popconfirm } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import ShowToastify from '../../../utils/ShowToastify';
+import AdminAction from "../../../redux/admin/action.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,50 +39,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function handleDelete() {
-  // Xử lý xóa
-}
-const token = JSON.parse(localStorage.getItem('Token'));
-const config = {
-  headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-  },
-};
-
 const QLTaiKhoanContainer = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedValue, setSelectedValue] = useState("Tất cả");
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {listUser} = useSelector((state) => state.Admin) || {}
+  const [page, setPage] = useState(1);
+  const [reloadData, setReloadData] = useState(true);
+  
   const handleSelectChange = (value) => {
-    setSelectedValue(value);
+    setPage(value);
   };
-
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-
+  
+  const pageIndex = 1;
+  const pageSize = 20;
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          'http://localhost:8001/api/user/all',
-          config
-          );
-        setData(response.data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (error) {
-    return <div>Lỗi khi tải dữ liệu: {error}</div>;
-  }
-  if (data.length === 0) {
-    return <div>Đang tải dữ liệu...</div>;
-  }
+    if (reloadData) {
+      dispatch({
+        type: AdminAction.GET_LIST_USER,
+        pageIndex : pageIndex,
+        pageSize: pageSize,
+          onSuccess: () => {
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+      setReloadData(false);
+    }
+  }, [page, reloadData]);
 
   const getEmailUsername = (email) => {
     const atIndex = email.indexOf('@');
@@ -90,18 +77,42 @@ const QLTaiKhoanContainer = () => {
     }
   };
 
-  const filteredData = selectedValue === "Tất cả" ? data : data.filter((item) => item.role === selectedValue);
 
-  const handleChangePage = (page) => {
-    setCurrentPage(page);
+  const handleChange = (event, value) => {
+    setPage(value);
+    dispatch({
+      type: AdminAction.GET_LIST_USER,
+      pageIndex : value,
+      pageSize: pageSize,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+        }
+    });
   };
 
+  function handleDelete(id) {
+    dispatch({
+      type: AdminAction.DELETE_USER,
+      id : id,
+        onSuccess: () => {
+          ShowToastify.showSuccessToast("Xóa thành công")
+          setReloadData(true);
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+        }
+    });
+  }
+
   return (
-    <div>
+    listUser && listUser.users ? (
+    <div className={`${styles['home']}`}>
       <div className={`flex m-2 ${styles['text']}`}>
         <div className="mr-4 pt-1">Loại người dùng</div>
         <SelectMenu onSelectChange={handleSelectChange} className="mr-4" />
-        <div className="flex-grow text-right pt-1 font-bold">Tổng: {filteredData.length}</div>
+        <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalItems}</div>
       </div>
       <div>
         <TableContainer component={Paper} className="mr-14">
@@ -109,23 +120,21 @@ const QLTaiKhoanContainer = () => {
             <TableHead>
               <TableRow>
                 <StyledTableCell>STT</StyledTableCell>
-                <StyledTableCell>Tên người dùng</StyledTableCell>
+                <StyledTableCell className="w-96">Tên người dùng</StyledTableCell>
                 <StyledTableCell>Vai trò</StyledTableCell>
                 <StyledTableCell align="center">Hành động</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredData
-                .slice((currentPage - 1) * 20, currentPage * 20)
-                .map((item, index) => (
+              {listUser.users.map((item, index) => (
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
-                      {((currentPage - 1) * 20) + index + 1}
+                      {((page - 1) * 20) + index + 1}
                     </StyledTableCell>
-                    {item.fullname ? (
-                      <StyledTableCell>{item.fullname}</StyledTableCell>
+                    {item.fullName ? (
+                      <StyledTableCell className="w-96">{item.fullName}</StyledTableCell>
                     ) : (
-                      <StyledTableCell>{getEmailUsername(item.email)}</StyledTableCell>
+                      <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
                     )}
                     <StyledTableCell>{item.role}</StyledTableCell>
                     <StyledTableCell>
@@ -140,7 +149,7 @@ const QLTaiKhoanContainer = () => {
                           title="Xóa người dùng"
                           description={`Bạn chắc chắn muốn xóa ${item.role} này?`}
                           icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-                          onConfirm={handleDelete}
+                          onConfirm={() => handleDelete(item.id)}
                           okText="OK"
                         >
                           <Button className="flex ml-5 gap-2 ">
@@ -157,14 +166,18 @@ const QLTaiKhoanContainer = () => {
         </TableContainer>
       </div>
       <Pagination
-        defaultCurrent={1}
-        current={currentPage}
-        total={filteredData.length}
-        pageSize={20}
-        onChange={handleChangePage}
+        count={listUser?.totalPages || 1}
+        defaultPage={1}
+        page={page}
+        // variant="outlined"
+        shape="rounded"
+        onChange={handleChange}
         className={`${styles['pagination']}`}
       />
     </div>
+    ) : (
+      <div></div>
+    )
   );
 };
 

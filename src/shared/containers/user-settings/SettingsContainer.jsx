@@ -9,11 +9,12 @@ import { Controller, useForm  } from 'react-hook-form';
 import moment from 'moment';
 import Select from 'react-select';
 import { DatePicker } from 'antd';
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const SettingsContainer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {userProfile} = useSelector((state) => state.Setting) || {}
   const id = JSON.parse(localStorage.getItem('id'));
   const { register, setValue, handleSubmit, watch, control, formState: { errors }} = useForm({
@@ -26,14 +27,13 @@ const SettingsContainer = () => {
         type: SettingAction.GET_PROFILE,
         id: id,
           onSuccess: () => {
-            console.log('Data after success:', userProfile);
           },
           onError: () => {
               ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
           }
       });
     }
-  }, []);
+  }, [id]);
 
   console.log('id', id)
   const item = userProfile;
@@ -61,16 +61,11 @@ const SettingsContainer = () => {
         onSuccess: () => {
           console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
-          setTimeout(() => {
             window.location.href = '/mysettings/info';
-          }, 1000);
         },
         onError: () => {
           console.log("That bai")
-          // ShowToastify.showErrorToast("Thất bại")
-          setTimeout(() => {
             window.location.href = '/mysettings/info';
-          }, 1000);
         }
     })
   }

@@ -6,9 +6,12 @@ import IcChangepw from '../icons/admin-header-icons/IcChangepw';
 import IcContact from '../icons/admin-header-icons/IcContact';
 import IcSetting from '../icons/admin-header-icons/IcSetting';
 import IcLogout from '../icons/admin-header-icons/IcLogout';
+import { useDispatch } from 'react-redux';
+import ShowToastify from '../../../utils/ShowToastify';
+import AuthAction from '../../../redux/auth/action';
 const DropdownUser = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-  
+    const dispatch = useDispatch();
     const trigger = useRef<any>(null);
     const dropdown = useRef<any>(null);
   
@@ -36,6 +39,21 @@ const DropdownUser = () => {
       return () => document.removeEventListener('keydown', keyHandler);
     });
   
+    const handleLogOut = ()=>{
+      // dispatch({
+      //   type: AuthAction.LOG_OUT,
+      //     onSuccess: () => {
+      //       localStorage.clear();
+      //       window.location.href = ('/');
+      //     },
+      //     onError: () => {
+      //         ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+      //     }
+      // });
+      localStorage.clear();
+      window.location.href = ('/');
+    }
+
     return (
       <div className="relative">
         <Link
@@ -66,15 +84,6 @@ const DropdownUser = () => {
           <ul className="flex flex-col gap-4 border-stroke px-6 py-7.5 ">
             <li>
               <Link
-                to="/addAdmin"
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-              >
-                <IcContact/>
-                Thêm người dùng
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/admin_changepw"
                 className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
@@ -92,7 +101,7 @@ const DropdownUser = () => {
               </Link>
             </li>
           </ul>
-          <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button onClick={handleLogOut} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <IcLogout/>
           Đăng xuất
           </button>

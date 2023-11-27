@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
-import { SignIn, SignUp } from '../../api/ApiAuth';
+import { SignIn, SignUp, LogOut } from '../../api/ApiAuth';
 import { signin } from './slice'
 function* watchSignIn() {
     yield takeEvery(actions.SIGNIN, function* (payload) {
@@ -40,9 +40,23 @@ function* watchSignUp() {
         }
     });
 }
+
+function* watchLogOut() {
+    yield takeEvery(actions.LOG_OUT, function* (payload) {
+        const { onSuccess, onError } = payload
+        const token = JSON.parse(localStorage.getItem('Token'));
+        console.log('token', token);
+        const response = yield call(LogOut, token);
+        if (response?.Data) {
+            onSuccess && onSuccess();
+        }
+    });
+}
+
 export default function* AuthSaga() {
     yield all([
         fork(watchSignIn),
         fork(watchSignUp),
+        fork(watchLogOut),
     ]);
 }

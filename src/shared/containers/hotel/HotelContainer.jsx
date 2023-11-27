@@ -41,7 +41,7 @@ function Map({ lat, lng }) {
     </GoogleMap>
 }
 const HotelContainer = () => {
-    const { hotel } = useSelector(state => state.Home) || {}
+    const { hotel, result } = useSelector(state => state.Home) || {}
     const { cart } = useSelector(state => state.Booking);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -49,21 +49,23 @@ const HotelContainer = () => {
     const [showButton, setShowButton] = React.useState(false);
     const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
     const { id } = useParams();
-    useEffect(() => {
-        if (id) {
-            dispatch({
-                type: HomeAction.GET_HOTEL,
-                hotelId: id,
-                onSuccess: () => {
+    console.log('result', result)
+    console.log('id', id)
+    // useEffect(() => {
+    //     if (id) {
+    //         dispatch({
+    //             type: HomeAction.GET_HOTEL,
+    //             hotelId: id,
+    //             onSuccess: () => {
 
-                },
-                onError: () => {
-                    ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-                }
-            });
-
-        }
-    }, [id])
+    //             },
+    //             onError: () => {
+    //                 ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+    //             }
+    //         });
+    //     }
+    // }, [id])
+    
     useEffect(() => {
         if (Object.keys(cart?.rooms).length !== 0) {
             setShowButton(true);

@@ -11,7 +11,7 @@ const initialState = {
     checkOut: "",
     bookingReserved: {},
     linkVnpay: "",
-    invoice:{}
+    cancel:{}
 }
 
 const bookingSlice = createSlice({
@@ -53,12 +53,12 @@ const bookingSlice = createSlice({
         pay: (state, { payload }) => {
             state.linkVnpay = payload
         },
-        invoice: (state, { payload }) => {
-            state.invoice = payload
+        cancel: (state, { payload }) => {
+            state.cancel = payload
         },
     },
 },)
 
-export const { booking, addRoomToCart, setCheckInOut, saveReservation, pay, invoice } = bookingSlice.actions
+export const { booking, addRoomToCart, setCheckInOut, saveReservation, pay, cancel } = bookingSlice.actions
 
 export default bookingSlice.reducer

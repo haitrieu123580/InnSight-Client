@@ -35,7 +35,7 @@ const BookingContainer1 = () => {
                 price: item.price
             })),
             totalPrice: total,
-            tax: Constants.tax,
+            tax: total * Constants.tax / 100,
             vat: parseFloat(totalWithTax.toFixed(3)),
             startDay: checkIn,
             endDay: checkOut

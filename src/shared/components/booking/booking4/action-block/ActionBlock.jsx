@@ -1,10 +1,12 @@
-import styles from '../index.module.scss'
+import styles from '../index.module.scss';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ActionBlock = () => {
+  const { bookingReserved } = useSelector(state => state.Booking);
 
   return (
     <>
@@ -14,7 +16,7 @@ const ActionBlock = () => {
         </div>
         <div className={`${styles['line']} mb-4 mt-2`}></div>
         <h2 className='text-sm'>Bạn luôn có thể xem hoặc thay đổi đặt phòng trực tuyến - không cần phải đăng ký.</h2>
-        <NavLink >
+        <NavLink to={`/cancel/1`}>
           <div className='my-4 flex justify-items-center'>
             <HighlightOffIcon className='text-2xl mr-2'/>
             <span className='font-bold text-sky-700'>Hủy đặt phòng</span>
@@ -37,5 +39,4 @@ const ActionBlock = () => {
   )
 }
 
-export default ActionBlock
-
+export default ActionBlock;

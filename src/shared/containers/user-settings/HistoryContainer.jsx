@@ -11,8 +11,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 const SettingsContainer = () => {
   const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const {userHistoryReservations} = useSelector((state) => state.Setting) || {}
+  const navigate = useNavigate();
+  const {userHistoryReservations} = useSelector((state) => state.Setting) || {}
+
   const id = JSON.parse(localStorage.getItem('id'));
   const data = {}
   data.requestData = id;
@@ -32,7 +33,6 @@ const SettingsContainer = () => {
     }
   }, []);
 
-  console.log('requestData', data)
   const reservationList = userHistoryReservations.reservationList;
   const totalItems = userHistoryReservations.totalItems;
 
@@ -59,8 +59,9 @@ const SettingsContainer = () => {
   const handleViewReservationClick = (reservationCode) => {
     localStorage.setItem('reservationCode', JSON.stringify(reservationCode));
     console.log('reservationCode', reservationCode);
-    window.location.href = ('/book/invoice/detail');
+    window.location.href =  '/book/invoice/detail';
   };
+
 
   return (
     <>
@@ -100,10 +101,18 @@ const SettingsContainer = () => {
                     <h1 className='font-bold'>{moment(item.startDay, 'YYYY-MM-DD').format('DD [tháng] MM [năm] YYYY')}</h1>
                     <h2>{item.checkInTime}</h2>
                   </div>
-                  <div className='my-6'>
+                  <div className='my-4'>
                     <h2 className='text-gray-700'>Trả phòng</h2>
                     <h1 className='font-bold'>{moment(item.endDay, 'YYYY-MM-DD').format('DD [tháng] MM [năm] YYYY')}</h1>
                     <h2>{item.checkOutTime}</h2>
+                  </div>
+                  <div className='text-sm mb-4'>
+                    <span>Trạng thái:</span>
+                    {item.status === 'CONFIRMED' ? (
+                      <span className='text-green-600'> {item.status}</span>
+                    ):(
+                      <span className='text-red-600'> {item.status}</span>
+                    )}
                   </div>
                   <div className='border mb-4'></div>
                   <div className='mt-2 mb-2'>Giá</div>
@@ -119,6 +128,7 @@ const SettingsContainer = () => {
                   </div>
                 </div>
               </div>
+              
           </NavLink>
           ))
           ):(

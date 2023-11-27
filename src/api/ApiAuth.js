@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = 'http://localhost:8001/api/v1/auth'
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/v1/auth'
 const config = {
     headers: {
         'Content-Type': 'application/json',
@@ -26,6 +26,27 @@ export const SignUp = async (data) => {
     else {
         return {
             Data: false
+        }
+    }
+}
+export const LogOut = async (token) => {
+    const response = await axios.post(
+        `${BASE_URL}/logout`, 
+        {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+    if (response.status === 200) {
+        return {
+            Data: response?.data
+        }
+    }
+    else {
+        return {
+            Message: "Error"
         }
     }
 }
