@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/hotel'
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/hotel'
 
 const config = {
     headers: {
