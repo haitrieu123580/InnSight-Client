@@ -1,15 +1,13 @@
 import styles from './Cancel2Container.module.scss';
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'antd';
-import { CheckOutlined, LeftOutlined } from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Cancel2Container = () => {
   const { bookingReserved, cancel} = useSelector(state => state.Booking);
-  console.log('bookingReserved',bookingReserved);
-  console.log('cancel',cancel);
-  const charged = bookingReserved.total - cancel.vnp_Amount/100;
+  const charged = bookingReserved.total - cancel.refundAmount;
   return (
     bookingReserved ? (
       <div className={styles['content']}>
@@ -49,12 +47,12 @@ const Cancel2Container = () => {
             {charged ? (
               <Col flex={3} className='text-right mr-40'>
               <h2 className='text-lg mb-4 font-bold text-red-600'>{charged} VND</h2>
-              <h2 className='text-lg font-bold text-green-600'>{cancel.vnp_Amount/100} VND</h2>
+              <h2 className='text-lg font-bold text-green-600'>{cancel.refundAmount} VND</h2>
               </Col>
             ):(
               <Col flex={3} className='text-right mr-40'>
               <h2 className='text-lg mb-4 font-bold text-green-600'>Miễn phí</h2>
-              <h2 className='text-lg font-bold text-green-600'>{cancel.vnp_Amount/100} VND</h2>
+              <h2 className='text-lg font-bold text-green-600'>{cancel.refundAmount} VND</h2>
               </Col>
             )}
           </Row>

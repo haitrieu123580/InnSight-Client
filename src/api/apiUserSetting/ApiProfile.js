@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/user'
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/user'
 
 export const getProfileById = async ({id,token}) => {
-  console.log('token:', token)
   const response = await axios.get(
     `${BASE_URL}/${id}`,
     { 
@@ -13,12 +12,10 @@ export const getProfileById = async ({id,token}) => {
       },
     }
     );
-  console.log('data',response.data);
   return { Data: response?.data };
 }
 
 export const updateProfileById = async ({id, data, token}) => {
-    const apiUrl = `${BASE_URL}/${id}`;
   try {
     const response = await axios.put(
       `${BASE_URL}/${id}`,
@@ -30,7 +27,6 @@ export const updateProfileById = async ({id, data, token}) => {
         },
       }
     );
-    console.log('Update successfully');
     return response.data;
   } catch (error) {
     console.error('Đã xảy ra lỗi:', error.response ? error.response.data : error.message);

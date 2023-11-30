@@ -4,7 +4,7 @@ import { SignIn, SignUp, LogOut } from '../../api/ApiAuth';
 import { signin } from './slice'
 function* watchSignIn() {
     yield takeEvery(actions.SIGNIN, function* (payload) {
-        const { data, onError, onSuccess } = payload
+        const { data, onError, onSuccess, onAdmin, onHost } = payload
         try {
             const response = yield call(SignIn, data);
             if (response?.Data !== "") {
@@ -17,7 +17,15 @@ function* watchSignIn() {
                 yield put(signin({
                     role: response?.Data?.role
                 }))
-                onSuccess && onSuccess();
+                if(response?.Data?.role === "ADMIN"){
+                    onAdmin && onAdmin();
+                }
+                else if(response?.Data?.role === "HOST"){
+                    onHost && onHost();
+                }
+                else {
+                    onSuccess && onSuccess();
+                }
             }
         } catch (error) {
             onError && onError();
@@ -45,10 +53,15 @@ function* watchLogOut() {
     yield takeEvery(actions.LOG_OUT, function* (payload) {
         const { onSuccess, onError } = payload
         const token = JSON.parse(localStorage.getItem('Token'));
-        console.log('token', token);
-        const response = yield call(LogOut, token);
-        if (response?.Data) {
-            onSuccess && onSuccess();
+        // console.log('token', token);
+        try {
+            const response = yield call(LogOut, token);
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
         }
     });
 }

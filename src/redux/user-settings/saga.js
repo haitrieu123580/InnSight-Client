@@ -9,7 +9,6 @@ function* watchChangePassword() {
   yield takeEvery(actions.CHANGEPASS, function* (payload) {
     const { data, onSuccess, onError } = payload;
     const token = JSON.parse(localStorage.getItem('Token'));
-    console.log(token)
     try {
       const response = yield call(changePassword, {data, token});
       if (response.status === 200 ) {
@@ -30,7 +29,6 @@ function* watchGetProfile() {
   yield takeEvery(actions.GET_PROFILE, function* (payload) {
       const {id, onSuccess, onError } = payload;
       const token = JSON.parse(localStorage.getItem('Token'));
-      console.log(token)
       try {
           const response = yield call(getProfileById, {id,token});
           if (response?.Data) {

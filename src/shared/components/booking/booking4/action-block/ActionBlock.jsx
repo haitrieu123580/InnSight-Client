@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const ActionBlock = () => {
   const { bookingReserved } = useSelector(state => state.Booking);
+  const isLogin = localStorage.getItem('isLogin')||false;
 
   return (
     <>
@@ -22,7 +23,7 @@ const ActionBlock = () => {
             <span className='font-bold text-sky-700'>Hủy đặt phòng</span>
           </div>
         </NavLink>
-        <NavLink to={'/mysettings/history'}>
+        <NavLink to={isLogin ? '/mysettings/history' : '/sign-in'}>
           <div className='my-4 flex justify-items-center'>
             <RemoveRedEyeIcon className='text-2xl mr-2'/>
             <span className='font-bold text-sky-700'>Xem đặt phòng</span>

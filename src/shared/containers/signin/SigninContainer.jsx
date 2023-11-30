@@ -36,18 +36,13 @@ const SigninContainer = () => {
             data: data,
             onSuccess: () => {
                 ShowToastify.showSuccessToast("Đăng nhập thành công")
-                if(role === "CUSTOMER"){
-                    navigate('/');
-                    console.log('role', role);
-                }
-                else if(role === "HOST"){
-                    navigate('/');
-                    console.log('role', role);
-                }
-                else if(role === "ADMIN"){
-                    navigate('/qltaikhoan');
-                    console.log('role', role);
-                }
+                navigate('/');
+            },
+            onAdmin: ()=>{
+                navigate('/qltaikhoan');
+            },
+            onHost: ()=>{
+                navigate('/');
             },
             onError: () => {
                 ShowToastify.showErrorToast("Đăng nhập thất bại")

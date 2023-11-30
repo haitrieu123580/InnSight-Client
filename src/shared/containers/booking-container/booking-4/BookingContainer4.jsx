@@ -15,12 +15,10 @@ import ShowToastify from '../../../../utils/ShowToastify';
 const BookingContainer4 = () => {
     const dispatch = useDispatch();
     const { bookingReserved } = useSelector(state => state.Booking);
-    console.log('bookingReserved', bookingReserved);
 
     localStorage.removeItem('reservation');
 
     const reservationCode = JSON.parse(localStorage.getItem('reservationCode'));
-    console.log('reservationCode', reservationCode)
     const data ={};
     data.requestData = reservationCode;
     useEffect(() => {

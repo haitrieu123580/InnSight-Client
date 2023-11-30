@@ -51,18 +51,15 @@ const Room = ({ room }) => {
                 image={room?.roomImage || ""}
                 title="hotel image"
               />
-
               <CardContent>
                 <div className='text-xs text-cyan-400 text-center mb-1'>Xem ảnh và chi tiết</div>
                 {Array?.from({ length: 3 })?.map((_, index) => (
                   <div key={index} className='text-xs mb-1'>
-                    {/* <DoneIcon className='mr-1' /> {room?.amenities[index]} */}
                   </div>))}
                 <div className='flex items-center text-xs mb-1'>
-                  <AddCircleIcon className='mr-1' /> <span className='text-xs text-cyan-400'> Xem thêm tiện ích</span>
+                  <AddCircleIcon className='mr-1'/> <span className='text-xs text-cyan-400'> Xem thêm tiện ích</span>
                 </div>
               </CardContent>
-
             </Card>
           </div>
         </div>
@@ -70,10 +67,11 @@ const Room = ({ room }) => {
           <div className='grid grid-cols-8 gap-0  h-full'>
             <div className='col-span-3 p-2 border-gray-200 border-solid border-r-2 h-full'>
               <div className='font-bold mb-5'>Giá này đã gồm</div>
-              {Array?.from({ length: 4 })?.map((_, index) => (
+              {room?.roomAmenities?.slice(0, 5).map((_, index) => (
                 <div key={index} className='text-sm mb-2'>
                   <DoneIcon className='text-cyan-400 mr-1' /> {room?.roomAmenities[index]}
-                </div>))}
+                </div>
+              ))}
             </div>
             <div className='col-span-1 p-2 border-gray-200 border-solid border-r-2 h-full'>
               <div className='font-bold mb-5'>Sức chứa</div>
@@ -89,10 +87,9 @@ const Room = ({ room }) => {
             <div className='col-span-2 p-2 border-gray-200 border-solid border-r-2 h-full'>
               <div className='font-bold mb-5'>Giá phòng ngày hôm nay</div>
               <div className='text-sm text-red-500 line-through'>
-                {/* {room?.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} */}
               </div>
               <div className='text-lg font-bold'>
-                {room?.price}
+                {room?.price !== undefined ? room.price.toLocaleString('vi-VN') : 'N/A'}
               </div>
             </div>
             <div className='col-span-2 p-2 h-full'>
@@ -101,7 +98,6 @@ const Room = ({ room }) => {
                   onChange={(e) => handleSelectQuantity(e.target.value)}
                   className='border-2 border-solid border-gray-500 font-semibold rounded-md hover:border-gray-500 hover:outline-none'
                 >
-
                   <option value={0}></option>
                   {Array.from({ length: room?.quantity || 0 }).map((_, index) => (
                     <option key={index} value={index + 1}>{index + 1}</option>

@@ -18,9 +18,6 @@ const BookingContainer3 = () => {
     reservation.orderId = searchParams.get('vnp_TxnRef');
     reservation.transDate = searchParams.get('vnp_PayDate');
 
-    console.log('bookingReserved:', bookingReserved);
-    console.log('reservation:', reservation);
-    
     useEffect(() => {
         if (vnp_TransactionStatus === '00' && vnp_ResponseCode === '00') {
             dispatch({

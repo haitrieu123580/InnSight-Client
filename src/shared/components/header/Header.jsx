@@ -72,7 +72,6 @@ const Header = () => {
         pageIndex: 1,
         pageSize: 5,
       }
-      console.log('filter', filter);
       dispatch({
         type: HomeAction.SEARCH_HOTELS,
         filter: filter,

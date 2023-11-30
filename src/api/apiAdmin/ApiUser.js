@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/user'
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/admin/management/user'
 
 export const getListUser = async ({ pageIndex = 1, pageSize = 10, token }) => {
   const response = await axios.get(
@@ -16,15 +16,19 @@ export const getListUser = async ({ pageIndex = 1, pageSize = 10, token }) => {
       },
     }
   );
-  console.log('data',response.data);
   return { Data: response?.data };
 }
 
-export const deleteUserById = async (id) => {
+export const deleteUserById = async ({ id, token }) => {
   const response = await axios.delete(
     `${BASE_URL}/${id}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
-  console.log('data',response.data);
   return { Data: response?.data };
 }
 
@@ -38,6 +42,5 @@ export const getDetailUser = async ({ id, token }) => {
       },
     }
   );
-  console.log('data',response.data);
   return { Data: response?.data };
 }

@@ -14,7 +14,6 @@ const Cancel1Container = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookingReserved } = useSelector(state => state.Booking);
-  console.log('object', bookingReserved)
   const handleAcceptCancel = () => {
     dispatch({
       type: BookingAction.RESERVATION_CANCEL,
