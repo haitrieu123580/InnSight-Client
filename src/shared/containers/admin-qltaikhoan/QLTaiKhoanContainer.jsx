@@ -110,8 +110,8 @@ const QLTaiKhoanContainer = () => {
     listUser && listUser.users ? (
     <div className={`${styles['home']}`}>
       <div className={`flex m-2 ${styles['text']}`}>
-        <div className="mr-4 pt-1">Loại người dùng</div>
-        <SelectMenu onSelectChange={handleSelectChange} className="mr-4" />
+        {/* <div className="mr-4 pt-1">Loại người dùng</div>
+        <SelectMenu onSelectChange={handleSelectChange} className="mr-4" /> */}
         <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalItems}</div>
       </div>
       <div>

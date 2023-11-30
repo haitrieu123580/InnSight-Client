@@ -42,7 +42,7 @@ const SigninContainer = () => {
                 navigate('/qltaikhoan');
             },
             onHost: ()=>{
-                navigate('/');
+                navigate('/host/dashboard');
             },
             onError: () => {
                 ShowToastify.showErrorToast("Đăng nhập thất bại")
