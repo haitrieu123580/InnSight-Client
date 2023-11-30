@@ -25,7 +25,7 @@ const ReservationBox = () => {
             <div className={styles['box']}>
                 <div className='flex justify-between'>
                     <div className=' font-bold text-xl'>Thành tiền</div>
-                    <div className='font-bold text-xl text-red-800'>{`${vat}VND`}</div>
+                    <div className='font-bold text-xl text-red-800'>{vat ? `${vat.toLocaleString('vi-VN')}VND` : '0VND'}</div>
                 </div>
                 <div className='text-blue-800 font-semibold flex'>
                     <span><IcWarning /></span>
@@ -40,7 +40,7 @@ const ReservationBox = () => {
                                 {room?.roomName}
                             </div>
                             <div>
-                                {room?.count * room?.price}VND
+                                {(room?.count && room?.price) ? (room.count * room.price).toLocaleString('vi-VN') + 'VND' : ''}
                             </div>
                         </div>
                     ))}

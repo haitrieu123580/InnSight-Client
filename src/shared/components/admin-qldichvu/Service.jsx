@@ -12,10 +12,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Service = ({ open, onClose, onAddService, onUpdateService, service, setService }) => {
   const classes = useStyles();
-    
+  const handleNameChange = (e) => {
+    setService({ ...service, name: e.target.value });
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
-      {service ? (
+      {service?.id ? (
             <DialogTitle>Cập nhật dịch vụ</DialogTitle>
           ) : (
             <DialogTitle>Thêm dịch vụ</DialogTitle>
@@ -27,22 +30,14 @@ const Service = ({ open, onClose, onAddService, onUpdateService, service, setSer
             style={{ marginTop: '8px', width: '550px', height: '50px' }}
             label="Tên dịch vụ"
             value={service ? service.name : ''}
-            onChange={(e) => setService({ ...service, name: e.target.value })}
-            className={classes.customInput}
-          />
-          <br />
-          <TextField
-            style={{ marginTop: '15px', width: '550px', height: '50px' }}
-            label="Mô tả"
-            value={service ? service.description : ''}
-            onChange={(e) => setService({ ...service, description: e.target.value })}
+            onChange={handleNameChange}
             className={classes.customInput}
           />
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Hủy</Button>
-        {service ? (
+        {service?.id ? (
           <Button onClick={onUpdateService}>Lưu</Button>
         ) : (
           <Button onClick={onAddService}>Thêm dịch vụ</Button>

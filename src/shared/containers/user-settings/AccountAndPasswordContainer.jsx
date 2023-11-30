@@ -29,14 +29,11 @@ const AccountAndPasswordContainer = () => {
         type: SettingAction.CHANGEPASS,
         data: data,
         onSuccess: () => {
-          console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
           window.location.href = '/mysettings/password';
         },
         onError: () => {
-          console.log("That bai")
           ShowToastify.showErrorToast("Thất bại")
-          // Navigate("/mysettings/password")
         }
     })
   } 

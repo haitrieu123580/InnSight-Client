@@ -1,7 +1,7 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
-import { booking, pay, invoice } from './slice'
-import { bookingApi, payment, reservationDetail, save_invoice } from '../../api/ApiBooking';
+import { booking, pay, cancel } from './slice'
+import { bookingApi, payment, reservationDetail, reservationCancel } from '../../api/ApiBooking';
 function* watchBooking() {
     yield takeEvery(actions.BOOKING_START, function* (payload) {
         const { reservation, onError, onSuccess } = payload
@@ -33,7 +33,7 @@ function* watchReservationDetail() {
         } finally {
         }
     });
-  }
+}
 
 function* watchPayment() {
     yield takeEvery(actions.PAYMENT, function* (payload) {
@@ -51,13 +51,13 @@ function* watchPayment() {
     });
 }
 
-function* watchSaveInvoice() {
-    yield takeEvery(actions.SAVE_INVOICE, function* (payload) {
-        const { data, onError, onSuccess } = payload
+function* watchReservationCancel() {
+    yield takeEvery(actions.RESERVATION_CANCEL, function* (payload) {
+        const {reservationCode, onSuccess, onError } = payload
         try {
-            const response = yield call(save_invoice, data);
-            if (response?.Data !== "") {
-                yield put(invoice(response?.Data))
+            const response = yield call(reservationCancel, reservationCode);
+            if (response?.Data) {
+                yield put(cancel(response?.Data))
                 onSuccess && onSuccess();
             }
         } catch (error) {
@@ -72,6 +72,6 @@ export default function* BookingSaga() {
         fork(watchBooking),
         fork(watchPayment),
         fork(watchReservationDetail),
-        fork(watchSaveInvoice),
+        fork(watchReservationCancel),
     ]);
 }

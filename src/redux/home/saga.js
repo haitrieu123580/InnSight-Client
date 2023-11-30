@@ -4,9 +4,9 @@ import { getHotelById, searchHotels } from '../../api/ApiHotels';
 import { getHotel, result } from './slice';
 function* watchGetHotel() {
     yield takeEvery(actions.GET_HOTEL, function* (payload) {
-        const { hotelId, onSuccess, onError } = payload
+        const {data, onSuccess, onError } = payload
         try {
-            const response = yield call(getHotelById, hotelId);
+            const response = yield call(getHotelById, data);
             if (response?.Data) {
                 yield put(getHotel(response?.Data))
                 onSuccess && onSuccess();
@@ -23,7 +23,6 @@ function* watchSearchHotel() {
         const { filter, onSuccess, onError } = payload
         try {
             const response = yield call(searchHotels, filter);
-            console.log(response)
             yield put(result(response?.Data))
             onSuccess && onSuccess();
         } catch (error) {

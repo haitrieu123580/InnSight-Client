@@ -32,6 +32,8 @@ const SearchBox = () => {
         room: searchParams.get('count'),
         adultCount: searchParams.get('adultCount'),
         childrenCount: searchParams.get('childrenCount'),
+        pageIndex: searchParams.get('pageIndex'),
+        pageSize: searchParams.get('pageSize'),
     };
     const [filter, setFilter] = useState(dfilter)
     const addFilterParams = (field, value) => {
@@ -57,6 +59,7 @@ const SearchBox = () => {
     };
 
     const handleSubmit = () => {
+        console.log('filter',filter);
         dispatch({
             type: HomeAction.SEARCH_HOTELS,
             filter: filter,

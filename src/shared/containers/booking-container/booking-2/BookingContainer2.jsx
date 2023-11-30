@@ -2,32 +2,22 @@ import React from 'react'
 import styles from './index.module.scss'
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import ContactBlock from '../../../components/booking/booking2/contact-block/ContactBlock'
-import ClientInfoBlock from '../../../components/booking/booking2/client-info-block/ClientInfoBlock'
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
 import HotelPolicyBox from '../../../components/booking/booking2/hotel-policy/HotelPolicyBox';
 import { Button } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import BookingAction from '../../../../redux/booking/action';
-import ShowToastify from '../../../../utils/ShowToastify';
-import useReloadAlert from '../../../../hooks/use-reload-alert';
-import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const BookingContainer2 = () => {
     const { reservation, cart, linkVnpay } = useSelector(state => state.Booking);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     localStorage.setItem('reservation', JSON.stringify(reservation));
-    localStorage.setItem('cart', JSON.stringify(cart));
 
     const handleSubmitReservation = () => {
         window.location.href = linkVnpay;
         console.log('linkVnPay', linkVnpay);
         console.log('reservation', localStorage.getItem('reservation'));
-        console.log('cart', localStorage.getItem('cart'));
     };
 
-    // useReloadAlert();
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14 font-bold'>

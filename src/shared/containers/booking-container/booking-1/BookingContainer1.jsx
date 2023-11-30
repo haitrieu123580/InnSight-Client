@@ -2,7 +2,6 @@ import styles from './index.module.scss'
 import IcChervonRightGreen from '../../../components/icons/booking/IcChervonRightGreen'
 import { Button } from '@mui/material'
 import ReservationBlock from '../../../components/booking/booking1/reservation-block/ReservationBlock'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,6 +13,8 @@ import ShowToastify from '../../../../utils/ShowToastify';
 import { saveReservation } from '../../../../redux/booking/slice';
 import useReloadAlert from '../../../../hooks/use-reload-alert';
 const BookingContainer1 = () => {
+    const email = JSON.parse(localStorage.getItem('email'));
+    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { cart, checkIn, checkOut } = useSelector(state => state.Booking);
@@ -35,7 +36,7 @@ const BookingContainer1 = () => {
                 price: item.price
             })),
             totalPrice: total,
-            tax: Constants.tax,
+            tax: total * Constants.tax / 100,
             vat: parseFloat(totalWithTax.toFixed(3)),
             startDay: checkIn,
             endDay: checkOut
@@ -128,6 +129,8 @@ const BookingContainer1 = () => {
                                             <input
                                                 className='w-full border border-solid'
                                                 type="email"
+                                                defaultValue={isLogin ? email : ''}
+                                                readOnly={isLogin}
                                                 {...register('email', {
                                                     required: 'Vui lòng nhập email',
                                                 })}
