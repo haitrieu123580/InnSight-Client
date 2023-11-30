@@ -8,7 +8,6 @@ import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 const Navbar = () => {
     const isLogin = localStorage.getItem('isLogin')||false;
-    
     return (
         <div className={`flex  ${styles['navbar']}`}>
             <Link
