@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import BadgeIcon from '@mui/icons-material/Badge';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SecurityIcon from '@mui/icons-material/Security';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
@@ -41,6 +41,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
     document.querySelector('body')?.classList.toggle('sidebar-expanded', sidebarExpanded);
   }, [sidebarExpanded]);
+
+  const handleLogOut = ()=>{
+    localStorage.clear();
+    window.location.href = ('/');
+  }
 
   return (
     <aside
@@ -83,17 +88,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             Tài khoản và mật khẩu
           </NavLink>
         </ul>
-        {/* <ul className="mb-7 flex flex-col gap-1.5">
-          <NavLink
-            to="/mysettings/pay"
-            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
-              pathname.includes('pay') && 'bg-slate-300'
-            }`}
+        <ul className="mb-7 flex flex-col gap-1.5">
+          <button
+            onClick={handleLogOut}
+            className={`text-red-600 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4`}
           >
-            <CreditCardIcon />
-            Thông tin thanh toán
-          </NavLink>
-        </ul> */}
+            <LogoutIcon />
+            Đăng xuất
+          </button>
+        </ul>
       </div>
     </aside>
   );

@@ -10,22 +10,24 @@ import { useSelector, useDispatch } from 'react-redux';
 import BookingAction from '../../../../redux/booking/action';
 import ShowToastify from '../../../../utils/ShowToastify';
 import useReloadAlert from '../../../../hooks/use-reload-alert';
+import { useNavigate } from 'react-router';
+
 const BookingContainer2 = () => {
-    const { reservation, cart } = useSelector(state => state.Booking);
+    const { reservation, cart, linkVnpay } = useSelector(state => state.Booking);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    localStorage.setItem('reservation', JSON.stringify(reservation));
+    localStorage.setItem('cart', JSON.stringify(cart));
+
     const handleSubmitReservation = () => {
-        dispatch({
-            type: BookingAction.BOOKING_START,
-            reservation: reservation,
-            onSuccess: () => {
-                ShowToastify.showSuccessToast("Xác nhận!")
-            },
-            onError: () => {
-                ShowToastify.showErrorToast("Xảy ra lỗi, xin hãy thử lại")
-            }
-        })
-    }
-    useReloadAlert();
+        window.location.href = linkVnpay;
+        console.log('linkVnPay', linkVnpay);
+        console.log('reservation', localStorage.getItem('reservation'));
+        console.log('cart', localStorage.getItem('cart'));
+    };
+
+    // useReloadAlert();
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
             <div className='text-3xl w-full my-14 font-bold'>

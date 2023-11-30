@@ -6,13 +6,12 @@ import IcSell from '../icons/header-icons/IcSell'
 import IcGroup from '../icons/header-icons/IcGroup'
 import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
-import { useSelector } from 'react-redux'
 const Navbar = () => {
-    const { userProfile } = useSelector(state => state.Auth)
     const isLogin = localStorage.getItem('isLogin')||false;
-
-    useEffect(()=>{
-    },[isLogin])
+    const email = JSON.parse(localStorage.getItem('email'));
+    const name = JSON.parse(localStorage.getItem('name'));
+    console.log('email, name', email, name)
+    
     return (
         <div className={`flex  ${styles['navbar']}`}>
             <Link
@@ -46,29 +45,32 @@ const Navbar = () => {
             </nav>
 
             <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
-                {!isLogin ?
+                {!isLogin ? (
                     <>
                         <Link to={'/sign-in'} className={`py-2 px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
                             <IcAvatar />
                             <span>Đăng nhập</span>
                         </Link>
-                        <Link to={'/sign-up'} className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
-                            <IcPencil />
-                            <span>Đăng ký</span>
+                        <Link to={'/sign-up'} className={`py-2 px-10 drop-shadow-md inline-flex items-center justify-between ${styles['navbar-button']}`}>
+                            <span className='ml-2'><IcPencil /></span>
+                            <span className='pr-3'>Đăng ký</span>
                         </Link>
-                    </> :
-                    <>
-                        <div className="pr-10">
-                            <Link to={'/mysettings/info'}>
-                                <button
-                                    className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
-                                >
-                                    <IcAvatar />
-                                    <span>{userProfile?.name||userProfile?.email}</span>
-                                </button>
-                            </Link>
-                        </div>
                     </>
+                ):(
+                    <>
+                    <div className="pr-10">
+                        <Link to={'/mysettings/info'}>
+                            <button
+                                className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
+                            >
+                                <IcAvatar />
+                                {/* <span>{name !== null ? name : email}</span> */}
+                                <span>Tài khoản của bạn</span>
+                            </button>
+                        </Link>
+                    </div>
+                    </>
+                )
                 }
             </div>
         </div>

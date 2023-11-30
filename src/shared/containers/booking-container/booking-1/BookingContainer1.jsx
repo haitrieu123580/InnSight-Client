@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Constants from '../../../../utils/Contants';
 import { useEffect, useState } from 'react';
-// import BookingAction from '../../../../redux/booking/action';
+import BookingAction from '../../../../redux/booking/action';
 import ShowToastify from '../../../../utils/ShowToastify';
 import { saveReservation } from '../../../../redux/booking/slice';
 import useReloadAlert from '../../../../hooks/use-reload-alert';
@@ -52,6 +52,15 @@ const BookingContainer1 = () => {
                 }
             }
         ))
+
+        dispatch({
+            type: BookingAction.PAYMENT,
+            reservation: reservation,
+            onSuccess: () => {
+            },
+            onError: () => {
+            }
+            });
     }
     useEffect(() => {
     }, [cart])
