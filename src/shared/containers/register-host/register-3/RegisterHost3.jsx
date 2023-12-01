@@ -120,16 +120,10 @@ const RegisterHost3Container = () => {
       name: serveBreakfast === "yes" ? "Phục vụ bữa sáng" : "",
       price: breakfastIncluded === "yes" ? 0 : 0,
     };
-    console.log("exAme", extraAmenity);
     dispatch({
       type: addAmenitiesHotel,
       payload: selectedAmenities,
     });
-    // dispatch({
-    //   type: addExtraAmenityHotel,
-    //   payload: extraAmenity,
-    // });
-    console.log("exSe", extraServices);
     dispatch({
       type: addExtraServiceHotel,
       payload: extraServices,

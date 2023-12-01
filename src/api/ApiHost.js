@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = `http://localhost:8001/api/hotel`
+const BASE_URL = `http://localhost:8001/api`
 
 const config = {
     headers: {
@@ -8,7 +8,7 @@ const config = {
     },
 };
 export const AddHotel = async (userID,newHotel) => {
-    const response = await axios.post(`${BASE_URL}`, newHotel, {
+    const response = await axios.post(`${BASE_URL}/hotel`, newHotel, {
         headers: {
             'Content-Type': 'multipart/form-data',
             'userId' : `${userID}`
@@ -25,3 +25,22 @@ export const AddHotel = async (userID,newHotel) => {
     }
   
 }
+export const AddRoomType = async (hotelId,newRoomType) => {
+    const response = await axios.post(`${BASE_URL}/room-types`, newRoomType, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'hotelId' : `${hotelId}`
+        },
+    });
+    console.log("res call",response)
+    if (response.status === 201) {
+        return { Data: true }
+    }
+    else {
+        return {
+            Data: false
+        }
+    }
+  
+}
+

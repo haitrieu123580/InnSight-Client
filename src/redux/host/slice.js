@@ -17,6 +17,22 @@ const initialState = {
     checkOutTime:"",
     images:[],
   },
+  roomTypes:[],
+  newRoomType:{
+    name:"",
+    sdRoomName:[],
+    count:0,
+    price: 0,
+    bathroomCount:0,
+    roomArea:0,
+    adultCount:0,
+    childrenCount:0,
+    description:"",
+    bedTypes:[],
+    amenities:[],
+    view: "",
+    images:[],
+  }
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -68,8 +84,40 @@ const hostSlice = createSlice({
 
     addHotel: (state,  payload ) => {
       const  newHotel  = payload;
-      console.log("ok")
+      console.log("add hotel ok")
       state.hotel=[...state.hotel,newHotel]
+    },
+    addBasicInfoRoomType: (state, { payload }) => {
+      const {name, sdRoomName, count,bedTypes,roomArea,adultCount,childrenCount,amenities,view }= payload;
+      console.log("payload addBasicInfoRoomType ",payload)
+      state.newRoomType.name = name;
+      state.newRoomType.sdRoomName = sdRoomName;
+      state.newRoomType.count = count;
+      state.newRoomType.bedTypes = bedTypes;
+      state.newRoomType.roomArea = roomArea;
+      state.newRoomType.adultCount = adultCount;
+      state.newRoomType.childrenCount = childrenCount;
+      state.newRoomType.amenities = amenities;
+      state.newRoomType.view = view;
+
+    },
+    addRoomTypePrice: (state, { payload }) => {
+      const price = payload;
+      console.log("payload addRoomTypePrice ",payload)
+      state.newRoomType.price = price;
+    },  
+    addImagesRoomType:(state,{payload})=>{
+      const images = payload;
+      state.newHotel.images = [
+        ...state.newHotel.images,
+        images,
+      ];
+      console.log("payload addImagesRoomType", state.newHotel.images);
+    },
+    addRoomType: (state,  payload ) => {
+      const  newRoomType  = payload;
+      console.log("add roomType ok")
+      state.roomTypes=[...state.roomTypes,newRoomType]
     },
   },
 });
@@ -81,6 +129,10 @@ export const {
   addAmenitiesHotel,
   addExtraServiceHotel,
   addCheckInCheckOutTime,
-  addImagesHotel
+  addImagesHotel,
+  addBasicInfoRoomType,
+  addRoomType,
+  addRoomTypePrice,
+  addImagesRoomType
 } = hostSlice.actions;
 export default hostSlice.reducer;
