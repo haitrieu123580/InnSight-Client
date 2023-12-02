@@ -15,10 +15,10 @@ const SelectComponent = ({ options, value, setValue, type }) => {
          <option
            key={
              type === "province"
-               ? option?.province_id
+               ? option?.province_name
                : type === "district"
-               ? option?.district_id
-               : option?.ward_id
+               ? option?.district_name
+               : option?.ward_name
            }
            value={
              type === "province"

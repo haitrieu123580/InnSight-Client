@@ -1,0 +1,10 @@
+@import '../../../Common.scss';
+
+.nav-host {
+    width: 100%;
+    background-color: $blue-dark !important;
+    height: 70px;
+    padding: 25px 190px;
+    display: flex;
+    color: white;
+}
