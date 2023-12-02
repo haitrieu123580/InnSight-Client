@@ -1,40 +1,31 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { publicRoutes, protectedRoutes } from './routes/MainRouter';
+import { publicRoutes, protectedRoutes, privateRoutes } from './routes/MainRouter';
 import "./Common.scss";
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import MainLayout from './shared/components/layout/MainLayout';
 import { Fragment, Suspense } from 'react';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-function App() {
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     localStorage.removeItem('role');
-  //     localStorage.removeItem('Token');
-  //   };
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
+import Roles from './utils/Roles';
 
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, []);
+function App() {
   const user = true;
-  const { userRole } = useSelector(state => state.Auth)
+  const { userRole, isLogin } = useSelector(state => state.Auth)
   return (
     <>
       <ToastContainer
         position="top-right"
         autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
+        hideProgressBar={true}
+        newestOnTop={true}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
         theme="light"
+        limit={1}
       />
       <Router>
         <div className='App'>
@@ -65,20 +56,47 @@ function App() {
               } else if (route.layout === null) {
                 Layout = Fragment;
               }
-
               return (
                 <Route
                   key={index}
                   path={route.path}
                   element={
-                    // userRole === 'host' ? (
-                    <Layout>
-                      <ProtectedRoute user={userRole === 'host' || true}>
-                        <Suspense fallback={<div>Loading...</div>}>
-                          {<route.component />}
-                        </Suspense>
-                      </ProtectedRoute>
-                    </Layout>
+                    isLogin || true ? (
+                      <Layout>
+                        <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin || true}>
+                          <Suspense fallback={<div>Loading...</div>}>
+                            {<route.component />}
+                          </Suspense>
+                        </ProtectedRoute>
+                      </Layout>
+                    ) : (
+                      <Navigate to="/" replace={true} />
+                    )
+                  }
+                />
+              );
+            })}
+            {/* private Routes */}
+            {privateRoutes?.map((route, index) => {
+              let Layout = MainLayout;
+              if (route.layout) {
+                Layout = route.layout;
+              } else if (route.layout === null) {
+                Layout = Fragment;
+              }
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    // isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
+                      <Layout>
+                        <ProtectedRoute user={user}>
+                          <Suspense fallback={<div>Loading...</div>}>
+                            {<route.component />}
+                          </Suspense>
+                        </ProtectedRoute>
+                      </Layout>
                     // ) : (
                     //   <Navigate to="/" replace={true} />
                     // )
@@ -88,7 +106,7 @@ function App() {
             })}
           </Routes>
         </div>
-      </Router>
+      </Router >
     </>
 
   );

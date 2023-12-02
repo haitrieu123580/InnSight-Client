@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     isLogin: false,
     userProfile: {},
-    userRole: JSON.parse(localStorage.getItem("role")) || ""
+    userRole: ""
 }
 
 const authSlice = createSlice({
@@ -12,9 +12,7 @@ const authSlice = createSlice({
     reducers: {
         signin: (state, { payload }) => {
             state.isLogin = true;
-            state.userProfile = payload?.profile;
             state.userRole = payload?.role
-            // state.userRole = 'host';
         },
     },
 

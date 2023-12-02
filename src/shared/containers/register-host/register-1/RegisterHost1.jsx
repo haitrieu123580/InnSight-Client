@@ -112,7 +112,7 @@ const RegisterHost1Container = () => {
                 {/* {<Select styles={{}} options={cityOptions} />} */}
               </div>
 
-              <div className={` flex flex-col   $styles['info-box']`}>
+              <div className={` flex flex-col   ${styles['info-box']}`}>
                 <h3 className="py-3 ">Số nhà/Đường</h3>
                 <input
                   type="text"

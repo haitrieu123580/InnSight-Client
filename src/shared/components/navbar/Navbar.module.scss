@@ -22,7 +22,7 @@
         margin-right: 20px;
 
         span {
-            font-size: $fontSizeMedium;
+            font-size: 20px;
             color: #9F3845;
             font-weight: $font-weight-bold;
         }
@@ -34,6 +34,16 @@
         padding: 11px !important;
         background: #CBDCF7;
         border-radius: $border-radius;
+        margin-left: 24px;
+    }
+
+    .button-account{
+        font-size:15px;
+        width: 205px;
+        height: 45px;
+        border-radius: 5px;
+        font-weight: 700; 
+        background: #CBDCF7;
         margin-left: 24px;
     }
 }

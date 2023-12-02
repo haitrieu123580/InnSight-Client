@@ -1,0 +1,10 @@
+.home {
+    min-height: 90vh;
+}
+.text{
+    display: 'flex';
+    flexDirection: 'column';
+    alignItems: 'center';
+    justifyContent: 'center';
+    height: '100vh'; // Adjust this to control the vertical centering
+}

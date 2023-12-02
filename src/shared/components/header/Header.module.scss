@@ -12,9 +12,9 @@ header {
     overflow: hidden;
 
     img {
-        transform: scale(1.3);
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 }
 
@@ -45,7 +45,7 @@ header {
             width: 100%;
 
             .item-label {
-               
+
                 font-weight: $font-weight-bold;
             }
         }
@@ -57,9 +57,11 @@ header {
 
     .header-search-submit {
         padding: 20px;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
+        border-top-right-radius: 17px;
+        border-bottom-right-radius: 17px;
         background-color: #6D7BFD;
+        width: 77px;
+        cursor: pointer;
     }
 
     .calendar {

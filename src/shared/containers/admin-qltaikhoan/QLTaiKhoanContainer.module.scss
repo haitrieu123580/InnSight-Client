@@ -1,0 +1,14 @@
+.home {
+    min-height: 90vh;
+    .text{
+    font-size: 14px;
+    }
+    .pagination{
+        padding-left: 700px;
+        padding-top: 15px;
+    }
+    :where(.css-dev-only-do-not-override-xu9wm8).ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
+        color: #fff !important;
+        background-color: #4096ff !important;
+    }
+}
