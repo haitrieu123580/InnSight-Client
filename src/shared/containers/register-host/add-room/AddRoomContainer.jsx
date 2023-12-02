@@ -33,7 +33,7 @@ const AddRoomContainer = () => {
     },
     {
       id: 3,
-      name: "Giường cỡ (cỡ King)",
+      name: "Giường lớn (cỡ King)",
       description: "Rộng 151-180cm",
     },
     {

@@ -122,7 +122,6 @@ const AddRoom = () => {
                 <Box sx={{ minWidth: 100 }}>
                   <FormControl fullWidth>
                     <ThemeProvider theme={themeSelect}>
-                      {/* <GlobalStyles styles={{ paddingRight: 0 }}/> */}
                       <Select
                         disableInjectingGlobalStyles
                         id="select-room-type"
