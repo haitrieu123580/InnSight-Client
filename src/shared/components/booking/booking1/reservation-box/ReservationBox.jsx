@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import IcWarning from '../../../../components/icons/booking/IcWarning'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Constants from '../../../../../utils/Contants';
 
 const ReservationBox = () => {
@@ -25,7 +25,7 @@ const ReservationBox = () => {
             <div className={styles['box']}>
                 <div className='flex justify-between'>
                     <div className=' font-bold text-xl'>Thành tiền</div>
-                    <div className='font-bold text-xl text-red-800'>{`${vat}VND`}</div>
+                    <div className='font-bold text-xl text-red-800'>{vat ? `${vat.toLocaleString('vi-VN')}VND` : '0VND'}</div>
                 </div>
                 <div className='text-blue-800 font-semibold flex'>
                     <span><IcWarning /></span>
@@ -34,13 +34,13 @@ const ReservationBox = () => {
                 <div className='border border-solid border-gray-200 my-5'></div>
                 <div className='text-base'>
                     {cart?.rooms?.map((room, idx) => (
-                        <div key={idx} className='flex justify-between justify-items-center'>
+                        <div key={idx} className='flex justify-between justify-items-center pb-2'>
                             <div >
                                 <span>{`(${room?.count}x) `}</span>
                                 {room?.roomName}
                             </div>
                             <div>
-                                {room?.count * room?.price}VND
+                                {(room?.count && room?.price) ? (room.count * room.price).toLocaleString('vi-VN') + 'VND' : ''}
                             </div>
                         </div>
                     ))}

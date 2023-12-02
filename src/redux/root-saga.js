@@ -3,6 +3,7 @@ import HomeSaga from './home/saga'
 import AuthSaga from './auth/saga'
 import BookingSaga from './booking/saga'
 import User_settings from './user-settings/saga'
+import AdminSaga from './admin/saga'
 import HostSaga from './host/saga'
 
 
@@ -12,6 +13,7 @@ export default function* rootSaga() {
         AuthSaga(),
         BookingSaga(),
         User_settings(),
+        AdminSaga(),
         HostSaga()
     ])
 }

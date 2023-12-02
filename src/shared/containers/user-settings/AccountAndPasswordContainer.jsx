@@ -5,8 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import SettingAction from '../../../redux/user-settings/action';
 import ShowToastify from '../../../utils/ShowToastify';
-import { Navigate } from 'react-router';
-import { NavLink } from 'react-router-dom';
 
 const AccountAndPasswordContainer = () => {
   const [isChange, setIsChange] = useState(false);
@@ -31,16 +29,11 @@ const AccountAndPasswordContainer = () => {
         type: SettingAction.CHANGEPASS,
         data: data,
         onSuccess: () => {
-          console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
-          setTimeout(() => {
-            window.location.href = '/mysettings/password';
-          }, 1500);
+          window.location.href = '/mysettings/password';
         },
         onError: () => {
-          console.log("That bai")
           ShowToastify.showErrorToast("Thất bại")
-          // Navigate("/mysettings/password")
         }
     })
   } 

@@ -4,12 +4,10 @@ import "./Common.scss";
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import MainLayout from './shared/components/layout/MainLayout';
 import { Fragment, Suspense } from 'react';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Roles from './utils/Roles';
-import { useRoutes } from 'react-router-dom';
 
 function App() {
   const user = true;
@@ -65,7 +63,7 @@ function App() {
                   element={
                     isLogin || true ? (
                       <Layout>
-                        <ProtectedRoute user={userRole === Roles.host || true}>
+                        <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin || true}>
                           <Suspense fallback={<div>Loading...</div>}>
                             {<route.component />}
                           </Suspense>
@@ -91,7 +89,7 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    isLogin && userRole === Roles.host ? (
+                    // isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
                       <Layout>
                         <ProtectedRoute user={user}>
                           <Suspense fallback={<div>Loading...</div>}>
@@ -99,9 +97,9 @@ function App() {
                           </Suspense>
                         </ProtectedRoute>
                       </Layout>
-                    ) : (
-                      <Navigate to="/" replace={true} />
-                    )
+                    // ) : (
+                    //   <Navigate to="/" replace={true} />
+                    // )
                   }
                 />
               );

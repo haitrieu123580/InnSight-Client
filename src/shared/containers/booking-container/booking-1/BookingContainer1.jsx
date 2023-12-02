@@ -2,32 +2,66 @@ import styles from './index.module.scss'
 import IcChervonRightGreen from '../../../components/icons/booking/IcChervonRightGreen'
 import { Button } from '@mui/material'
 import ReservationBlock from '../../../components/booking/booking1/reservation-block/ReservationBlock'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReservationBox from '../../../components/booking/booking1/reservation-box/ReservationBox'
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Constants from '../../../../utils/Contants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import BookingAction from '../../../../redux/booking/action';
+import ShowToastify from '../../../../utils/ShowToastify';
+import { saveReservation } from '../../../../redux/booking/slice';
+import useReloadAlert from '../../../../hooks/use-reload-alert';
 const BookingContainer1 = () => {
+    const email = JSON.parse(localStorage.getItem('email'));
+    const isLogin = JSON.parse(localStorage.getItem('isLogin'));
     const navigate = useNavigate();
-    const { cart } = useSelector(state => state.Booking);
-    const { handleSubmit, register, setError, setValue, clearErrors, formState: { errors } } = useForm({
+    const dispatch = useDispatch();
+    const { cart, checkIn, checkOut } = useSelector(state => state.Booking);
+    const { handleSubmit, register, formState: { errors } } = useForm({
         criteriaMode: "all"
     });
+    useReloadAlert();
     const onSubmit = (data) => {
+        const total = cart.rooms.reduce((acc, room) => (
+            acc + (room?.price * parseInt(room?.count || 0, 10))
+        ), 0);
+        const totalWithTax = total + total * Constants.tax / 100;
         const reservation = {
             ...data,
             hotelId: cart?.hotel?.id,
-            // "paymentMethod": "the tin dung",
-            roomTypeReservedList: cart?.rooms,
-            totalPrice: 5000.0,
-            tax: Constants.tax,
-            vat: 5600.0,
-            startDay: cart?.hotel?.checkIn,
-            endDay: cart?.hotel?.checkOut
+            roomTypeReservedList: cart?.rooms.map(item => ({
+                id: item.id,
+                count: parseInt(item.count),
+                price: item.price
+            })),
+            totalPrice: total,
+            tax: total * Constants.tax / 100,
+            vat: parseFloat(totalWithTax.toFixed(3)),
+            startDay: checkIn,
+            endDay: checkOut
         }
-        // navigate("/book/check")
+        dispatch(saveReservation(
+            {
+                reservation: reservation,
+                onSuccess: () => {
+                    ShowToastify.showSuccessToast('Đã lưu thông tin')
+                    navigate("/book/check");
+                },
+                onError: () => {
+
+                }
+            }
+        ))
+
+        dispatch({
+            type: BookingAction.PAYMENT,
+            reservation: reservation,
+            onSuccess: () => {
+            },
+            onError: () => {
+            }
+            });
     }
     useEffect(() => {
     }, [cart])
@@ -95,6 +129,8 @@ const BookingContainer1 = () => {
                                             <input
                                                 className='w-full border border-solid'
                                                 type="email"
+                                                defaultValue={isLogin ? email : ''}
+                                                readOnly={isLogin}
                                                 {...register('email', {
                                                     required: 'Vui lòng nhập email',
                                                 })}

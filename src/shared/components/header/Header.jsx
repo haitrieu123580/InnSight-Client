@@ -14,6 +14,8 @@ import imgBg from '../../../assets/images/header-background.png'
 import HomeAction from '../../../redux/home/action';
 import ShowToastify from '../../../utils/ShowToastify';
 import ProvinceDropdown from './province-dropdown/ProvinceDropdown';
+import { setCheckInOut } from '../../../redux/booking/slice';
+import BookingAction from '../../../redux/booking/action';
 const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,10 +27,8 @@ const Header = () => {
     room: searchParams.get('count') || 1,
     adultCount: searchParams.get('adultCount') || 2,
     childrenCount: searchParams.get('childrenCount') || 0,
-    fromPrice: searchParams.get('fromPrice') || 0,
-    toPrice: searchParams.get('toPrice') || 0,
-    rate: searchParams.get('rate') || 0,
-    review: searchParams.get('review') || 0,
+    pageIndex: 1,
+    pageSize: 5,
   };
   const dateRef = useRef(null);
   const optionRef = useRef(null);
@@ -65,7 +65,12 @@ const Header = () => {
         checkoutDay: format(date[0].endDate, 'yyyy-MM-dd'),
         count: options?.room,
         adultCount: options?.adult,
-        childrenCount: options?.children
+        childrenCount: options?.children,
+        fromPrice: searchParams.get('fromPrice') || 0,
+        rate: searchParams.get('rate') !== 'null' ? searchParams.get('rate') : null ,
+        review: searchParams.get('review') !== 'null' ? searchParams.get('review') : null,
+        pageIndex: 1,
+        pageSize: 5,
       }
       dispatch({
         type: HomeAction.SEARCH_HOTELS,
@@ -78,7 +83,7 @@ const Header = () => {
           ShowToastify.showErrorToast("Có lỗi xảy ra, vui lòng thử lại")
         }
       })
-
+      dispatch(setCheckInOut({ checkIn: filter.checkinDay, checkOut: filter.checkoutDay }))
     }
     else {
       ShowToastify.showWarningToast('Vui lòng địa điểm muốn đến')

@@ -43,27 +43,12 @@ function Map({ lat, lng }) {
 const HotelContainer = () => {
     const { hotel } = useSelector(state => state.Home) || {}
     const { cart } = useSelector(state => state.Booking);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [showButton, setShowButton] = React.useState(false);
     const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
-    const { id } = useParams();
-    useEffect(() => {
-        if (id) {
-            dispatch({
-                type: HomeAction.GET_HOTEL,
-                hotelId: id,
-                onSuccess: () => {
-
-                },
-                onError: () => {
-                    ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-                }
-            });
-
-        }
-    }, [id])
+    console.log('hotel', hotel);
+    
     useEffect(() => {
         if (Object.keys(cart?.rooms).length !== 0) {
             setShowButton(true);
@@ -127,7 +112,7 @@ const HotelContainer = () => {
                         <div className='col-span-2'>
                             <div className='flex flex-col justify-center items-center'>
                                 <div className='font-semibold mb-2' >Giá phòng mỗi đêm từ</div>
-                                <div className='text-lg text-red-500 font-semibold mb-2'>{hotel?.minPrice} VNĐ</div>
+                                <div className='text-lg text-red-500 font-semibold mb-2'>{hotel?.minPrice.toLocaleString('vi-VN')} VNĐ</div>
                             </div>
 
                         </div>
@@ -198,12 +183,11 @@ const HotelContainer = () => {
                     {hotel?.roomList?.map((room, index) => (
                         <Room key={index} room={room} />
                     ))}
-
                 </div>
                 <div className={`${styles['content-block']} w-full flex justify-end`}>
                     {showButton &&
                         <Button variant='contained mb-2' className={styles['button-orange']}
-                            onClick={() => { navigate('/book') }}
+                            onClick={() => { navigate('/book/fill-info') }}
                         >
                             Tiến hành đặt phòng
                         </Button>
