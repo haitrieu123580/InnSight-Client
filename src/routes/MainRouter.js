@@ -1,5 +1,6 @@
 import MainLayout from "../shared/components/layout/MainLayout";
 import HostLayout from "../shared/components/layout/HostLayout/HostLayout";
+import BookingLayout from "../shared/components/layout/booking-layout/BookingLayout";
 import SigninLayout from "../shared/components/layout/SigninLayout";
 import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayout";
 import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
