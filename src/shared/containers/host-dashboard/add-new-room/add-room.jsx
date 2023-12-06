@@ -1,99 +1,69 @@
 import React, { useState } from "react";
 import styles from "./AddRoomContainer.module.scss";
 import Box from "@mui/material/Box";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import CheckIcon from "@mui/icons-material/Check";
 import {
   Button,
   Checkbox,
-  FormControl,
   FormControlLabel,
   FormGroup,
-  FormLabel,
-  Input,
-  Select,
+  Radio,
+  RadioGroup,
+  Stack,
   TextField,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
-import { useDispatch } from "react-redux";
-import { addBasicInfoRoomType } from "../../../../redux/host/slice";
-import { MenuItem } from "material-ui";
-const AddRoomContainer = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const bedTypes = [
-    {
-      id: 1,
-      name: "Giường đơn",
-      description: "Rộng 90-130cm",
-    },
-    {
-      id: 2,
-      name: "Giường đôi",
-      description: "Rộng 131-150cm",
-    },
-    {
-      id: 3,
-      name: "Giường lớn (cỡ King)",
-      description: "Rộng 151-180cm",
-    },
-    {
-      id: 4,
-      name: "Giường cực lớn (cỡ Super-King)",
-      description: "Rộng 181-210cm",
-    },
-  ];
-  const roomAmenities = [
-    {
-      id: 1,
-      name: "Điều hòa nhiệt độ",
-    },
-    {
-      id: 2,
-      name: "Bồn tắm nóng/Bể sục",
-    },
-  ];
-  const views = [
-    {
-      id: 1,
-      name: "View sông",
-    },
-    {
-      id: 2,
-      name: "View sân vườn",
-    },
-  ];
+import BedroomChildIcon from "@mui/icons-material/BedroomChild";
+import {
+  bedTypes,
+  roomTypes,
+  roomAmenities,
+  cancelTimes,
+  feeCancels,
+} from "../../../../api/mock-data/host";
+import IcXmark from "../../../components/icons/home-icons/IcXmark";
+import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
+
+const AddRoom = () => {
   const handleAddRoomAmenities = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
     infoAmenity.classList.toggle("hidden");
   };
   const [roomType, setRoomType] = useState("");
+
   const handleChangeRoomType = (event) => {
     setRoomType(event.target.value);
   };
+
   const [roomCount, setRoomCount] = useState(0);
   const handleChangeRoomCount = (event) => {
     setRoomCount(event.target.value);
   };
-  const [bedTypeCount, setBedTypeCount] = useState(
-    bedTypes.map((bedType) => ({ name: bedType.name, count: 0 }))
-  );
+  const [bedCount, setBedCount] = useState(new Array(bedTypes.length).fill(0));
   const handleChangeBedCount = (event, index) => {
-    const value = event.target.value;
-    setBedTypeCount((prevBedCount) => {
-      const newBedCount = [...prevBedCount];
-      newBedCount[index] = { ...newBedCount[index], count: value };
-      return newBedCount;
-    });
+    const newCount = event.target.value;
+    const updatedBedCount = [...bedCount];
+    updatedBedCount[index] = newCount;
+    setBedCount(updatedBedCount);
   };
+
   const [childrenCount, setChildrenCount] = useState(0);
   const handleChangeChildrenCount = (event) => {
     setChildrenCount(event.target.value);
   };
+
   const [adultCount, setAdultCount] = useState(0);
   const handleChangeAdultCount = (event) => {
     setAdultCount(event.target.value);
   };
+
   const [roomArea, setRoomArea] = useState(0);
   const handleChangeRoomArea = (event) => {
     setRoomArea(event.target.value);
@@ -103,55 +73,41 @@ const AddRoomContainer = () => {
   const handleChangeBathroom = (event) => {
     setBathroomCount(event.target.value);
   };
-
-  const [roomName, setRoomName] = useState([]);
-  const handleTypeRoomName = (index, event) => {
-    setRoomName((prevRoomName) => {
-      const newRoomName = [...prevRoomName];
-      newRoomName[index] = event.target.value;
-      return newRoomName;
-    });
+  const [price, setPrice] = useState(0);
+  const themeSelect = createTheme({
+    sx: {
+      body: {
+        paddingRight: 0,
+      },
+    },
+  });
+  const [cancelTime, setCancelTime] = useState(cancelTimes[0]);
+  const [feeCancel, setFeeCancel] = useState(feeCancels[0]);
+  const handleChangeCancelTime = (event) => {
+    setCancelTime(event.target.value);
   };
 
-  const [view, setView] = useState("");
-  const handleChangeView = (event) => {
-    setView(event.target.value);
+  const handleChangeFeeCancel = (event) => {
+    setFeeCancel(event.target.value);
   };
-  const [extraAmenityName, setExtraAmenityName] = useState("");
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const handleAddExtraAmenity = () => {
-    setSelectedAmenities([...selectedAmenities, extraAmenityName]);
+  const [previewImages, setPreviewImages] = useState([]);
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const newImages = Array.from(files).map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setPreviewImages((prevImages) => [...prevImages, ...newImages]);
   };
 
-  const handleCheckedAmenities = (e) => {
-    const checkedAmenity = selectedAmenities.find(
-      (amenity) => amenity.name === e.target.name
-    );
-    setSelectedAmenities(
-      checkedAmenity
-        ? selectedAmenities.filter((amenity) => amenity !== e.target.value)
-        : [...selectedAmenities, e.target.name]
-    );
+  const handleImageRemove = (index) => {
+    const updatedImages = [...previewImages];
+    updatedImages.splice(index, 1);
+    setPreviewImages(updatedImages);
   };
-  const onSubmit = () => {
-    const basicInfoRoomType = {
-      name: roomType,
-      sdRoomName: roomName,
-      count: roomCount,
-      bedTypes: bedTypeCount,
-      roomArea: roomArea,
-      adultCount: adultCount,
-      childrenCount: childrenCount,
-      amenities: selectedAmenities,
-      view: view,
-    };
-    dispatch({
-      type: addBasicInfoRoomType,
-      payload: basicInfoRoomType,
-    });
 
-    navigate("/host/add-room-price");
-  };
   return (
     <div className={` ${styles["add-room"]}`}>
       <div className={`${styles["content"]}`}>
@@ -164,12 +120,24 @@ const AddRoomContainer = () => {
               <div className={`my-3  ${styles["room-type"]}`}>
                 <h3 className="font-bold">Đây là loại phòng gì?</h3>
                 <Box sx={{ minWidth: 100 }}>
-                  <TextField
-                    fullWidth
-                    id="room-type-name"
-                    className="my-2"
-                    onChange={handleChangeRoomType}
-                  />
+                  <FormControl fullWidth>
+                    <ThemeProvider theme={themeSelect}>
+                      <Select
+                        disableInjectingGlobalStyles
+                        id="select-room-type"
+                        value={roomType}
+                        onChange={handleChangeRoomType}
+                        className="my-2 h-10"
+                      >
+                        {roomTypes?.map((type) => {
+                          return (
+                            <MenuItem value={type.name}>{type.name}</MenuItem>
+                          );
+                        })}
+                        ;
+                      </Select>
+                    </ThemeProvider>
+                  </FormControl>
                 </Box>
               </div>
               <div className={`mb-3 ${styles["room-count"]}`}>
@@ -184,25 +152,6 @@ const AddRoomContainer = () => {
                   min={0}
                 />
               </div>
-              <div>
-                {roomCount > 0 && (
-                  <>
-                    <FormLabel id="demo-radio-buttons-group-label">
-                      Bây giờ bạn hãy điền tên từng phòng của loại phòng này?
-                    </FormLabel>
-                    {Array.from({ length: roomCount }, (_, i) => (
-                      <TextField
-                        key={i}
-                        fullWidth
-                        id={`room-type-name-${i}`}
-                        placeholder={`Tên phòng ${i + 1}`}
-                        className="my-2"
-                        onChange={(event) => handleTypeRoomName(i, event)}
-                      />
-                    ))}
-                  </>
-                )}
-              </div>
             </div>
 
             <div className="flex flex-col justify-between border-2 my-4 px-5 rounded-md">
@@ -210,7 +159,7 @@ const AddRoomContainer = () => {
                 <h3 className="font-bold">
                   Có loại giường nào trong phòng này?
                 </h3>
-                {bedTypeCount.map((bed, index) => {
+                {bedTypes.map((bed, index) => {
                   return (
                     <div
                       className={`flex justify-between py-2 ${styles["count-bed-type"]}`}
@@ -222,7 +171,7 @@ const AddRoomContainer = () => {
                       </div>
                       <input
                         type="number"
-                        value={bed.count}
+                        value={bedCount[index]}
                         onChange={(event) => handleChangeBedCount(event, index)}
                         className="border-2 p-2"
                         min={0}
@@ -299,32 +248,6 @@ const AddRoomContainer = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 flex-col justify-between border-2 my-4 px-5 rounded-md">
-              <div className={`my-3  ${styles[""]}`}>
-                <h3 className="font-bold">Phòng này có view như thế nào?</h3>
-                <div className="flex justify-between">
-                  <div className="flex items-center">
-                      <FormControl fullWidth>
-                        <select
-                          id="select-view"
-                          value={view}
-                          onChange={handleChangeView}
-                          className="my-2 h-10 border rounded-sm border-[#dedfe0] w-full"
-                        >
-
-
-                          {views?.map((viewItem) => (
-                            <option key={viewItem.name} value={viewItem.name}>
-                              {viewItem.name}
-                            </option>
-                          ))}
-                        </select>
-                      </FormControl>
-              
-                  </div>
-                </div>
-              </div>
-            </div>
             <div
               className={`border-2 my-4 px-5 rounded-md  flex flex-col   ${styles[""]}  `}
             >
@@ -338,30 +261,26 @@ const AddRoomContainer = () => {
                         key={roomAmenity.id}
                         control={<Checkbox />}
                         label={roomAmenity.name}
-                        name={roomAmenity.name}
-                        onChange={handleCheckedAmenities}
                       />
                     );
                   })}
-                  <div className={`flex flex-col `}>
+
+                  <div className={`flex flex-col ${styles["add-amenity"]}`}>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label={"Thêm dịch vụ (nếu có)"}
+                      label={"Thêm tiện ích (nếu có)"}
                       onChange={handleAddRoomAmenities}
                     />
-                    <div className={`flex justify-between hidden `}>
-                      <Input
+                    <div
+                      className={`flex justify-between hidden ${styles["info-amenity"]}`}
+                    >
+                      <TextField
+                        label="Tên tiện ích"
                         id="amenity-name"
                         variant="standard"
-                        placeholder="Ten tien ich"
-                        onChange={(e) => setExtraAmenityName(e.target.value)}
-                      ></Input>
-                      <Button
-                        onClick={handleAddExtraAmenity}
-                        variant="outlined"
-                      >
-                        Thêm
-                      </Button>
+                        size="small"
+                      />
+                      <Button variant="outlined">Thêm</Button>
                     </div>
                   </div>
                 </FormGroup>
@@ -369,23 +288,161 @@ const AddRoomContainer = () => {
             </div>
           </div>
         </div>
+        <Box
+          sx={{
+            border: "1px solid #dadada",
+            width: "50%",
+            padding: 3,
+            marginY: 3,
+            borderRadius: 2,
+          }}
+        >
+          <h2 className="text-xl pb-2">
+            Quý vị muốn thu bao nhiêu tiền mỗi đêm?
+          </h2>
+          <Stack paddingX={3} paddingBottom={4}>
+            <h3 className="pb-2">Số tiền khách trả</h3>
+            <TextField
+              id="price-room"
+              helperText="Bao gồm các loại thuế, phí và hoa hồng"
+              onChange={(e) => {
+                setPrice(e.target.value);
+                console.log(price);
+              }}
+            />
+          </Stack>
+          <Stack paddingX={8} spacing={2}>
+            <h3 className="text-gray-400 py-1">15% hoa hồng cho InnSight</h3>
+            <Stack direction="row" spacing={1}>
+              <CheckIcon />
+              <h3 className="text-gray-400 py-1">
+                Trợ giúp 24/7 bằng ngôn ngữ của Quý vị
+              </h3>
+            </Stack>
+            <Stack direction="row" spacing={1}>
+              <CheckIcon />
+              <h3 className="text-gray-400 py-1">
+                Tiết kiệm thời gian với đặt phòng được xác nhận tự động
+              </h3>
+            </Stack>
+            <hr width="100%" />
+            <h3>
+              Doanh thu của Quý vị (bao gồm thuế): {(price * 85) / 100} VND{" "}
+            </h3>
+          </Stack>
+        </Box>
+        <Box
+          sx={{
+            border: "1px solid #dadada",
+            width: "50%",
+            paddingY: 3,
+            paddingX: 5,
+            marginY: 3,
+            borderRadius: 2,
+          }}
+        >
+          <h2 className="text-l pb-2 font-bold">
+            Khách có thể hủy đặt phòng miễn phí khi nào?
+          </h2>
+          <Select
+            fullWidth
+            id="cancel-time-select"
+            value={cancelTime}
+            className="mb-8"
+            onChange={(event) => {
+              handleChangeCancelTime(event);
+            }}
+          >
+            {cancelTimes.map((time) => {
+              return (
+                <MenuItem value={time} key={time}>
+                  {time}
+                </MenuItem>
+              );
+            })}
+          </Select>
+
+          <h2 className="text-l pb-2 font-bold">
+            Khách bị tính phí bao nhiêu nếu họ hủy sau thời gian hủy miễn phí
+            trên?
+          </h2>
+          <RadioGroup
+            value={feeCancel}
+            name="fee-cancel-radio"
+            onChange={handleChangeFeeCancel}
+          >
+            {feeCancels.map((fee) => {
+              return (
+                <FormControlLabel
+                  value={fee}
+                  control={<Radio />}
+                  label={fee}
+                  key={fee}
+                />
+              );
+            })}
+          </RadioGroup>
+          <p className="text-gray-400 pt-3">
+            Để tránh việc Quý vị tốn thời gian xử lý các đặt phòng do nhầm lẫn,
+            chúng tôi tự động miễn phí hủy cho các khách hủy trong vòng 24h kể
+            từ thời điểm đặt
+          </p>
+        </Box>
+        <div
+          className={`border-dashed border-2 items-center flex justify-center  ${styles["container-upload-image"]}`}
+        >
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+            className=""
+          />
+        </div>
+        <div className={`${styles["previewStyles"]}`}>
+          {previewImages.map((image, index) => (
+            <div key={index} className={`${styles["imageContainerStyles"]}`}>
+              <img
+                src={image.preview}
+                alt={`preview-${index}`}
+                className={`${styles["imageStyles"]}`}
+              />
+              <button
+                className={`${styles["btn-remove"]}`}
+                onClick={() => handleImageRemove(index)}
+              >
+                <IcXmark />
+              </button>
+            </div>
+          ))}
+        </div>
+        {previewImages.length < 5 ? (
+          <div className="flex items-center">
+            <CircleExclamation />
+            <span className="text-red-600 pl-1">
+              Đăng tải thêm {5 - previewImages.length} để tiếp tục
+            </span>
+          </div>
+        ) : (
+          console.log("Đủ ảnh")
+        )}
+
         <div className={`w-1/2 flex pt-7`}>
           <Link to="/host/dashboard">
             <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
               <IcChevronLeft />
             </button>
           </Link>
-
-          <button
+          <Link
+            to="/host/add-room/2"
             className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-            onClick={onSubmit}
           >
-            Tiếp tục
-          </button>
+            <button className="h-full">Tiếp tục</button>
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default AddRoomContainer;
+export default AddRoom;

@@ -9,8 +9,12 @@ import dayjs from "dayjs";
 import { FormLabel } from "@mui/material";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { useRef, useState } from "react";
-
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addCheckInCheckOutTime } from "../../../../redux/host/slice";
 const RegisterHost4Container = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const dateRef = useRef(null);
   const timeCheckins = [dayjs("2023-10-17T16:30"), dayjs("2023-10-17T18:30")];
   const timeCheckouts = [dayjs("2023-10-17T15:30"), dayjs("2023-10-17T18:30")];
@@ -20,7 +24,13 @@ const RegisterHost4Container = () => {
 
   const [timeCheckoutFrom, setTimeCheckoutFrom] = useState(timeCheckouts[0]);
   const [timeCheckoutTo, setTimeCheckoutTo] = useState(timeCheckouts[1]);
-
+  const onSubmit = () => { 
+    dispatch({
+      type: addCheckInCheckOutTime,
+      payload: {checkInTime:timeCheckinFrom.format("HH:mm:ss"),checkOutTime:timeCheckoutFrom.format("HH:mm:ss")},
+    });  
+    navigate("/host/register-5");
+  };
   return (
     <div className={` ${styles["register-4"]}`}>
       <div className={`${styles["content"]}`}>
@@ -85,12 +95,12 @@ const RegisterHost4Container = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              <Link
-                to="/host/register-5"
-                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-              >
-                <button className="h-full">Tiếp tục</button>
-              </Link>
+              <button
+                  className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                  onClick={onSubmit}
+                >
+                  Tiếp tục
+                </button>
             </div>
           </div>
           <div className="flex-1"></div>

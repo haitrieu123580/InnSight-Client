@@ -5,91 +5,147 @@ import { Link } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import { useState } from "react";
 import {
   Button,
   FormControl,
   FormLabel,
   Radio,
   RadioGroup,
-  TextField,
-  Stack,
+  Input,
 } from "@mui/material";
-
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import {
+  addAmenitiesHotel,
+  addExtraAmenityHotel,
+  addExtraServiceHotel,
+} from "../../../../redux/host/slice";
 const RegisterHost3Container = () => {
-  const services = [
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  let amenities = [
     {
       id: 1,
       name: "Nhà hàng",
+      price: 100,
     },
     {
       id: 2,
       name: "Quầy bar",
+      price: 100,
     },
     {
       id: 3,
       name: "Lễ tân 24 giờ",
+      price: 100,
     },
     {
       id: 4,
       name: "Trung tâm thể dục",
+      price: 100,
     },
     {
       id: 5,
       name: "Phòng xông hơi",
+      price: 100,
     },
     {
       id: 6,
       name: "Sân vườn",
+      price: 100,
     },
     {
       id: 7,
       name: "Sân thượng/hiên",
+      price: 100,
     },
     {
       id: 8,
       name: "Phòng không hút thuốc",
+      price: 100,
     },
     {
       id: 9,
       name: "Trung tâm Spa & chăm sóc sức khỏe",
+      price: 100,
     },
     {
       id: 10,
       name: "Wifi miễn phí",
+      price: 100,
     },
 
     {
       id: 11,
       name: "Trạm sạc xe điện",
+      price: 100,
     },
     {
       id: 12,
       name: "Hồ bơi",
+      price: 100,
     },
     {
       id: 13,
       name: "Bãi biển",
+      price: 100,
     },
     {
       id: 14,
       name: "Bồn tắm nóng",
+      price: 100,
     },
   ];
-  const amenities = [
-    {
-      id: 1,
-      name: "Điều hòa nhiệt độ",
-    },
-    {
-      id: 2,
-      name: "Bồn tắm nóng/Bể sục",
-    },
-  ];
-  const handleAddService = (e) => {
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [extraAmenity, setExtraAmenity] = useState();
+  const [extraAmenityName, setExtraAmenityName] = useState("");
+  const [extraAmenityPrice, setExtraAmenityPrice] = useState(0);
+  const [serveBreakfast, setServeBreakfast] = useState("yes");
+  const handleServeBreakfastChange = (event) => {
+    setServeBreakfast(event.target.value);
+  };
+  const [breakfastIncluded, setBreakfastIncluded] = useState("yes");
+  const handleBreakfastIncludedChange = (event) => {
+    setBreakfastIncluded(event.target.value);
+  };
+  const handleToggleAddAmenity = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
-    let infoService = addElement.children[1];
-    infoService.classList.toggle("hidden");
+    let infoAmenity = addElement.children[1];
+    infoAmenity.classList.toggle("hidden");
+  };
+
+  const onSubmit = () => {
+    const extraServices = {
+      name: serveBreakfast === "yes" ? "Phục vụ bữa sáng" : "",
+      price: breakfastIncluded === "yes" ? 0 : 0,
+    };
+    dispatch({
+      type: addAmenitiesHotel,
+      payload: selectedAmenities,
+    });
+    dispatch({
+      type: addExtraServiceHotel,
+      payload: extraServices,
+    });
+    navigate("/host/register-4");
+  };
+  const handleAddExtraAmenity = () => {
+    setExtraAmenity({ name: extraAmenityName, price: extraAmenityPrice });
+    setSelectedAmenities([...selectedAmenities,{ name: extraAmenityName, price: extraAmenityPrice }]);
+  };
+
+  const handleCheckedAmenities = (e) => {
+    const checkedAmenity = selectedAmenities.find(
+      (amenity) => amenity.name === e.target.name
+    );
+    setSelectedAmenities(
+      checkedAmenity
+        ? selectedAmenities.filter((amenity) => amenity.name !== e.target.name)
+        : [...selectedAmenities, {name:e.target.name,price:0}]
+    );
+
+    console.log(selectedAmenities);
   };
   return (
     <div className={` ${styles["register-3"]}`}>
@@ -112,104 +168,49 @@ const RegisterHost3Container = () => {
 
               <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
                 <FormGroup>
-                  {services?.map((service) => {
-                    return (
-                      <FormControlLabel
-                        key={service.id}
-                        control={<Checkbox />}
-                        label={service.name}
-                      />
-                    );
-                  })}
-
-                  <div className={`flex flex-col ${styles["add-service"]}`}>
-                    <FormControlLabel
-                      control={<Checkbox />}
-                      label={"Thêm dịch vụ (nếu có)"}
-                      onChange={handleAddService}
-                    />
-                    <div
-                      className={`flex justify-between hidden ${styles["info-service"]}`}
-                    >
-                      <TextField
-                        label="Tên dịch vụ"
-                        id="service-name"
-                        variant="standard"
-                        size="small"
-                      />
-                      <TextField
-                        label="Giá"
-                        id="service-price"
-                        variant="standard"
-                        size="small"
-                      />
-                      <Button variant="outlined">Thêm</Button>
-                    </div>
-                  </div>
-                </FormGroup>
-              </div>
-            </div>
-
-            <div
-              className={`px-5 flex flex-col pb-2 mt-3  ${styles["form"]}  `}
-            >
-              <FormLabel id="demo-radio-buttons-group-label">
-                Khách có thể sử dụng tiện ích gì tại chỗ nghỉ của Quý vị?
-              </FormLabel>
-
-              <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
-                <FormGroup>
                   {amenities?.map((amenity) => {
                     return (
                       <FormControlLabel
                         key={amenity.id}
                         control={<Checkbox />}
                         label={amenity.name}
+                        name={amenity.name}
+                        onChange={handleCheckedAmenities}
                       />
                     );
                   })}
 
-                  <div className={`flex flex-col ${styles["add-amenity"]}`}>
+                  <div className={`flex flex-col `}>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label={"Thêm tiện ích (nếu có)"}
-                      onChange={handleAddService}
+                      label={"Thêm dịch vụ (nếu có)"}
+                      onChange={handleToggleAddAmenity}
                     />
-                    <div
-                      className={`flex justify-between hidden ${styles["info-amenity"]}`}
-                    >
-                      <TextField
-                        label="Tên tiện ích"
+                    <div className={`flex justify-between hidden `}>
+                      <Input
                         id="amenity-name"
                         variant="standard"
-                        size="small"
-                      />
-                      <Button variant="outlined">Thêm</Button>
+                        placeholder="Ten tien ich"
+                        onChange={(e) => setExtraAmenityName(e.target.value)}
+                      ></Input>
+                      <Input
+                        placeholder="Giá"
+                        id="amenity-price"
+                        variant="standard"
+                        onChange={(e) => setExtraAmenityPrice(e.target.value)}
+                      ></Input>
+                      <Button
+                        onClick={handleAddExtraAmenity}
+                        variant="outlined"
+                      >
+                        Thêm
+                      </Button>
                     </div>
                   </div>
                 </FormGroup>
               </div>
             </div>
-
-            <div className={`flex pt-7`}>
-              <Link to="/host/register-2">
-                <button
-                  className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}
-                >
-                  <IcChevronLeft />
-                </button>
-              </Link>
-              <Link  to="/host/register-4"
-                  className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                  >
-                <button className="h-full"
-                >
-                  Tiếp tục
-                </button>
-              </Link>
-            </div>
           </div>
-
           <div className={`xl:flex-1 `}>
             <div className={`px-5 flex flex-col pb-2 ${styles["form"]} `}>
               <h3 className="py-3 text-lg border-0">
@@ -225,6 +226,7 @@ const RegisterHost3Container = () => {
                     aria-labelledby="breakfast"
                     defaultValue="yes"
                     name="group-breakfast"
+                    onChange={handleServeBreakfastChange}
                   >
                     <FormControlLabel
                       value="yes"
@@ -241,13 +243,14 @@ const RegisterHost3Container = () => {
               </div>
               <div className={`flex flex-col px-6  ${styles["info-hotel"]}`}>
                 <FormControl>
-                  <FormLabel id="breakfast-fee">
+                  <FormLabel id="breakfast-included">
                     Bữa sáng có bao gồm trong giá khách trả không?
                   </FormLabel>
                   <RadioGroup
-                    aria-labelledby="breakfast-fee"
+                    aria-labelledby="breakfast-included"
                     defaultValue="yes"
-                    name="group-breakfast-fee"
+                    name="group-breakfast-included"
+                    onChange={handleBreakfastIncludedChange}
                   >
                     <FormControlLabel
                       value="yes"
@@ -264,6 +267,19 @@ const RegisterHost3Container = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className={`flex pt-7 w-full lg:w-1/2`}>
+          <Link to="/host/register-2">
+            <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
+              <IcChevronLeft />
+            </button>
+          </Link>
+          <button
+            className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+            onClick={onSubmit}
+          >
+            Tiếp tục
+          </button>
         </div>
       </div>
     </div>
