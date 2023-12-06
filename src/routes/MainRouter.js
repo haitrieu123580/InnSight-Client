@@ -5,6 +5,7 @@ import SigninLayout from "../shared/components/layout/SigninLayout";
 import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayout";
 import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import { lazy } from 'react';
+import RoomPrice from "../pages/host-pages/dashboard/room-price/RoomPrice";
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
 const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
@@ -35,14 +36,15 @@ const QLLoaiGiuong = lazy(() => import('../pages/qldanhmuc/QLLoaiGiuong'))
 const QLTamNhin = lazy(() => import('../pages/qldanhmuc/QLTamNhin'))
 const Thongke = lazy(() => import('../pages/admin-thongke/Thongke'))
 const Setting = lazy(() => import('../pages/admin-setting/Setting'))
-const AddAdmin = lazy(() => import('../pages/admin-addAdmin/AddAdmin'))
 const Changepw = lazy(() => import('../pages/admin-ChangePW/Changepw'))
 const Cancel1 = lazy(() => import('../pages/cancel/Cancel1'))
 const Cancel2 = lazy(() => import('../pages/cancel/Cancel2'))
-const Cancel3 = lazy(() => import('../pages/cancel/Cancel3'))
-const Cancel4 = lazy(() => import('../pages/cancel/Cancel4'))
 const BookingHistory = lazy(() => import('../pages/user-settings-page/BookingHistory'))
 const AccountAndPassword = lazy(() => import('../pages/user-settings-page/AccountAndPassword'))
+const PriceRoom = lazy(() => import('../pages/host-pages/dashboard/room-price/RoomPrice'))
+
+
+
 const publicRoutes = [
     {
         path: '/',
@@ -137,6 +139,21 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
+    path: '/host/register-finished',
+    component: RegisterFinished,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/dashboard",
+    component: RoomPrice,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/price-room",
+    component: RoomPrice,
+    layout: HostLayout,
+  },
+  {
     path: "/host/add-room",
     component: AddRoom,
     layout: HostLayout,
@@ -219,11 +236,6 @@ const privateRoutes = [
     layout: MainLayoutAdmin,
   },
   {
-    path: '/addAdmin',
-    component: AddAdmin,
-    layout: MainLayoutAdmin,
-  },
-  {
     path: '/admin_changepw',
     component:Changepw,
     layout: MainLayoutAdmin,
@@ -236,16 +248,6 @@ const privateRoutes = [
   {
     path: '/cancel/2',
     component: Cancel2,
-    layout: MainLayout,
-  },
-  {
-    path: '/cancel/3',
-    component: Cancel3,
-    layout: MainLayout,
-  },
-  {
-    path: '/cancel/4',
-    component: Cancel4,
     layout: MainLayout,
   },
  

@@ -1,47 +1,25 @@
 import React, { useState } from "react";
 import styles from "./AddRoomContainer.module.scss";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { ConstructionOutlined, Label } from "@mui/icons-material";
 import {
   Button,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
-  GlobalStyles,
+  FormLabel,
+  Input,
+  Select,
   TextField,
-  ThemeProvider,
-  createTheme,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
-import BedroomChildIcon from "@mui/icons-material/BedroomChild";
+import { useDispatch } from "react-redux";
+import { addBasicInfoRoomType } from "../../../../redux/host/slice";
+import { MenuItem } from "material-ui";
 const AddRoomContainer = () => {
-  const roomTypes = [
-    {
-      id: 1,
-      name: "Phòng giường đôi",
-    },
-    {
-      id: 2,
-      name: "Phòng Tiêu chuẩn có giường đôi",
-    },
-    {
-      id: 3,
-      name: "Phòng giường đơn cỡ lớn",
-    },
-    {
-      id: 4,
-      name: "Phòng giường đơn",
-    },
-    {
-      id: 5,
-      name: "Phòng Business",
-    },
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const bedTypes = [
     {
       id: 1,
@@ -55,7 +33,7 @@ const AddRoomContainer = () => {
     },
     {
       id: 3,
-      name: "Giường cỡ (cỡ King)",
+      name: "Giường lớn (cỡ King)",
       description: "Rộng 151-180cm",
     },
     {
@@ -64,7 +42,6 @@ const AddRoomContainer = () => {
       description: "Rộng 181-210cm",
     },
   ];
-
   const roomAmenities = [
     {
       id: 1,
@@ -75,41 +52,48 @@ const AddRoomContainer = () => {
       name: "Bồn tắm nóng/Bể sục",
     },
   ];
+  const views = [
+    {
+      id: 1,
+      name: "View sông",
+    },
+    {
+      id: 2,
+      name: "View sân vườn",
+    },
+  ];
   const handleAddRoomAmenities = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
     infoAmenity.classList.toggle("hidden");
   };
   const [roomType, setRoomType] = useState("");
-  // const [bedType, setBedType] = useState("");
-
   const handleChangeRoomType = (event) => {
     setRoomType(event.target.value);
   };
-  const handleClickChangeRoomType = (event) => {};
-
   const [roomCount, setRoomCount] = useState(0);
   const handleChangeRoomCount = (event) => {
     setRoomCount(event.target.value);
   };
-  const [bedCount, setBedCount] = useState(new Array(bedTypes.length).fill(0));
+  const [bedTypeCount, setBedTypeCount] = useState(
+    bedTypes.map((bedType) => ({ name: bedType.name, count: 0 }))
+  );
   const handleChangeBedCount = (event, index) => {
-    const newCount = event.target.value;
-    const updatedBedCount = [...bedCount];
-    updatedBedCount[index] = newCount;
-    setBedCount(updatedBedCount);
+    const value = event.target.value;
+    setBedTypeCount((prevBedCount) => {
+      const newBedCount = [...prevBedCount];
+      newBedCount[index] = { ...newBedCount[index], count: value };
+      return newBedCount;
+    });
   };
-
   const [childrenCount, setChildrenCount] = useState(0);
   const handleChangeChildrenCount = (event) => {
     setChildrenCount(event.target.value);
   };
-
   const [adultCount, setAdultCount] = useState(0);
   const handleChangeAdultCount = (event) => {
     setAdultCount(event.target.value);
   };
-
   const [roomArea, setRoomArea] = useState(0);
   const handleChangeRoomArea = (event) => {
     setRoomArea(event.target.value);
@@ -120,13 +104,54 @@ const AddRoomContainer = () => {
     setBathroomCount(event.target.value);
   };
 
-  const themeSelect = createTheme({
-    sx: {
-      body: {
-        paddingRight: 0,
-      },
-    },
-  });
+  const [roomName, setRoomName] = useState([]);
+  const handleTypeRoomName = (index, event) => {
+    setRoomName((prevRoomName) => {
+      const newRoomName = [...prevRoomName];
+      newRoomName[index] = event.target.value;
+      return newRoomName;
+    });
+  };
+
+  const [view, setView] = useState("");
+  const handleChangeView = (event) => {
+    setView(event.target.value);
+  };
+  const [extraAmenityName, setExtraAmenityName] = useState("");
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const handleAddExtraAmenity = () => {
+    setSelectedAmenities([...selectedAmenities, extraAmenityName]);
+  };
+
+  const handleCheckedAmenities = (e) => {
+    const checkedAmenity = selectedAmenities.find(
+      (amenity) => amenity.name === e.target.name
+    );
+    setSelectedAmenities(
+      checkedAmenity
+        ? selectedAmenities.filter((amenity) => amenity !== e.target.value)
+        : [...selectedAmenities, e.target.name]
+    );
+  };
+  const onSubmit = () => {
+    const basicInfoRoomType = {
+      name: roomType,
+      sdRoomName: roomName,
+      count: roomCount,
+      bedTypes: bedTypeCount,
+      roomArea: roomArea,
+      adultCount: adultCount,
+      childrenCount: childrenCount,
+      amenities: selectedAmenities,
+      view: view,
+    };
+    dispatch({
+      type: addBasicInfoRoomType,
+      payload: basicInfoRoomType,
+    });
+
+    navigate("/host/add-room-price");
+  };
   return (
     <div className={` ${styles["add-room"]}`}>
       <div className={`${styles["content"]}`}>
@@ -139,26 +164,12 @@ const AddRoomContainer = () => {
               <div className={`my-3  ${styles["room-type"]}`}>
                 <h3 className="font-bold">Đây là loại phòng gì?</h3>
                 <Box sx={{ minWidth: 100 }}>
-                  <FormControl fullWidth>
-                    <ThemeProvider theme={themeSelect}>
-                      {/* <GlobalStyles styles={{ paddingRight: 0 }}/> */}
-                      <Select
-                        disableInjectingGlobalStyles
-                        id="select-room-type"
-                        value={roomType}
-                        onChange={handleChangeRoomType}
-                        className="my-2 h-10"
-                        // onClick={handleClickChangeRoomType}
-                      >
-                        {roomTypes?.map((type) => {
-                          return (
-                            <MenuItem value={type.name}>{type.name}</MenuItem>
-                          );
-                        })}
-                        ;
-                      </Select>
-                    </ThemeProvider>
-                  </FormControl>
+                  <TextField
+                    fullWidth
+                    id="room-type-name"
+                    className="my-2"
+                    onChange={handleChangeRoomType}
+                  />
                 </Box>
               </div>
               <div className={`mb-3 ${styles["room-count"]}`}>
@@ -173,6 +184,25 @@ const AddRoomContainer = () => {
                   min={0}
                 />
               </div>
+              <div>
+                {roomCount > 0 && (
+                  <>
+                    <FormLabel id="demo-radio-buttons-group-label">
+                      Bây giờ bạn hãy điền tên từng phòng của loại phòng này?
+                    </FormLabel>
+                    {Array.from({ length: roomCount }, (_, i) => (
+                      <TextField
+                        key={i}
+                        fullWidth
+                        id={`room-type-name-${i}`}
+                        placeholder={`Tên phòng ${i + 1}`}
+                        className="my-2"
+                        onChange={(event) => handleTypeRoomName(i, event)}
+                      />
+                    ))}
+                  </>
+                )}
+              </div>
             </div>
 
             <div className="flex flex-col justify-between border-2 my-4 px-5 rounded-md">
@@ -180,7 +210,7 @@ const AddRoomContainer = () => {
                 <h3 className="font-bold">
                   Có loại giường nào trong phòng này?
                 </h3>
-                {bedTypes.map((bed, index) => {
+                {bedTypeCount.map((bed, index) => {
                   return (
                     <div
                       className={`flex justify-between py-2 ${styles["count-bed-type"]}`}
@@ -192,7 +222,7 @@ const AddRoomContainer = () => {
                       </div>
                       <input
                         type="number"
-                        value={bedCount[index]}
+                        value={bed.count}
                         onChange={(event) => handleChangeBedCount(event, index)}
                         className="border-2 p-2"
                         min={0}
@@ -269,6 +299,32 @@ const AddRoomContainer = () => {
                 </div>
               </div>
             </div>
+            <div className="flex-1 flex-col justify-between border-2 my-4 px-5 rounded-md">
+              <div className={`my-3  ${styles[""]}`}>
+                <h3 className="font-bold">Phòng này có view như thế nào?</h3>
+                <div className="flex justify-between">
+                  <div className="flex items-center">
+                      <FormControl fullWidth>
+                        <select
+                          id="select-view"
+                          value={view}
+                          onChange={handleChangeView}
+                          className="my-2 h-10 border rounded-sm border-[#dedfe0] w-full"
+                        >
+
+
+                          {views?.map((viewItem) => (
+                            <option key={viewItem.name} value={viewItem.name}>
+                              {viewItem.name}
+                            </option>
+                          ))}
+                        </select>
+                      </FormControl>
+              
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               className={`border-2 my-4 px-5 rounded-md  flex flex-col   ${styles[""]}  `}
             >
@@ -282,26 +338,30 @@ const AddRoomContainer = () => {
                         key={roomAmenity.id}
                         control={<Checkbox />}
                         label={roomAmenity.name}
+                        name={roomAmenity.name}
+                        onChange={handleCheckedAmenities}
                       />
                     );
                   })}
-
-                  <div className={`flex flex-col ${styles["add-amenity"]}`}>
+                  <div className={`flex flex-col `}>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label={"Thêm tiện ích (nếu có)"}
+                      label={"Thêm dịch vụ (nếu có)"}
                       onChange={handleAddRoomAmenities}
                     />
-                    <div
-                      className={`flex justify-between hidden ${styles["info-amenity"]}`}
-                    >
-                      <TextField
-                        label="Tên tiện ích"
+                    <div className={`flex justify-between hidden `}>
+                      <Input
                         id="amenity-name"
                         variant="standard"
-                        size="small"
-                      />
-                      <Button variant="outlined">Thêm</Button>
+                        placeholder="Ten tien ich"
+                        onChange={(e) => setExtraAmenityName(e.target.value)}
+                      ></Input>
+                      <Button
+                        onClick={handleAddExtraAmenity}
+                        variant="outlined"
+                      >
+                        Thêm
+                      </Button>
                     </div>
                   </div>
                 </FormGroup>
@@ -310,17 +370,18 @@ const AddRoomContainer = () => {
           </div>
         </div>
         <div className={`w-1/2 flex pt-7`}>
-          <Link to="/host/register-list-section">
+          <Link to="/host/dashboard">
             <button className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}>
               <IcChevronLeft />
             </button>
           </Link>
-          <Link
-            to="/host/add-room-price"
+
+          <button
             className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+            onClick={onSubmit}
           >
-            <button className="h-full">Tiếp tục</button>
-          </Link>
+            Tiếp tục
+          </button>
         </div>
       </div>
     </div>

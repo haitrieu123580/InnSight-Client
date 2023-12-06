@@ -1,24 +1,19 @@
 import axios from 'axios';
 
-const token = JSON.parse(localStorage.getItem('Token'));
-// const BASE_URL = 'http://localhost:8001/api/user/changePassword'
-const BASE_URL = process.env.REACT_APP_SERVER_URL + '/user/changePassword'
-const config = {
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-    },
-};
+const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/user/changePassword'
 
-export const changePassword = async (data) => {
-  console.log("data, token",data, token)
+export const changePassword = async ({data, token}) => {
   try {
     const response = await axios.put(
       BASE_URL,
       JSON.stringify(data),
-      config
+      { 
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        },
+      }
     );
-    console.log('Password changed successfully');
     return response;
   } catch (error) {
     console.error('Đã xảy ra lỗi:', error.response ? error.response.data : error.message);

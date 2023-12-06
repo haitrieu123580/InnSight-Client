@@ -82,7 +82,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <NavLink
-                  to="/admin"
+                  to="/qltaikhoan"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-slate-50 duration-300 ease-in-out dark:hover:bg-meta-4 ${
                     pathname.includes('qltaikhoan') &&
                     'bg-cyan-900 dark:bg-cyan-900'

@@ -14,6 +14,12 @@ import Service from '../../components/admin-qldichvu/Service';
 import IcDelete from '../../components/icons/qldichvu-icons/IcDelete';
 import IcUpdate from '../../components/icons/qldichvu-icons/IcUpdate';
 import styles from './QLDichVuContainer.module.scss'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import AdminAction from '../../../redux/admin/action';
+import ShowToastify from '../../../utils/ShowToastify';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,37 +42,40 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const confirm = (e) => {
-  console.log(e);
-  // 
-  message.success('Xóa thành công');
-};
-
-
 const QLDichVuContainer = () => {
+  const dispatch = useDispatch();
+  const {service, amenity} = useSelector((state) => state.Admin) || {}
+  const [reloadData, setReloadData] = useState(false);
 
-  const [service, setService] = React.useState([
-    { id: '1', name: 'Dịch vụ phòng', description: '...................................................'},
-    { id: '2', name: 'Trung tâm thể dục', description: '...................................................'},
-    { id: '3', name: 'Trung tâm thể dục', description: '...................................................'},
-    { id: '4', name: 'Dịch vụ phòng', description: '...................................................'},
-    { id: '5', name: 'Dịch vụ phòng', description: '...................................................'},
-    { id: '6', name: 'Trung tâm thể dục', description: '...................................................'},
-    { id: '7', name: 'Dịch vụ phòng', description: '...................................................'},
-    { id: '8', name: 'Trung tâm thể dục', description: '...................................................'},
-    { id: '9', name: 'Dịch vụ phòng', description: '...................................................'},
-    { id: '10', name: 'Dịch vụ phòng', description: '...................................................'},
-  ]);
-  
-  const [amentity, setAmentity] = React.useState([
-    {id:'1', name:'Điều hòa nhiệt độ'},
-    {id:'2', name:'Điều hòa nhiệt độ'},
-    {id:'3', name:'Điều hòa nhiệt độ'},
-    {id:'4', name:'Điều hòa nhiệt độ'},
-    {id:'5', name:'Điều hòa nhiệt độ'},
-    {id:'6', name:'Điều hòa nhiệt độ'},
-    {id:'7', name:'Điều hòa nhiệt độ'},
-  ]);
+  //Service 
+  const [addServiceOpen, setAddServiceOpen] = React.useState(false);
+  const [updateServiceOpen, setUpdateServiceOpen] = React.useState(false);
+  const [dataService, setDataService] = React.useState(null);
+  //Amentity
+  const [addAmentityOpen, setAddAmentityOpen] = React.useState(false);
+  const [updateAmentityOpen, setUpdateAmentityOpen] = React.useState(false);
+  const [dataAmentity, setDataAmentity] = React.useState(null);
+
+  useEffect(() => {
+      dispatch({
+        type: AdminAction.GET_LIST_SERVICE,
+          onSuccess: () => {
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+
+      dispatch({
+        type: AdminAction.GET_LIST_AMENITY,
+          onSuccess: () => {
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+      setReloadData(false);
+  }, [reloadData]);
 
   const [serviceCount, setServiceCount] = React.useState(1);
   const [amentityCount, setAmentityCount] = React.useState(1);
@@ -80,47 +89,98 @@ const QLDichVuContainer = () => {
     setAmentityCount(amentityCount + 1);
   };
 
-  //Service 
-  const [addServiceOpen, setAddServiceOpen] = React.useState(false);
-  const [updateServiceOpen, setUpdateServiceOpen] = React.useState(false);
-  const [selectedService, setSelectedService] = React.useState(null);
-
   // add service
   const handleOpenAddService = () => {
-    setSelectedService(null);
+    setDataService(null);
     setAddServiceOpen(true);
   };
   const handleAddService = () => {
+    if(dataService){
+      dispatch({
+        type: AdminAction.ADD_SERVICE,
+        data: dataService,
+          onSuccess: () => {
+            ShowToastify.showSuccessToast("Thêm thành công");
+            setReloadData(true);
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+    }
+    else{
+      ShowToastify.showErrorToast("Không thành công");
+    }
     setAddServiceOpen(false);
   };
   const handleCloseAddService = () => {
     setAddServiceOpen(false);
   };
-
   // Update service
   const handleOpenUpdateService = (item) => {
-    setSelectedService(item);
+    setDataService(item);
     setUpdateServiceOpen(true);
   };
   const handleUpdateService = () => {
-    // action 
+    if(dataService){
+      dispatch({
+        type: AdminAction.UPDATE_SERVICE,
+        data: dataService,
+          onSuccess: () => {
+            ShowToastify.showSuccessToast("Sửa thành công");
+            setReloadData(true);
+        },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+          }
+      });
+    }
+    else{
+    ShowToastify.showErrorToast("Không thành công");
+    }
     setUpdateServiceOpen(false);
   };
   const handleCloseUpdateService = () => {
     setUpdateServiceOpen(false);
   };
 
-  //Amentity
-  const [addAmentityOpen, setAddAmentityOpen] = React.useState(false);
-  const [updateAmentityOpen, setUpdateAmentityOpen] = React.useState(false);
-  const [selectedAmentity, setSelectedAmentity] = React.useState(null);
+  // Delete Service
+  function handleDeleteService(id) {
+    dispatch({
+      type: AdminAction.DELETE_SERVICE,
+      id : id,
+        onSuccess: () => {
+          ShowToastify.showSuccessToast("Xóa thành công")
+          setReloadData(true);
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+        }
+    });
+  }
 
   // Add Amentity
   const handleOpenAddAmentity = () => {
-    setSelectedAmentity(null);
+    setDataAmentity(null);
     setAddAmentityOpen(true);
   };
   const handleAddAmentity = () => {
+    if(dataAmentity){
+      dispatch({
+        type: AdminAction.ADD_AMENITY,
+        data: dataAmentity,
+          onSuccess: () => {
+            ShowToastify.showSuccessToast("Thêm thành công");
+            setReloadData(true);
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+    }
+    else{
+      ShowToastify.showErrorToast("Không thành công");
+    }
     setAddAmentityOpen(false);
   };
   const handleCloseAddAmentity = () => {
@@ -129,46 +189,74 @@ const QLDichVuContainer = () => {
 
   // Update Amentity
   const handleOpenUpdateAmentity = (item) => {
-    setSelectedAmentity(item);
+    setDataAmentity(item);
     setUpdateAmentityOpen(true);
   };
   const handleUpdateAmentity = () => {
-    // action 
+    if(dataAmentity){
+      dispatch({
+        type: AdminAction.UPDATE_AMENITY,
+        data: dataAmentity,
+          onSuccess: () => {
+            ShowToastify.showSuccessToast("Sửa thành công");
+            setReloadData(true);
+        },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+          }
+      });
+    }
+    else{
+      ShowToastify.showErrorToast("Không thành công");
+    }
     setUpdateAmentityOpen(false);
   };
   const handleCloseUpdateAmentity = () => {
     setUpdateAmentityOpen(false);
   };
 
+  // Delete Amenity
+  function handleDeleteAmenity(id) {
+    dispatch({
+      type: AdminAction.DELETE_AMENITY,
+      id : id,
+        onSuccess: () => {
+          ShowToastify.showSuccessToast("Xóa thành công")
+          setReloadData(true);
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+        }
+    });
+  }
+
   return (
+    service && amenity ? (
     <div className={`${styles['home']} flex justify-between`}>
       <div >
-        <h2 className="ml-80 text-2xl font-bold text-sky-900 mb-2">Dịch vụ</h2>
+        <h2 className="ml-60 text-2xl font-bold text-sky-900 mb-2">Dịch vụ</h2>
         <TableContainer component={Paper} className="mr-10">
-          <Table sx={{ minWidth: 650 }}>
+          <Table sx={{ minWidth: 550 }}>
             <TableHead>
               <TableRow>
                 <StyledTableCell>STT</StyledTableCell>
                 <StyledTableCell align="left">Tên dịch vụ</StyledTableCell>
-                <StyledTableCell align="left">Mô tả</StyledTableCell>
                 <StyledTableCell align="right">Sửa</StyledTableCell>
                 <StyledTableCell align="left">Xóa</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {service.map((item, index) => (
+              {Array.isArray(service) && service.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {serviceCount + index}
                   </StyledTableCell>
-                  <StyledTableCell align="left">{item.name}</StyledTableCell>
-                  <StyledTableCell align="left">{item.description}</StyledTableCell>
+                  <StyledTableCell align="left" style={{ width: '360px' }}>{item?.name}</StyledTableCell>
                   <StyledTableCell align="right" onClick={() => handleOpenUpdateService(item)}><button><IcUpdate/></button></StyledTableCell>
-                  
                   <Popconfirm
                     title="Xóa dịch vụ"
                     description="Bạn có chắc chắc muốn xóa dịch vụ này không?"
-                    onConfirm={confirm}
+                    onConfirm={() => handleDeleteService(item.id)}
                     okText="OK"
                     cancelText="Hủy"
                   >
@@ -185,8 +273,8 @@ const QLDichVuContainer = () => {
                 open={updateServiceOpen}
                 onClose={handleCloseUpdateService}
                 onUpdateService={handleUpdateService}
-                service={selectedService}
-                setService={setSelectedService}
+                service={dataService}
+                setService={setDataService}
               />
             </TableBody>
           </Table>
@@ -200,14 +288,16 @@ const QLDichVuContainer = () => {
             open={addServiceOpen}
             onClose={handleCloseAddService}
             onAddService={handleAddService}
+            service={dataService}
+            setService={setDataService}
           />
         </div>
       </div>
 
       <div>
-        <h2 className="ml-40 text-2xl font-bold text-teal-800 mb-2">Tiện ích</h2>
+        <h2 className="ml-60 text-2xl font-bold text-teal-800 mb-2">Tiện ích</h2>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 450 }}>
+          <Table sx={{ minWidth: 550 }}>
             <TableHead>
               <TableRow>
                 <StyledTableCell>STT</StyledTableCell>
@@ -217,17 +307,17 @@ const QLDichVuContainer = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {amentity.map((item, index) => (
+              {Array.isArray(amenity) && amenity?.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {amentityCount + index}
                   </StyledTableCell>
-                  <StyledTableCell align="left">{item.name}</StyledTableCell>
+                  <StyledTableCell align="left" style={{ width: '360px'}}>{item?.name}</StyledTableCell>
                   <StyledTableCell align="right" onClick={() => handleOpenUpdateAmentity(item)}><button ><IcUpdate/></button></StyledTableCell>
                   <Popconfirm
                     title="Xóa tiện ích"
                     description="Bạn có chắc chắc muốn xóa tiện ích này không?"
-                    onConfirm={confirm}
+                    onConfirm={() => handleDeleteAmenity(item.id)}
                     okText="Ok"
                     cancelText="Hủy"
                   >
@@ -239,8 +329,8 @@ const QLDichVuContainer = () => {
                 open={updateAmentityOpen}
                 onClose={handleCloseUpdateAmentity}
                 onUpdateAmentity={handleUpdateAmentity}
-                amentity={selectedAmentity}
-                setAmentity={setSelectedAmentity}
+                amentity={dataAmentity}
+                setAmentity={setDataAmentity}
               />
             </TableBody>
           </Table>
@@ -254,10 +344,15 @@ const QLDichVuContainer = () => {
             open={addAmentityOpen}
             onClose={handleCloseAddAmentity}
             onAddAmentity={handleAddAmentity}
+            amentity={dataAmentity}
+            setAmentity={setDataAmentity}
           />
         </div>
       </div>
     </div>
+    ) : (
+      <div> null </div>
+    )
   );
 };
 export default QLDichVuContainer;

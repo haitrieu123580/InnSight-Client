@@ -15,16 +15,12 @@ import ShowToastify from '../../../../utils/ShowToastify';
 const BookingContainer4 = () => {
     const dispatch = useDispatch();
     const { bookingReserved } = useSelector(state => state.Booking);
-    console.log('bookingReserved', bookingReserved);
 
     localStorage.removeItem('reservation');
-    localStorage.removeItem('cart');
 
     const reservationCode = JSON.parse(localStorage.getItem('reservationCode'));
-    console.log('reservationCode', reservationCode)
     const data ={};
     data.requestData = reservationCode;
-
     useEffect(() => {
         dispatch({
             type: BookingAction.RESERVATION_DETAIL,
@@ -77,7 +73,7 @@ const BookingContainer4 = () => {
                             </div>
                             <div className='col-span-4'>
                             <img 
-                                src="" 
+                                src={bookingReserved.imagePath} 
                                 alt="" 
                                 className={`${styles.image}`}/>
                             </div>
@@ -120,7 +116,7 @@ const BookingContainer4 = () => {
                         <div>
                             <span>Từ </span>
                             <span >{moment(bookingReserved?.startDay, 'YYYY-MM-DD').subtract(1, 'days').format('DD [tháng] MM[,] YYYY')} 23:59 [+07]: </span>
-                            <span className='text-red-500'>mức phí {bookingReserved.total} VND - Bạn sẽ trả cho hủy đặt phòng</span>
+                            <span className='text-red-500'>mức phí {bookingReserved.total *0.1} VND - Bạn sẽ trả cho hủy đặt phòng</span>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ const Amentity = ({ open, onClose, onAddAmentity, onUpdateAmentity, amentity, se
 
   return (
     <Dialog open={open} onClose={onClose}>
-    {amentity ? (
+    {amentity?.id ? (
       <DialogTitle>Cập nhật tiện ích</DialogTitle>
       ) : (
       <DialogTitle>Thêm tiện ích</DialogTitle>
@@ -33,7 +33,7 @@ const Amentity = ({ open, onClose, onAddAmentity, onUpdateAmentity, amentity, se
       </DialogContent>
       <DialogActions>
       <Button onClick={onClose}>Hủy</Button>
-        {amentity ? (
+        {amentity?.id ? (
           <Button onClick={onUpdateAmentity}>Lưu</Button>
         ) : (
           <Button onClick={onAddAmentity}>Thêm tiện ích</Button>

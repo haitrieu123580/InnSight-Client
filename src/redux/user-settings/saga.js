@@ -8,9 +8,9 @@ import { changePasswordSuccess, changePasswordFailure, getProfile, updateProfile
 function* watchChangePassword() {
   yield takeEvery(actions.CHANGEPASS, function* (payload) {
     const { data, onSuccess, onError } = payload;
-
+    const token = JSON.parse(localStorage.getItem('Token'));
     try {
-      const response = yield call(changePassword, data);
+      const response = yield call(changePassword, {data, token});
       if (response.status === 200 ) {
         yield put(changePasswordSuccess(response));
         onSuccess && onSuccess();
@@ -27,9 +27,10 @@ function* watchChangePassword() {
 
 function* watchGetProfile() {
   yield takeEvery(actions.GET_PROFILE, function* (payload) {
-      const {id, onSuccess, onError } = payload
+      const {id, onSuccess, onError } = payload;
+      const token = JSON.parse(localStorage.getItem('Token'));
       try {
-          const response = yield call(getProfileById, id);
+          const response = yield call(getProfileById, {id,token});
           if (response?.Data) {
               yield put(getProfile(response?.Data))
               onSuccess && onSuccess();
@@ -44,9 +45,9 @@ function* watchGetProfile() {
 function* watchUpdateProfile() {
   yield takeEvery(actions.UPDATE_PROFILE, function* (payload) {
     const {id, data, onSuccess, onError } = payload;
-
+    const token = JSON.parse(localStorage.getItem('Token'));
     try {
-      const response = yield call(updateProfileById, id , data);
+      const response = yield call(updateProfileById, {id , data, token});
       if (response.status === 200 ) {
         localStorage.setItem("name", JSON.stringify(data.fullName))
         yield put(updateProfileSuccess(response));

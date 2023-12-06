@@ -10,14 +10,14 @@ import IcStar from "../shared/components/icons/home-icons/IcStar";
 
 const Constants = {
     price: [
-        '100.000', '200.000', '300.000', '400.000', '500.000', '1.000.000'
+        '100.000', '300.000', '400.000', '700.000', '900.000', '1000.000'
     ],
 
     review: [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10
     ],
     rate: [
-        1, 2, 3, 4, 5, 6
+        '1 sao', '2 sao', '3 sao', '4 sao', '5 sao'
     ],
     amenities: [
         { name: 'máy lạnh', icon: <AirIcon /> },

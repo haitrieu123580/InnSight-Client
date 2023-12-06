@@ -38,7 +38,7 @@
 
     .header-button {
         font-size:15px;
-        width: 130px;
+        width: 150px;
         height: 45px;
         padding: 11px !important;
         
@@ -55,5 +55,12 @@
         background: #CBDCF7;
         margin-left: 24px;
     }
-    
+    .navbar-button {
+        width: 130px;
+        height: 45px;
+        padding: 11px !important;
+        background: #CBDCF7;
+        border-radius: $border-radius;
+        margin-left: 24px;
+    }
 }

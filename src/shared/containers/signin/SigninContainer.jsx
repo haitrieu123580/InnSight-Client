@@ -2,16 +2,18 @@ import React from 'react'
 import styles from './index.module.scss'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AuthAction from '../../../redux/auth/action';
 import { useNavigate } from 'react-router';
 import ShowToastify from '../../../utils/ShowToastify';
 const SigninContainer = () => {
     const dispath = useDispatch();
+    const { userRole, isLogin } = useSelector(state => state.Auth)
+    console.log('userRole, isLogin', userRole, isLogin)
     const navigate = useNavigate();
     const [typedEmail, setTypedEmail] = useState(false);
     const [email, setEmail] = useState("")
-    const { handleSubmit, register, setError, setValue, clearErrors, formState: { errors } } = useForm({
+    const { handleSubmit, register, setError, clearErrors, formState: { errors } } = useForm({
         criteriaMode: "all"
     });
     const isEmailValid = (email) => {
@@ -27,14 +29,20 @@ const SigninContainer = () => {
             setTypedEmail(true);
         }
     };
-
+    const role = JSON.parse(localStorage.getItem('role'));
     const onSubmit = (data) => {
         dispath({
             type: AuthAction.SIGNIN,
             data: data,
             onSuccess: () => {
                 ShowToastify.showSuccessToast("Đăng nhập thành công")
-                navigate("/")
+                navigate('/');
+            },
+            onAdmin: ()=>{
+                navigate('/qltaikhoan');
+            },
+            onHost: ()=>{
+                navigate('/host/dashboard');
             },
             onError: () => {
                 ShowToastify.showErrorToast("Đăng nhập thất bại")

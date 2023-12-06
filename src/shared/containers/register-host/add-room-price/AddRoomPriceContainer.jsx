@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import styles from "./AddRoomPriceContainer.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Box, Stack, TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
+import { useDispatch } from "react-redux";
+import { addRoomTypePrice } from "../../../../redux/host/slice";
 
 const AddRoomPriceContainer = () => {
+  const commission=15;
   const [price, setPrice] =useState (0);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onSubmit = () => {
+    dispatch({
+      type: addRoomTypePrice,
+      payload: price*(100-commission)/100,  
+    });
+
+    navigate("/host/add-cancel-policy");
+  };
   return (
     <div className={` ${styles["add-room-price"]}`}>
       <div className={`${styles["content"]}`}>
@@ -42,7 +55,7 @@ const AddRoomPriceContainer = () => {
               </h3>
             </Stack>
             <hr width="100%" />
-            <h3>Doanh thu của Quý vị (bao gồm thuế): {price*85/100} VND </h3>
+            <h3>Doanh thu của Quý vị (bao gồm thuế): {price*(100-commission)/100} VND </h3>
           </Stack>
         </Box>
         <div className={`w-1/2 flex pt-7`}>
@@ -51,12 +64,12 @@ const AddRoomPriceContainer = () => {
               <IcChevronLeft />
             </button>
           </Link>
-          <Link
-            to="/host/add-cancel-policy"
+          <button
             className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+            onClick={onSubmit}
           >
-            <button className="h-full">Tiếp tục</button>
-          </Link>
+            Tiếp tục
+          </button>
         </div>
       </div>
     </div>
