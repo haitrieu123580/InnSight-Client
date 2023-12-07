@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./RegisterFinished.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
@@ -10,9 +10,22 @@ import {
   FormGroup,
   Typography,
 } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import HostAction from "../../../../redux/host/action";
+import ShowToastify from "../../../../utils/ShowToastify";
 
 const RegisterFinishedContainer = () => {
+  const id = JSON.parse(localStorage.getItem("id"));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const newHotel = useSelector((state) => state.Host.newHotel);
+  console.log("new1", newHotel);
+
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
@@ -25,7 +38,6 @@ const RegisterFinishedContainer = () => {
 
   const handleChangeAgreeChecked = (event) => {
     setAgreeChecked(event.target.checked);
-
   };
   useEffect(() => {
     if (guaranteeChecked && agreeChecked) {
@@ -35,9 +47,74 @@ const RegisterFinishedContainer = () => {
     }
   }, [guaranteeChecked, agreeChecked]);
 
+  const onSubmit = () => {
+    
+    if (isFinished) {
+      console.log("new Hotel", newHotel);
 
-  console.log("guaranteeChecked:", guaranteeChecked);
-  console.log("agreeChecked:", agreeChecked);
+      const formData = new FormData();
+      formData.append('name', newHotel.name||'');
+      formData.append('checkInTime', newHotel.checkInTime||'');
+      formData.append('checkOutTime', newHotel.checkOutTime||'');
+      formData.append('description', newHotel.description||'');
+      formData.append('province', newHotel.province||'');
+      formData.append('district', newHotel.district||'');
+      formData.append('ward', newHotel.ward||'');
+      formData.append('street', newHotel.street||'');
+      formData.append('rate', newHotel.rate||'');
+
+      if (newHotel.amenities && Array.isArray(newHotel.amenities)) {
+        newHotel.amenities.forEach((amenity, i) => {
+          if (amenity && amenity.name ) {
+            formData.append(`amenities[${i}].name`, amenity.name||'');
+            formData.append(`amenities[${i}].price`, amenity.price||'');
+          }
+        });
+      }else{
+        formData.append('amenities[0].name', '');
+        formData.append('amenities[0].price', 0);
+      }
+
+      if (newHotel.extraServices && Array.isArray(newHotel.extraServices)) {
+        newHotel.extraServices.forEach((extraService, i) => {
+          console.log("ex",extraService)
+          if (extraService && extraService.name) {
+            formData.append(`extraServices[${i}].name`, extraService.name||'');
+            formData.append(`extraServices[${i}].price`, extraService.price||'');
+          }
+        });
+      } else{
+        formData.append('extraServices[0].name', '');
+        formData.append('extraServices[0].price', '');
+      }
+
+      if (newHotel.images[0] ) {
+        newHotel.images[0].forEach((image, index) => {
+          if (image ) {
+            console.log("aa",image.file)
+            formData.append(`images[${index}]`, image.file||null);
+          }
+        });
+      }
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      dispatch({
+        type: HostAction.ADD_HOTEL,
+        id: id,
+        data: formData,
+        onSuccess: () => {
+          ShowToastify.showSuccessToast("Đăng kí khách sạn thành công!");
+          navigate("/host/dashboard");
+        },
+        onError: () => {
+          ShowToastify.showErrorToast("Đăng kí thất bại");
+        },
+      });
+    } else {
+      toast.error("Bạn phải đồng ý với tất cả điều khoản.");
+    }
+  };
   return (
     <div className={` ${styles["register-finished"]}`}>
       <div className={`${styles["content"]}`}>
@@ -76,19 +153,23 @@ const RegisterFinishedContainer = () => {
             <hr width="100%" />
             <FormGroup className="mt-5">
               <FormControlLabel
-                control={<Checkbox 
-                  checked={guaranteeChecked}
-                  onChange={handleChangeGuaranteeChecked}
-                />}
+                control={
+                  <Checkbox
+                    checked={guaranteeChecked}
+                    onChange={handleChangeGuaranteeChecked}
+                  />
+                }
                 label="Tôi cam đoan rằng đây là doanh nghiệp chỗ nghỉ hợp
               pháp với tất cả giấy phép cần thiết mà tôi có thể xuất trình khi được yêu cầu chứng minh."
               />
               <FormControlLabel
                 // required
-                control={<Checkbox 
-                  checked={agreeChecked}
-                  onChange={handleChangeAgreeChecked}
-                />}
+                control={
+                  <Checkbox
+                    checked={agreeChecked}
+                    onChange={handleChangeAgreeChecked}
+                  />
+                }
                 label="Tôi đã đọc, chấp nhận và đồng ý với Điều khoản chung."
               />
             </FormGroup>
@@ -100,14 +181,20 @@ const RegisterFinishedContainer = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              <Link
+              {/* <Link
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                to={isFinished?"/host/dashboard":""}
+                to={isFinished ? "/host/dashboard" : ""}
               >
                 <button className="h-full">
                   Hoàn tất đăng nhập và mở phòng cho khách đặt
                 </button>
-              </Link>
+              </Link> */}
+              <button
+                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                onClick={onSubmit}
+              >
+                Hoàn tất đăng nhập và mở phòng cho khách đặt
+              </button>
             </div>
           </div>
         </div>

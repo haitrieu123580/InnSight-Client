@@ -6,8 +6,15 @@ import IcCamera from "../../../components/icons/home-icons/IcCamera";
 import { Link } from "react-router-dom";
 import { FormLabel } from "@mui/material";
 import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
-
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { addImagesHotel } from "../../../../redux/host/slice";
 const RegisterHost5Container = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
   const [previewImages, setPreviewImages] = useState([]);
 
   const handleFileChange = (event) => {
@@ -25,8 +32,13 @@ const RegisterHost5Container = () => {
     updatedImages.splice(index, 1);
     setPreviewImages(updatedImages);
   };
-
-
+  const onSubmit = () => {
+    dispatch({
+      type: addImagesHotel,
+      payload: previewImages,
+    });
+    navigate("/host/register-list-section/2");
+  };
 
   return (
     <div className={` ${styles["register-5"]}`}>
@@ -47,8 +59,9 @@ const RegisterHost5Container = () => {
                 Đăng tải ít nhất 5 ảnh của chỗ nghỉ. Càng đăng nhiều, Quý vị
                 càng có cơ hội nhận đặt phòng. Quý vị có thể thêm ảnh sau.
               </FormLabel>
-              <div className={`border-dashed border-2 items-center flex justify-center  ${styles['container-upload-image']}`}>
-                
+              <div
+                className={`border-dashed border-2 items-center flex justify-center  ${styles["container-upload-image"]}`}
+              >
                 <input
                   type="file"
                   accept="image/*"
@@ -57,40 +70,36 @@ const RegisterHost5Container = () => {
                   className=""
                 />
               </div>
-                <div className={`${styles["previewStyles"]}`}>
-                  {previewImages.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`${styles["imageContainerStyles"]}`}
+              <div className={`${styles["previewStyles"]}`}>
+                {previewImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`${styles["imageContainerStyles"]}`}
+                  >
+                    <img
+                      src={image.preview}
+                      alt={`preview-${index}`}
+                      className={`${styles["imageStyles"]}`}
+                    />
+                    <button
+                      className={`${styles["btn-remove"]}`}
+                      onClick={() => handleImageRemove(index)}
                     >
-                      <img
-                        src={image.preview}
-                        alt={`preview-${index}`}
-                        className={`${styles["imageStyles"]}`}
-                      />
-                      <button
-                        className={`${styles["btn-remove"]}`}
-                        onClick={() => handleImageRemove(index)}
-                      >
-                        <IcXmark />
-                      </button>
-                    </div>
-                  ))}
-                  
+                      <IcXmark />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {previewImages.length < 5 ? (
+                <div className="flex items-center">
+                  <CircleExclamation />
+                  <span className="text-red-600 pl-1">
+                    Đăng tải thêm {5 - previewImages.length} để tiếp tục
+                  </span>
                 </div>
-                {
-                    previewImages.length < 5 ?
-                     (
-                      <div className="flex items-center">
-                        <CircleExclamation/>
-                        <span className="text-red-600 pl-1">Đăng tải thêm {5-previewImages.length} để tiếp tục</span>
-                      </div>
-                      
-                     
-                     )
-                     :
-                     (console.log("Đủ ảnh"))
-                  }
+              ) : (
+                console.log("Đủ ảnh")
+              )}
             </div>
 
             <div className={`flex pt-7`}>
@@ -101,12 +110,12 @@ const RegisterHost5Container = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              <Link
-                to="/host/register-list-section/2"
+              <button
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                onClick={onSubmit}
               >
-                <button className="h-full">Tiếp tục</button>
-              </Link>
+                Tiếp tục
+              </button>
             </div>
           </div>
           <div className="flex-1">

@@ -25,7 +25,7 @@ const RegisterListSectionContainer = () => {
               <IcCheck className="h-10" />
             </div>
             <div className="pl-5 pr-10">
-              <h2 className="pt-2 pb-1">Bước 1</h2>
+              <h2 className="pt-2 pb-1">Bước đầu</h2>
               <h2 className="font-bold text-xl">Thông tin chỗ nghỉ</h2>
               <p className="py-2">
                 Các thông tin cơ bản. Nhập tên chỗ nghỉ, địa chỉ, tiện nghi và
@@ -48,7 +48,7 @@ const RegisterListSectionContainer = () => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className={`flex items-center border-2 px-5 py-3 rounded-md justify-between ${styles["box-section"]}`}
         >
           <div className="flex items-center">
@@ -78,7 +78,7 @@ const RegisterListSectionContainer = () => {
               </CustomButton>
             )}
           </div>
-        </div>
+        </div> */}
 
         <div
           className={`flex items-center border-2 px-5 py-3 rounded-md justify-between ${styles["box-section"]}`}
@@ -88,7 +88,7 @@ const RegisterListSectionContainer = () => {
               <IcBed className="h-10" />
             </div>
             <div className="pl-5 pr-10">
-              <h2 className="pb-1 pt-2">Bước 3</h2>
+              <h2 className="pb-1 pt-2">Hoàn tất</h2>
               <h2 className="font-bold text-xl">Những bước cuối cùng</h2>
               <p className="py-2">
                 Nhập thông tin thanh toán và hóa đơn trước khi mở để nhận đặt
@@ -98,8 +98,8 @@ const RegisterListSectionContainer = () => {
           </div>
           <div>
             <CustomButton
-              variant={sectionStatus < 3 ? "disabled" : "contained"}
-              className={sectionStatus < 3 ?"bg-stone-200":"bg-sky-600"}
+              variant={sectionStatus < 2 ? "disabled" : "contained"}
+              className={sectionStatus < 2 ?"bg-stone-200":"bg-sky-600"}
             >
               <Link to="/host/register-finished" className="px-2">
                 Hoàn tất đăng ký

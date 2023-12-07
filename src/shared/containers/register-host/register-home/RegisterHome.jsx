@@ -20,7 +20,7 @@ const RegisterHomeContainer = () => {
 
     return (
         <div className={`${styles['home']}`}>
-            <div className={`flex justify-between items-center ${styles['first-banner']} ${styles['banner']}`}>
+            <div className={`flex justify-between items-center  ${styles['first-banner']} ${styles['banner']}`}>
                 <div className='hidden xl:flex flex-1 flex-col 2xl:text-left xl:mr-20'>
                     <h1 className='font-extrabold'>Đăng ký nơi lưu trú của mình trên InnSight</h1>
                     <p className='text-2xl font-medium'>Dù kinh doanh chỗ nghỉ là công việc tay trái hay toàn thời gian, đừng quên đăng kí 
