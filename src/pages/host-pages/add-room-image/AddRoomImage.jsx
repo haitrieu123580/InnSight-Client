@@ -1,5 +1,4 @@
-import AddRoomImageContainer from "../../../shared/containers/register-host/add-room-image/AddRoomImage"
-
+import AddRoomImageContainer from "../../../shared/containers/host-dashboard/add-room/add-room-image/AddRoomImage"
 
 const AddRoomImage = () => {
 

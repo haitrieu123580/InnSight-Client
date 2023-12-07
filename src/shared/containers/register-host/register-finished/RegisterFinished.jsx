@@ -181,14 +181,7 @@ const RegisterFinishedContainer = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              {/* <Link
-                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                to={isFinished ? "/host/dashboard" : ""}
-              >
-                <button className="h-full">
-                  Hoàn tất đăng nhập và mở phòng cho khách đặt
-                </button>
-              </Link> */}
+
               <button
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
                 onClick={onSubmit}

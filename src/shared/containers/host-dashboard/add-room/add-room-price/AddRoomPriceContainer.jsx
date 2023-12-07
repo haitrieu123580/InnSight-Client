@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "./AddRoomPriceContainer.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
+import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
 import { Box, Stack, TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import { useDispatch } from "react-redux";
-import { addRoomTypePrice } from "../../../../redux/host/slice";
+import { addRoomTypePrice } from "../../../../../redux/host/slice";
 
 const AddRoomPriceContainer = () => {
   const commission=15;
