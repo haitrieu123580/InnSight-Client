@@ -4,11 +4,10 @@ import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import IcXmark from "../../../components/icons/home-icons/IcXmark";
 import IcCamera from "../../../components/icons/home-icons/IcCamera";
 import { Link } from "react-router-dom";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormLabel } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, FormLabel } from "@mui/material";
 import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addImagesRoomType } from "../../../../redux/host/slice";
 import HostAction from "../../../../redux/host/action";
 import ShowToastify from "../../../../utils/ShowToastify";
 const AddRoomImageContainer = () => {
@@ -38,11 +37,6 @@ const AddRoomImageContainer = () => {
   };
 
   const handleAddImageRoomType = () => {
-    // dispatch({
-    //   type: addImagesRoomType,
-    //   payload: previewImages,
-    // });
-    // console.log("a",newRoomType)
     setOpenDialog(true);
   };
 
