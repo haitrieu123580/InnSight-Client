@@ -110,6 +110,7 @@ const AddRoomImageContainer = () => {
           ShowToastify.showErrorToast("Thêm phòng thất bại");
         },
       })
+      handleCloseDialog()
   }
   return (
     <div className={` ${styles["add-room-image"]}`}>

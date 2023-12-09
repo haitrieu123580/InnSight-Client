@@ -4,10 +4,7 @@ import styles from "./Header.module.scss";
 
 import IcAvatar from "../icons/header-icons/IcAvatar";
 import IcPencil from "../icons/header-icons/IcPencil";
-import { useSelector } from "react-redux";
-
 const Header = () => {
-  const { userProfile } = useSelector((state) => state.Auth);
   const isLogin = localStorage.getItem("isLogin") || false;
   useEffect(() => {}, [isLogin]);
   return (
@@ -27,7 +24,7 @@ const Header = () => {
                   className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
                 >
                   <IcAvatar />
-                  <span>{userProfile?.name || userProfile?.email}</span>
+                  <span>Tài khoản của bạn</span>
                 </button>
               </Link>
             </div>
