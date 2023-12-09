@@ -5,6 +5,8 @@ const initialState = {
   detailUser:{},
   service:{},
   amenity:{},
+  bedTypes:{},
+  views:{},
 };
 
 const adminSlice = createSlice({
@@ -23,6 +25,12 @@ const adminSlice = createSlice({
     listAmenity: (state, { payload }) => {
       state.amenity = payload
     },
+    listBedTypes: (state, { payload }) => {
+      state.bedTypes = payload
+    },
+    listViews: (state, { payload }) => {
+      state.views = payload
+    },
   },
 });
 
@@ -31,6 +39,8 @@ export const {
   detailUser,
   listService,
   listAmenity,
+  listBedTypes,
+  listViews,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

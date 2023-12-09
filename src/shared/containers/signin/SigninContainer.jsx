@@ -29,7 +29,6 @@ const SigninContainer = () => {
             setTypedEmail(true);
         }
     };
-    const role = JSON.parse(localStorage.getItem('role'));
     const onSubmit = (data) => {
         dispath({
             type: AuthAction.SIGNIN,

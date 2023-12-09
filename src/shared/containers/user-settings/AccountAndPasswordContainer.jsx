@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './AccountAndPasswordContainer.module.scss';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
