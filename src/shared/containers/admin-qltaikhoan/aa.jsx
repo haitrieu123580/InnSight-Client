@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import IcDetail from '../../components/icons/qltaikhoan-icons/IcDetail.jsx'
 import IcDelete from '../../components/icons/qltaikhoan-icons/IcDelete.jsx'
 import SelectMenu from '../../components/admin-qltaikhoan/SelectMenu.tsx'
@@ -41,11 +41,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const QLTaiKhoanContainer = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {listUser} = useSelector((state) => state.Admin) || {}
   const [page, setPage] = useState(1);
   const [reloadData, setReloadData] = useState(true);
-  
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const email = searchParams.get('email') || '';
+
   const handleSelectChange = (value) => {
     setPage(value);
   };
@@ -53,20 +55,21 @@ const QLTaiKhoanContainer = () => {
   const pageIndex = 1;
   const pageSize = 20;
   useEffect(() => {
-    if (reloadData) {
+    // if (reloadData) {
       dispatch({
-        type: AdminAction.GET_LIST_USER,
-        pageIndex : pageIndex,
-        pageSize: pageSize,
+        type: AdminAction.SEARCH_USER,
+        email: email,
+        // pageIndex : pageIndex,
+        // pageSize: pageSize,
           onSuccess: () => {
           },
           onError: () => {
-              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+              ShowToastify.showErrorToast("Không có dữ liệu phù hợp!")
           }
       });
-      setReloadData(false);
-    }
-  }, [page, reloadData]);
+      // setReloadData(false);
+    // }
+  }, [page, reloadData, email, dispatch]);
 
   const getEmailUsername = (email) => {
     const atIndex = email.indexOf('@');
@@ -77,18 +80,18 @@ const QLTaiKhoanContainer = () => {
     }
   };
 
-
   const handleChange = (event, value) => {
     setPage(value);
     dispatch({
-      type: AdminAction.GET_LIST_USER,
-      pageIndex : value,
-      pageSize: pageSize,
-        onSuccess: () => {
-        },
-        onError: () => {
-            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-        }
+      type: AdminAction.SEARCH_USER,
+      email: email,
+      // pageIndex : pageIndex,
+      // pageSize: pageSize,
+      onSuccess: () => {
+      },
+      onError: () => {
+        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+      }
     });
   };
 
@@ -107,12 +110,12 @@ const QLTaiKhoanContainer = () => {
   }
 
   return (
-    listUser && listUser.users ? (
+    listUser ? (
     <div className={`${styles['home']}`}>
       <div className={`flex m-2 ${styles['text']}`}>
         {/* <div className="mr-4 pt-1">Loại người dùng</div>
         <SelectMenu onSelectChange={handleSelectChange} className="mr-4" /> */}
-        <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalItems}</div>
+        <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.length}</div>
       </div>
       <div>
         <TableContainer component={Paper} className="mr-14">
@@ -126,16 +129,12 @@ const QLTaiKhoanContainer = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {listUser.users.map((item, index) => (
+              {Array.isArray(listUser) && listUser.map((item, index) => (
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
                       {((page - 1) * 20) + index + 1}
                     </StyledTableCell>
-                    {item.fullName ? (
-                      <StyledTableCell className="w-96">{item.fullName}</StyledTableCell>
-                    ) : (
                       <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
-                    )}
                     <StyledTableCell>{item.role}</StyledTableCell>
                     <StyledTableCell>
                       <div className="flex justify-center">
