@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-// import Selectmenu from '../../components/admin-thongke/option'
 import RevenueDate from '../../components/admin-thongke/RevenueDate'
 import RevenueMonth from '../../components/admin-thongke/RevenueMonth'
 import RevenueYear from '../../components/admin-thongke/RevenueYear';
+import {CSVLink} from 'react-csv';
 
-
-
-const ThongkeContainer: React.FC = () => {
+const ThongkeContainer = () => {
   const [revenueDate, setRevenueDate] = React.useState([
     {id:'1', amount:'300000', date:'17-01-2021'},
     {id:'2', amount:'800000', date:'1-05-2022'},
@@ -63,6 +61,7 @@ const ThongkeContainer: React.FC = () => {
 
   return (
     <>
+      {/* <CSVLink data={revenueDate} filename={'Revenue Statistics.csv'} className='border'>Export Data</CSVLink> */}
       <RevenueDate revenue = {revenueDate}/>
       <RevenueMonth revenue = {revenueMonth}/>
       <RevenueYear revenue = {revenueYear}/>

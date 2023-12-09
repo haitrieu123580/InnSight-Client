@@ -1,8 +1,10 @@
 import axios from "axios";
 
+
 const BASE_URL = process.env.REACT_APP_SERVER_URL + "/api";
 
 const config = {
+
   headers: {
     "Content-Type": "multipart/form-data",
     // 'userId' : {userId}
