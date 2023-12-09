@@ -1,4 +1,4 @@
-import AddRoomPriceContainer from "../../../shared/containers/register-host/add-room-price/AddRoomPriceContainer"
+import AddRoomPriceContainer from "../../../shared/containers/host-dashboard/add-room/add-room-price/AddRoomPriceContainer"
 
 const AddRoomPrice = () => {
 

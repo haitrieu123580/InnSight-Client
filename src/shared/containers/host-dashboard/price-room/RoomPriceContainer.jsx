@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavHost from "../../../components/nav-host/NavHost";
 import {
   Box,
@@ -11,95 +11,117 @@ import {
 import { List, ListItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import HostAction from "../../../../redux/host/action";
+import ShowToastify from "../../../../utils/ShowToastify";
+
 const RoomPriceContainer = () => {
-  let rooms = [
-    {
-      roomType_id: 1,
-      name: "Phòng Giường đôi",
-      bed_type: "Giường đôi",
-      count: 3,
-      price: 700000,
-      room_area: 40,
-      adult_count: 2,
-      children_count: 1,
-      room_amenity: [
-        {
-          id: 1,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 2,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 3,
-          name: "Bồn tắm nóng",
-        },
-      ],
-    },
+  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+
+  const dispatch = useDispatch();
+  const roomTypes = useSelector((state) => state.Host.roomTypes)
+  console.log("romm",roomTypes)
+  useEffect(() => {
+    if (hotelId) {
+      dispatch({
+        type: HostAction.GET_ROOMTYPES,
+        id: hotelId,
+          onSuccess: () => {
+          },
+          onError: () => {
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+          }
+      });
+    }
+  }, []);
+  // let rooms = [
+  //   {
+  //     roomType_id: 1,
+  //     name: "Phòng Giường đôi",
+  //     bed_type: "Giường đôi",
+  //     count: 3,
+  //     price: 700000,
+  //     room_area: 40,
+  //     adult_count: 2,
+  //     children_count: 1,
+  //     room_amenity: [
+  //       {
+  //         id: 1,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //     ],
+  //   },
     
-    {
-      roomType_id: 2,
-      name: "Phòng giường đơn",
-      bed_type: "Giường đôi",
-      count: 3,
-      price: 300000,
-      room_area: 1212,
-      adult_count: 2,
-      children_count: 1,
-      room_amenity: [
-        {
-          id: 1,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 2,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 3,
-          name: "Bồn tắm nóng",
-        },
-      ],
-    },{
-      roomType_id: 3,
-      name: "Phòng giường đơn",
-      bed_type: "Giường đơn",
-      count: 3,
-      price: 300000,
-      room_area: 30,
-      adult_count: 2,
-      children_count: 1,
-      room_amenity: [
-        {
-          id: 1,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 2,
-          name: "Bồn tắm nóng",
-        },
-        {
-          id: 3,
-          name: "Bồn tắm nóng",
-        },
-      ],
-    },
-  ];
-  const [roomList, setRoomList] = useState(rooms);
-  const [selectedRoomIndex, setSelectedRoomIndex] = useState(null);
-  const [open, setOpen] = React.useState(false);
-  const handleOpenModal = (index) => {
-    setSelectedRoomIndex(roomList[index]);
-    setOpen(true);
-  };
-  const handleCloseModal = () => setOpen(false);
-  const handleRoomAreaChange = (event) => {
-    const updatedRooms = [...roomList];
-    updatedRooms[selectedRoomIndex].room_area = event.target.value;
-    console.log(updatedRooms)
-    setRoomList(updatedRooms);
-  };
+  //   {
+  //     roomType_id: 2,
+  //     name: "Phòng giường đơn",
+  //     bed_type: "Giường đôi",
+  //     count: 3,
+  //     price: 300000,
+  //     room_area: 1212,
+  //     adult_count: 2,
+  //     children_count: 1,
+  //     room_amenity: [
+  //       {
+  //         id: 1,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //     ],
+  //   },{
+  //     roomType_id: 3,
+  //     name: "Phòng giường đơn",
+  //     bed_type: "Giường đơn",
+  //     count: 3,
+  //     price: 300000,
+  //     room_area: 30,
+  //     adult_count: 2,
+  //     children_count: 1,
+  //     room_amenity: [
+  //       {
+  //         id: 1,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 2,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //       {
+  //         id: 3,
+  //         name: "Bồn tắm nóng",
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  // const [selectedRoomIndex, setSelectedRoomIndex] = useState(null);
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpenModal = (index) => {
+  //   setSelectedRoomIndex(roomList[index]);
+  //   setOpen(true);
+  // };
+  // const handleCloseModal = () => setOpen(false);
+  // const handleRoomAreaChange = (event) => {
+  //   const updatedRooms = [...roomList];
+  //   updatedRooms[selectedRoomIndex].room_area = event.target.value;
+  //   console.log(updatedRooms)
+  //   setRoomList(updatedRooms);
+  // };
 
   const styleModal = {
     position: "absolute",
@@ -126,8 +148,8 @@ const RoomPriceContainer = () => {
           </Link>
         </div>
         <div className={"bg-white min-h-screen"}>
-          {roomList ? (
-            roomList.map((room, index) => (
+          {roomTypes ? (
+            roomTypes.map((room, index) => (
               <div
                 key={room.roomType_id}
               >
@@ -138,7 +160,7 @@ const RoomPriceContainer = () => {
                     <span className="font-bold text-[blue]">{room.name}</span>
                   </h2>
                   <div>
-                    <Button onClick={handleOpenModal}>Chỉnh sửa</Button>
+                    <Button>Chỉnh sửa</Button>
                     <Button>Xóa</Button>
                   </div>
                 </div>
@@ -146,19 +168,19 @@ const RoomPriceContainer = () => {
                   <div className="">
                     <h2 className="font-bold text-lg pb-2">
                       Loại giường:{" "}
-                      <span className="font-medium">{room.bed_type}</span>
+                      <span className="font-medium">{ room.bedTypes.find(bed => bed.count > 0).name}</span>
                     </h2>
                     <h2 className="font-bold text-lg pb-2">
                       Diện tích:{" "}
-                      <span className="font-medium">{room.room_area}</span>
+                      <span className="font-medium">{room.roomArea}</span>
                     </h2>
                     <h2 className="font-bold text-lg pb-2">
                       Số Người lớn:{" "}
-                      <span className="font-medium">{room.adult_count}</span>
+                      <span className="font-medium">{room.adultCount}</span>
                     </h2>
                     <h2 className="font-bold text-lg pb-2">
                       Số Trẻ em:{" "}
-                      <span className="font-medium">{room.children_count}</span>
+                      <span className="font-medium">{room.childrenCount}</span>
                     </h2>
                   </div>
                   <div>
@@ -167,9 +189,9 @@ const RoomPriceContainer = () => {
                         <h2 className="font-bold text-lg pl-3">Tiện nghi</h2>
                       }
                     >
-                      {room.room_amenity?.map((amenity) => (
-                        <ListItem key={amenity.id}>
-                          <span className="font-medium">{amenity.name}</span>
+                      {room.amenities?.map((amenity,index) => (
+                        <ListItem key={index}>
+                          <span className="font-medium">{amenity}</span>
                         </ListItem>
                       ))}
                     </List>
@@ -188,7 +210,7 @@ const RoomPriceContainer = () => {
                 </div>
                 </div>
                 
-                <Modal  open={open} onClose={handleCloseModal}>
+                {/* <Modal  open={open} onClose={handleCloseModal}>
                   <Box sx={styleModal} flex flexDirection={"column"}>
                     <span className="text-2xl font-bold pb-2">
                       Thông tin phòng: {room.name}
@@ -241,7 +263,7 @@ const RoomPriceContainer = () => {
                     </div>
                     <Button>Cập nhật </Button>
                   </Box>
-                </Modal>
+                </Modal> */}
               </div>
             ))
           ) : (

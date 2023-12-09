@@ -13,9 +13,9 @@ import {
   TextField,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
+import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
 import { useDispatch } from "react-redux";
-import { addBasicInfoRoomType } from "../../../../redux/host/slice";
+import { addBasicInfoRoomType } from "../../../../../redux/host/slice";
 import { MenuItem } from "material-ui";
 const AddRoomContainer = () => {
   const navigate = useNavigate();
