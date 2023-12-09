@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isSuccess: false,
+  listHotels:[],
   hotel:[],
   newHotel: {
     province: "",

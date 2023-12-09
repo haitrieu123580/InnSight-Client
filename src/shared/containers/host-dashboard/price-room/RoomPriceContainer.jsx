@@ -1,12 +1,6 @@
-
 import React, { useEffect, useState } from "react";
 import NavHost from "../../../components/nav-host/NavHost";
-import {
-  Button,
-  Input,
-  Skeleton,
-
-} from "@mui/material";
+import { Button, Input, Skeleton, Typography } from "@mui/material";
 import { List, ListItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
@@ -14,11 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../redux/host/action";
 import ShowToastify from "../../../../utils/ShowToastify";
 import { ConfigProvider, Modal } from "antd";
+import UpdateRoom from "./UpdateRoom";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import styles from "./PriceRoom.module.scss";
 const RoomPriceContainer = () => {
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const dispatch = useDispatch();
   const roomTypes = useSelector((state) => state.Host.roomTypes);
-  console.log("roomtypes", roomTypes);
   useEffect(() => {
     if (hotelId) {
       dispatch({
@@ -30,9 +29,9 @@ const RoomPriceContainer = () => {
         },
       });
     }
-  }, []);
+  }, [hotelId]);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState();
   const handleSelectRoomToUpdate = (room) => {
     setOpen(true);
@@ -41,12 +40,7 @@ const RoomPriceContainer = () => {
   };
 
   const handleCloseModal = () => setOpen(false);
-  // const handleRoomAreaChange = (event) => {
-  //   const updatedRooms =roomTypes;
-  //   updatedRooms[selectedRoomIndex].room_area = event.target.value;
-  //   console.log(updatedRooms)
-  //   setRoomList(updatedRooms);
-  // };
+
   return (
     <div>
       <NavHost />
@@ -71,6 +65,7 @@ const RoomPriceContainer = () => {
                       <span className="font-bold text-[blue]">{room.name}</span>
                     </h2>
                     <div>
+                      <UpdateRoom room={selectedRoom} isOpen={open} />
                       <Button
                         onClick={() => {
                           handleSelectRoomToUpdate(room);
@@ -136,7 +131,40 @@ const RoomPriceContainer = () => {
             <Skeleton variant="rectangular" width={210} height={118} />
           )}
         </div>
-        <ConfigProvider
+        <Dialog open={open} onClose={handleCloseModal}>
+          <DialogContent className={`${styles["content"]}`}>
+
+              <div className="flex">
+                <span className={`${styles["text-modal"]}`}>Loại giường: </span>
+                <Input
+                  defaultValue={
+                    selectedRoom?.bedTypes.find((bedType) => bedType.count > 0)
+                      ?.name
+                  }
+                />
+              </div>
+              <div className="flex">
+                <span className={`${styles["text-modal"]}`}>Diện tích: </span>
+                <Input defaultValue={selectedRoom?.roomArea} />
+              </div>
+              <div className="flex">
+                <span className={`${styles["text-modal"]}`}>
+                  Số người lớn:{" "}
+                </span>
+                <Input defaultValue={selectedRoom?.adultCount} />
+              </div>
+              <div className="flex">
+                <span className={`${styles["text-modal"]}`}>Số trẻ em: </span>
+                <Input defaultValue={selectedRoom?.childrenCount} />
+              </div>
+           
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal}>Cancel</Button>
+            <Button onClick={handleCloseModal}>Subscribe</Button>
+          </DialogActions>
+        </Dialog>
+        {/* <ConfigProvider
           theme={{
             token: {
               titleFontSize: 30,
@@ -185,7 +213,7 @@ const RoomPriceContainer = () => {
               </div>
             </div>
           </Modal>
-        </ConfigProvider>
+        </ConfigProvider> */}
       </div>
     </div>
   );

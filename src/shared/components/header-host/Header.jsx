@@ -1,21 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
-
 import IcAvatar from "../icons/header-icons/IcAvatar";
 import IcPencil from "../icons/header-icons/IcPencil";
 const Header = () => {
   const isLogin = localStorage.getItem("isLogin") || false;
+  const listHotels =
+  JSON.parse(localStorage.getItem("listHotels"));
+  console.log("s",listHotels)
+  const initialHotelId = parseInt(localStorage.getItem("hotelId")) || "";
+  const [hotelId, setHotelId] = useState(initialHotelId);
+  const handleChangeHotel = (event) => {
+    const selectedHotel = event.target.value;
+    setHotelId(selectedHotel);
+    localStorage.setItem("hotelId", JSON.stringify(selectedHotel));
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+    // window.location.reload()
+  };
   useEffect(() => {}, [isLogin]);
   return (
-    <header className={`hidden md:flex ${styles["header"]}`}>
-      <Link
-        to={"/"}
-        className={` flex items-center font-bold  ${styles["logo-text"]}`}
-      >
-        InnSight
-      </Link>
-      <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
+    <header className={`hidden md:flex justify-between ${styles["header"]}`}>
+      <div className="flex items-baseline gap-8">
+        <Link to={"/"} className={` font-bold  ${styles["logo-text"]}`}>
+          InnSight
+        </Link>
+        {listHotels && (
+          <div className="flex gap-1 items-baseline">
+            <span className="text-lg text-white uppercase ">Khách sạn</span>
+            <select
+              id="select-hotel"
+              value={hotelId}
+              defaultValue={hotelId}
+              onChange={handleChangeHotel}
+              className={` ${styles["select-hotel"]} w-fit text-right`}
+            >
+              {listHotels &&
+                listHotels.map((hotel, index) => (
+                  <option
+                    key={index}
+                    value={hotel.hotelId}
+                    selected={initialHotelId === hotel.hotelId}
+                  >
+                    {hotel.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}{" "}
+      </div>
+
+      <div className="flex items-center md:px-4 lg:px-6 xl:px-8 ">
         {isLogin ? (
           <>
             <div className="pr-44 mr-2">
