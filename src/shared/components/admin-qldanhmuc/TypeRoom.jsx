@@ -15,7 +15,7 @@ const TypeRoom = ({ open, onClose, onAddTypeRoom, onUpdateTypeRoom, typeroom, se
   
   return (
     <Dialog open={open} onClose={onClose}>
-      {typeroom ? (
+      {typeroom?.id ? (
             <DialogTitle>Cập nhật loại phòng</DialogTitle>
           ) : (
             <DialogTitle>Thêm loại phòng</DialogTitle>
@@ -42,7 +42,7 @@ const TypeRoom = ({ open, onClose, onAddTypeRoom, onUpdateTypeRoom, typeroom, se
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Hủy</Button>
-        {typeroom ? (
+        {typeroom?.id ? (
           <Button onClick={onUpdateTypeRoom}>Lưu</Button>
         ) : (
           <Button onClick={onAddTypeRoom}>Thêm loại phòng</Button>

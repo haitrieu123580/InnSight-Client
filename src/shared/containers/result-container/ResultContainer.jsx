@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './ResultContainer.module.scss'
 import Header from '../../components/header/Header'
 import ResultList from '../../components/result-list/ResultList'
