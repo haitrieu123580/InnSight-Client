@@ -33,10 +33,17 @@ export const AddRoomType = async (hotelId, newRoomType) => {
   });
   console.log("res call", response);
   if (response.status === 201) {
+<<<<<<< HEAD
     return { Data: response?.data  };
   } else {
     return {
       Message: "Error",
+=======
+    return { Data: true };
+  } else {
+    return {
+      Data: false,
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
     };
   }
 };
@@ -95,6 +102,7 @@ export const GetRoomAvailable = async (hotelId, data) => {
     };
   }
 };
+<<<<<<< HEAD
 
 export const UpdateRoomType = async (hotelId, newRoomType) => {
   const response = await axios.put(`${BASE_URL}/room-types`, newRoomType, {
@@ -112,3 +120,5 @@ export const UpdateRoomType = async (hotelId, newRoomType) => {
     };
   }
 };
+=======
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259

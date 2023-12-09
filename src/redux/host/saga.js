@@ -1,6 +1,10 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
+<<<<<<< HEAD
 import { AddHotel, AddRoomType, GetRoomAvailable, GetRoomTypes, UpdateRoomType } from '../../api/ApiHost';
+=======
+import { AddHotel, AddRoomType, GetRoomAvailable, GetRoomTypes } from '../../api/ApiHost';
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
 import { GetListRoomTypes, filterRoomAvailable } from './slice';
 
 function* watchAddHotel() {
@@ -98,12 +102,60 @@ function* watchUpdateRoomType() {
         }
     });
 }
+<<<<<<< HEAD
+=======
+function* watchGetRoomTypes() {
+    yield takeEvery(actions.GET_ROOMTYPES, function* (payload) {
+        const {id, onSuccess, onError } = payload
+        
+        console.log("watchGetRoomTypes payload saga", payload);
+
+        try {
+            const response = yield call(GetRoomTypes,id);
+            console.log("res saga",response);
+
+            if (response?.Data) {
+                yield put(GetListRoomTypes(response?.Data))
+                onSuccess && onSuccess();
+            }
+
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchFilterRoomAvailable() {
+    yield takeEvery(actions.GET_ROOM_AVAILABLE, function* (payload) {
+        const {id, data, onSuccess, onError } = payload
+        console.log("watchFilterRoomAvailable payload saga", data);
+
+        try {
+            const response = yield call(GetRoomAvailable,id, data);
+            console.log("res saga",response);
+
+            if (response?.Data) {
+                yield put(filterRoomAvailable(response?.Data))
+                onSuccess && onSuccess();
+            }
+
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
 export default function* HostSaga() {
     yield all([
         fork(watchAddHotel),
         fork(watchAddRoomType),
         fork(watchGetRoomTypes),
         fork(watchFilterRoomAvailable),
+<<<<<<< HEAD
         fork(watchUpdateRoomType),
+=======
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
     ]);
 }

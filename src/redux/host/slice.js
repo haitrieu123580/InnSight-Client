@@ -130,10 +130,13 @@ const hostSlice = createSlice({
       console.log("filterRoomAvailable ok",roomAvailableByFilter)
       state.roomAvailableByFilter=roomAvailableByFilter
     },
+<<<<<<< HEAD
     updateRoomType:(state, payload)=>{
       const  {room,index} = payload;
       state.roomTypes[index]=room
     }
+=======
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
   },
 });
 export const {
@@ -150,7 +153,11 @@ export const {
   addRoomTypePrice,
   addImagesRoomType,
   filterRoomAvailable,
+<<<<<<< HEAD
   GetListRoomTypes,
   updateRoomType
+=======
+  GetListRoomTypes
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
 } = hostSlice.actions;
 export default hostSlice.reducer;

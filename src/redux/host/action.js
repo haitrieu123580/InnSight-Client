@@ -5,6 +5,9 @@ const HostAction = {
     ADD_ROOM_TYPE: 'ADD_ROOM_TYPE',
     GET_ROOMTYPES: 'GET_ROOMTYPES',
     GET_ROOM_AVAILABLE: 'GET_ROOM_AVAILABLE',
+<<<<<<< HEAD
     UPDATE_ROOMTYPE: 'UPDATE_ROOMTYPE'
+=======
+>>>>>>> 487baa2e2090e1d617308ca8a528f7b88b469259
 }
 export default HostAction

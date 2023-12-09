@@ -1,8 +1,10 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
-import { getListUser, deleteUserById, getDetailUser } from '../../api/apiAdmin/ApiUser';
+import { getListUser, deleteUserById, getDetailUser, searchUser } from '../../api/apiAdmin/ApiUser';
+import { getListBedTypes, updateBedTypes, addBedTypes, deleteBedTypes } from '../../api/apiAdmin/ApiBedType';
+import { getListViews, updateViews, addViews, deleteViews, searchViews } from '../../api/apiAdmin/ApiViews';
 import { getListService, updateService, addService, deleteService, getListAmenity, updateAmenity, addAmenity, deleteAmenity} from '../../api/apiAdmin/ApiServiceAmenity';
-import { listUser, detailUser, listService, listAmenity } from './slice';
+import { listUser, detailUser, listService, listAmenity, listBedTypes, listViews } from './slice';
 
 // USER
 function* watchGetListUser() {
@@ -53,6 +55,24 @@ function* watchGetDetailUser() {
       } finally {
       }
   });
+}
+
+function* watchSearchUser() {
+    yield takeEvery(actions.SEARCH_USER, function* (payload) {
+        const {email, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(searchUser, {email, token });
+            console.log('response', response)
+            if (response?.Data) {
+                yield put(listUser(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
 }
 
 // SERVICE
@@ -187,10 +207,160 @@ function* watchDeleteAmenity() {
     });
 }
 
+// BEDTYPES
+function* watchGetListBedTypes() {
+    yield takeEvery(actions.GET_LIST_BED_TYPES, function* (payload) {
+        const {onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+      try {
+            const response = yield call(getListBedTypes, token);
+            if (response?.Data) {
+                yield put(listBedTypes(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchUpdateBedTypes() {
+    yield takeEvery(actions.UPDATE_BED_TYPES, function* (payload) {
+        const {id, data, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(updateBedTypes, {id, data, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchAddBedTypes() {
+    yield takeEvery(actions.ADD_BED_TYPES, function* (payload) {
+        const {data, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(addBedTypes, {data, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchDeleteBedTypes() {
+    yield takeEvery(actions.DELETE_BED_TYPES, function* (payload) {
+        const {id, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(deleteBedTypes, {id, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+// VIEWS
+function* watchGetListViews() {
+    yield takeEvery(actions.GET_LIST_VIEWS, function* (payload) {
+        const {onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+      try {
+            const response = yield call(getListViews, token);
+            if (response?.Data) {
+                yield put(listViews(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchUpdateViews() {
+    yield takeEvery(actions.UPDATE_VIEWS, function* (payload) {
+        const {id, data, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(updateViews, {id, data, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchAddViews() {
+    yield takeEvery(actions.ADD_VIEWS, function* (payload) {
+        const {data, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(addViews, {data, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchDeleteViews() {
+    yield takeEvery(actions.DELETE_VIEWS, function* (payload) {
+        const {id, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(deleteViews, {id, token });
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchSearchViews() {
+    yield takeEvery(actions.SEARCH_VIEWS, function* (payload) {
+        const {name, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(searchViews, {name, token });
+            if (response?.Data) {
+                yield put(listViews(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
 export default function* AdminSaga() {
   yield all([
     fork(watchGetListUser),
     fork(watchDeleteUserById),
+    fork(watchSearchUser),
     fork(watchGetDetailUser),
     fork(watchGetListService),
     fork(watchUpdateService),
@@ -200,5 +370,14 @@ export default function* AdminSaga() {
     fork(watchUpdateAmenity),
     fork(watchAddAmenity),
     fork(watchDeleteAmenity),
+    fork(watchGetListBedTypes),
+    fork(watchUpdateBedTypes),
+    fork(watchAddBedTypes),
+    fork(watchDeleteBedTypes),
+    fork(watchGetListViews),
+    fork(watchUpdateViews),
+    fork(watchAddViews),
+    fork(watchDeleteViews),
+    fork(watchSearchViews),
   ]);
 }
