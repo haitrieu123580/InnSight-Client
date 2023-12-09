@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import styles from "./AddRoomImage.module.scss";
-import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
-import IcXmark from "../../../components/icons/home-icons/IcXmark";
-import IcCamera from "../../../components/icons/home-icons/IcCamera";
+import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
+import IcXmark from "../../../../components/icons/home-icons/IcXmark";
+import IcCamera from "../../../../components/icons/home-icons/IcCamera";
 import { Link } from "react-router-dom";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, FormLabel } from "@mui/material";
-import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText,  FormLabel } from "@mui/material";
+import CircleExclamation from "../../../../components/icons/home-icons/IcCircleExclamation";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import HostAction from "../../../../redux/host/action";
-import ShowToastify from "../../../../utils/ShowToastify";
+import HostAction from "../../../../../redux/host/action";
+import ShowToastify from "../../../../../utils/ShowToastify";
 const AddRoomImageContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const newRoomType = useSelector((state) => state.Host.newRoomType);
   console.log("new roomtype", newRoomType);
   const [previewImages, setPreviewImages] = useState([]);
@@ -99,7 +100,7 @@ const AddRoomImageContainer = () => {
 
       dispatch({
         type: HostAction.ADD_ROOM_TYPE,
-        id: 14,
+        id: hotelId,
         data: formData,
         onSuccess: () => {
           ShowToastify.showSuccessToast("Thêm phòng thành công!");
@@ -256,4 +257,3 @@ const AddRoomImageContainer = () => {
 };
 
 export default AddRoomImageContainer;
-

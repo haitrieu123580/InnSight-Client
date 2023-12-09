@@ -1,4 +1,5 @@
-import AddRoomContainer from "../../../shared/containers/register-host/add-room/AddRoomContainer"
+import AddRoomContainer from "../../../shared/containers/host-dashboard/add-room/add-room/AddRoomContainer"
+
 
 const AddRoom = () => {
 

@@ -6,6 +6,7 @@ import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayo
 import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import { lazy } from 'react';
 import RoomPrice from "../pages/host-pages/dashboard/room-price/RoomPrice";
+import RoomStatus from "../pages/host-pages/dashboard/room-status/RoomStatus";
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
 const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
@@ -171,6 +172,11 @@ const protectedRoutes = [
   {
     path: "/host/add-room-image",
     component: AddRoomImage,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/room-status",
+    component: RoomStatus,
     layout: HostLayout,
   },
   {
