@@ -15,7 +15,7 @@ const AddRoomPriceContainer = () => {
   const onSubmit = () => {
     dispatch({
       type: addRoomTypePrice,
-      payload: price*(100-commission)/100,  
+      payload: price,  
     });
 
     navigate("/host/add-cancel-policy");
