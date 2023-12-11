@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import NavHost from "../../../components/nav-host/NavHost";
-import { Button, Input, Skeleton, Typography } from "@mui/material";
+import { Button, Input, Skeleton } from "@mui/material";
 import { List, ListItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../redux/host/action";
 import ShowToastify from "../../../../utils/ShowToastify";
-import { ConfigProvider, Modal } from "antd";
-import UpdateRoom from "./UpdateRoom";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import styles from "./PriceRoom.module.scss";
+import Constants from "../../../../utils/Contants";
+
 const RoomPriceContainer = () => {
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const dispatch = useDispatch();
   const roomTypes = useSelector((state) => state.Host.roomTypes);
+  const bedTypes = Constants.bedTypes;
   useEffect(() => {
     if (hotelId) {
       dispatch({
@@ -30,17 +30,55 @@ const RoomPriceContainer = () => {
       });
     }
   }, [hotelId]);
-
   const [open, setOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState();
+  const [bedTypeCount, setBedTypeCount] = useState(
+    bedTypes.map((bedType) => ({ name: bedType.name, count: 0 }))
+  );
+  const handleChangeBedCount = (event, index) => {
+    const value = parseInt(event.target.value);
+    setBedTypeCount((prevBedCount) => {
+      const newBedCount = [...prevBedCount];
+      newBedCount[index] = { ...newBedCount[index], count: value };
+      return newBedCount;
+    });
+  };
+  const [childrenCountUpdate, setChildrenCountUpdate] = useState(0);
+  const handleChangeChildrenCountUpdate = (event) => {
+    setChildrenCountUpdate(parseInt(event.target.value));
+  };
+  const [adultCountUpdate, setAdultCountUpdate] = useState(0);
+  const handleChangeAdultCountUpdate = (event) => {
+    setAdultCountUpdate(parseInt(event.target.value));
+  };
+  const [roomAreaUpdate, setRoomAreaUpdate] = useState(0);
+  const handleChangeRoomAreaUpdate = (event) => {
+    setRoomAreaUpdate(parseInt(event.target.value));
+  };
+  const loadInfoRoom =(selectedRoom)=>{
+    setBedTypeCount(selectedRoom.bedTypes)
+    setAdultCountUpdate(selectedRoom.adultCount)
+    setChildrenCountUpdate(selectedRoom.childrenCount)
+    setRoomAreaUpdate(selectedRoom.roomArea)
+
+  }
   const handleSelectRoomToUpdate = (room) => {
     setOpen(true);
     setSelectedRoom(room);
+    loadInfoRoom(room)
     console.log("selected", room);
   };
 
   const handleCloseModal = () => setOpen(false);
-
+  const handleSumbit=(selectedRoom)=>{
+    let updateRoom={...selectedRoom};
+    updateRoom.bedTypes=bedTypeCount;
+    updateRoom.adultCount=adultCountUpdate;
+    updateRoom.childrenCount=childrenCountUpdate;
+    updateRoom.roomArea=roomAreaUpdate;
+    
+    console.log("update",updateRoom)
+  }
   return (
     <div>
       <NavHost />
@@ -65,7 +103,6 @@ const RoomPriceContainer = () => {
                       <span className="font-bold text-[blue]">{room.name}</span>
                     </h2>
                     <div>
-                      <UpdateRoom room={selectedRoom} isOpen={open} />
                       <Button
                         onClick={() => {
                           handleSelectRoomToUpdate(room);
@@ -133,87 +170,51 @@ const RoomPriceContainer = () => {
         </div>
         <Dialog open={open} onClose={handleCloseModal}>
           <DialogContent className={`${styles["content"]}`}>
-
-              <div className="flex">
-                <span className={`${styles["text-modal"]}`}>Loại giường: </span>
-                <Input
-                  defaultValue={
-                    selectedRoom?.bedTypes.find((bedType) => bedType.count > 0)
-                      ?.name
-                  }
-                />
-              </div>
-              <div className="flex">
-                <span className={`${styles["text-modal"]}`}>Diện tích: </span>
-                <Input defaultValue={selectedRoom?.roomArea} />
-              </div>
-              <div className="flex">
-                <span className={`${styles["text-modal"]}`}>
-                  Số người lớn:{" "}
-                </span>
-                <Input defaultValue={selectedRoom?.adultCount} />
-              </div>
-              <div className="flex">
-                <span className={`${styles["text-modal"]}`}>Số trẻ em: </span>
-                <Input defaultValue={selectedRoom?.childrenCount} />
-              </div>
-           
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseModal}>Cancel</Button>
-            <Button onClick={handleCloseModal}>Subscribe</Button>
-          </DialogActions>
-        </Dialog>
-        {/* <ConfigProvider
-          theme={{
-            token: {
-              titleFontSize: 30,
-              fontSize: 24,
-              lineHeight: 2,
-              padding: 8,
-            },
-          }}
-        >
-          <Modal
-            className="lg:w-[800px]"
-            open={open}
-            title={`Chỉnh sửa thông tin phòng ${selectedRoom?.name}`}
-            onOk={handleCloseModal}
-            onCancel={handleCloseModal}
-            footer={[
-              <Button key="cancel" onClick={handleCloseModal}>
-                Hủy
-              </Button>,
-              <Button key="submit" type="primary"  onClick={handleCloseModal}>
-                Cập nhật
-              </Button>
-            ]}
-          >
-            <div className="flex flex-col ">
-              <div className="flex items-center justify-between">
-                <span className="text-2xl">Loai giuong: </span>
-                <Input
-                  defaultValue={
-                    selectedRoom?.bedTypes.find((bedType) => bedType.count > 0)
-                      ?.name
-                  }
-                />
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Diện tích:</span>
-                <Input defaultValue={selectedRoom?.roomArea} />
-              </div>
-              <div className="flex  items-center justify-between">
-                <span>Số người lớn:</span>
-                <Input defaultValue={selectedRoom?.adultCount} />
-              </div>
-              <div className="flex items-center justify-between">
-                <span>Số trẻ em:</span>
-                <Input defaultValue={selectedRoom?.childrenCount} />
+            <div className="flex">
+              <span className={`${styles["text-modal"]}`}>Loại giường: </span>
+              <div className="flex gap-2">
+              {bedTypeCount.map((bed, index) => {
+                return (
+                  <div
+                    className={`${styles['bed-type-count']}`}
+                    key={bed.name}
+                  >
+                    <div className="flex flex-col">
+                      <h3 className="">{bed.name}</h3>
+                      <p className="text-slate-400">{bed.description}</p>
+                    </div>
+                    <input
+                      type="number"
+                      value={bed.count}
+                      onChange={(event) =>
+                        handleChangeBedCount(event, index)
+                      }
+                      className="border p-2 border-black"
+                      min={0}
+                    />
+                  </div>
+                );
+              })}
               </div>
             </div>
-          </Modal>
-        </ConfigProvider> */}
+            <div className="flex">
+              <span className={`${styles["text-modal"]}`}>Diện tích: </span>
+              <input  type="number" value={roomAreaUpdate} onChange={handleChangeRoomAreaUpdate} />
+            </div>  
+            <div className="flex">
+              <span className={`${styles["text-modal"]}`}>Số người lớn: </span>
+              <input  type="number" value={adultCountUpdate} onChange={handleChangeAdultCountUpdate} />
+            </div>
+            <div className="flex">
+              <span className={`${styles["text-modal"]}`}>Số trẻ em: </span>
+              <input type="number" value={childrenCountUpdate} onChange={handleChangeChildrenCountUpdate} />
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal}>Hủy</Button>
+            <Button onClick={()=>handleSumbit(selectedRoom)}>Cập nhật</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

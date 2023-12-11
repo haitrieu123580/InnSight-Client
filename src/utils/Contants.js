@@ -36,5 +36,27 @@ const Constants = {
 
     ],
     tax: 10,
+    bedTypes : [
+        {
+          id: 1,
+          name: "Giường đơn",
+          description: "Rộng 90-130cm",
+        },
+        {
+          id: 2,
+          name: "Giường đôi",
+          description: "Rộng 131-150cm",
+        },
+        {
+          id: 3,
+          name: "Giường lớn (cỡ King)",
+          description: "Rộng 151-180cm",
+        },
+        {
+          id: 4,
+          name: "Giường cực lớn (cỡ Super-King)",
+          description: "Rộng 181-210cm",
+        },
+      ]
 }
 export default Constants;
