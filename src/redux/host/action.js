@@ -5,5 +5,6 @@ const HostAction = {
     ADD_ROOM_TYPE: 'ADD_ROOM_TYPE',
     GET_ROOMTYPES: 'GET_ROOMTYPES',
     GET_ROOM_AVAILABLE: 'GET_ROOM_AVAILABLE',
+    UPDATE_ROOMTYPE: 'UPDATE_ROOMTYPE'
 }
 export default HostAction

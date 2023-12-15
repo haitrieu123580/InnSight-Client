@@ -1,8 +1,10 @@
 import axios from "axios";
 
+
 const BASE_URL = process.env.REACT_APP_SERVER_URL + "/api";
 
 const config = {
+
   headers: {
     "Content-Type": "multipart/form-data",
     // 'userId' : {userId}
@@ -33,10 +35,10 @@ export const AddRoomType = async (hotelId, newRoomType) => {
   });
   console.log("res call", response);
   if (response.status === 201) {
-    return { Data: true };
+    return { Data: response?.data  };
   } else {
     return {
-      Data: false,
+      Message: "Error",
     };
   }
 };
@@ -92,6 +94,23 @@ export const GetRoomAvailable = async (hotelId, data) => {
     console.error("Error in API request", error);
     return {
       Data: "error",
+    };
+  }
+};
+
+export const UpdateRoomType = async (hotelId, newRoomType) => {
+  const response = await axios.put(`${BASE_URL}/room-types`, newRoomType, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      hotelId: `${hotelId}`,
+    },
+  });
+  console.log("res call", response);
+  if (response.status === 201) {
+    return { Data: true };
+  } else {
+    return {
+      Data: false,
     };
   }
 };
