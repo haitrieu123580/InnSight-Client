@@ -28,13 +28,12 @@ const Header = () => {
       navigate(`/qltaikhoan?${queryParams}`);
     }
     else if (location.pathname === '/qldichvu') {
-      console.log('searchValue', searchValue);
-    }
-    else if (location.pathname === '/qldanhmuc/loai_phong') {
-      console.log('searchValue', searchValue);
+      const queryParams = new URLSearchParams({ name: searchValue }).toString();
+      navigate(`/qldichvu?${queryParams}`);
     }
     else if (location.pathname === '/qldanhmuc/loai_giuong') {
-      console.log('searchValue', searchValue);
+      const queryParams = new URLSearchParams({ name: searchValue }).toString();
+      navigate(`/qldanhmuc/loai_giuong?${queryParams}`);
     }
     else if (location.pathname === '/qldanhmuc/tam_nhin') {
       const queryParams = new URLSearchParams({ name: searchValue }).toString();

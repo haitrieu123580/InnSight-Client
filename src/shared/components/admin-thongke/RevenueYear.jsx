@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 
-const RevenueYear = ({ revenue }) => {
-  const yearOptions = Array.from(new Set(revenue.map(item => item.year)));
+const RevenueYear = () => {
+  const {revenueAllYear} = useSelector((state) => state.Admin) || {}
+  const yearOptions = Array.from(new Set(revenueAllYear.map(item => item.year)));
   const [selectedYearstart, setSelectedYearstart] = useState(yearOptions[0]);
   const [selectedYearend, setSelectedYearend] = useState(yearOptions[yearOptions.length - 1]);
   const [selectedYears, setSelectedYears] = useState([]);
-
   const [series, setSeries] = useState([]);
-
+  
   useEffect(() => {
-    const startYear = parseInt(selectedYearstart);
-    const endYear = parseInt(selectedYearend);
-    const updatedCategories = Array.from({ length: endYear - startYear + 1 }, (_, i) => (startYear + i).toString());
+    const startYear = selectedYearstart;
+    const endYear = selectedYearend;
+    const updatedCategories = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i);
     setSelectedYears(updatedCategories);
+    const filteredData = revenueAllYear.filter(item => item.year >= selectedYearstart && item.year <= selectedYearend);
 
-    const filteredData = revenue.filter(item => item.year >= selectedYearstart && item.year <= selectedYearend);
-    
     const dataForSelectedYears = updatedCategories.map(selectedYear => {
       const matchingData = filteredData.find(item => item.year === selectedYear);
-      return matchingData ? parseInt(matchingData.amount) : 0;
+      return matchingData ? Number(matchingData.revenue.replace(/\./g, '')) : 0;
     });
 
     const updatedSeries = [
@@ -30,16 +30,16 @@ const RevenueYear = ({ revenue }) => {
     ];
 
     setSeries(updatedSeries);
-  }, [selectedYearstart, selectedYearend, revenue]);
+  }, [selectedYearstart, selectedYearend, revenueAllYear]);
 
   const handleSelectChange = (event) => {
     if (event.target.id === 'selectYearStart') {
-      setSelectedYearstart(event.target.value);
+      setSelectedYearstart(parseInt(event.target.value));
     } else if (event.target.id === 'selectYearEnd') {
-      setSelectedYearend(event.target.value);
+      setSelectedYearend(parseInt(event.target.value));
     }
   };
-  
+
   const renderYearEndOptions = () => {
     return yearOptions
       .filter((year) => year > selectedYearstart)
@@ -178,14 +178,7 @@ const RevenueYear = ({ revenue }) => {
           value={selectedYearend}
           onChange={handleSelectChange}
         >
-          {yearOptions
-            .filter((year) => year > selectedYearstart) // Chỉ hiển thị giá trị lớn hơn giá trị đã chọn trong selectYearStart
-            .map((year) => (
-              <option key={year} value={year}>
-                năm {year}
-              </option>
-            ))
-          }
+          {renderYearEndOptions()}
         </select>
       </div>
 
