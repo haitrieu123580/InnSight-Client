@@ -37,7 +37,7 @@ const AddRoomPriceContainer = () => {
             <TextField
               id="price-room"
               helperText="Bao gồm các loại thuế, phí và hoa hồng"
-              onChange={(e)=>{setPrice(e.target.value); console.log (price)}}
+              onChange={(e)=>{setPrice(e.target.value)}}
             />
           </Stack>
           <Stack paddingX={8} spacing={2}>
