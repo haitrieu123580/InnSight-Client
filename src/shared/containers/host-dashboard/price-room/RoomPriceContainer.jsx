@@ -12,6 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import styles from "./PriceRoom.module.scss";
 import Constants from "../../../../utils/Contants";
+import UpdateRoom from "./UpdateRoom";
 
 const RoomPriceContainer = () => {
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
@@ -31,6 +32,7 @@ const RoomPriceContainer = () => {
     }
   }, [hotelId]);
   const [open, setOpen] = useState(false);
+let isOpen=false;
   const [selectedRoom, setSelectedRoom] = useState();
   const [bedTypeCount, setBedTypeCount] = useState(
     bedTypes.map((bedType) => ({ name: bedType.name, count: 0 }))
@@ -63,6 +65,7 @@ const RoomPriceContainer = () => {
 
   }
   const handleSelectRoomToUpdate = (room) => {
+    isOpen=true
     setOpen(true);
     setSelectedRoom(room);
     loadInfoRoom(room)
@@ -168,7 +171,8 @@ const RoomPriceContainer = () => {
             <Skeleton variant="rectangular" width={210} height={118} />
           )}
         </div>
-        <Dialog open={open} onClose={handleCloseModal}>
+        {isOpen&&(<UpdateRoom room={selectedRoom} />)}
+        {/* <Dialog open={open} onClose={handleCloseModal}>
           <DialogContent className={`${styles["content"]}`}>
             <div className="flex">
               <span className={`${styles["text-modal"]}`}>Loại giường: </span>
@@ -214,7 +218,7 @@ const RoomPriceContainer = () => {
             <Button onClick={handleCloseModal}>Hủy</Button>
             <Button onClick={()=>handleSumbit(selectedRoom)}>Cập nhật</Button>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
       </div>
     </div>
   );
