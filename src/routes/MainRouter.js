@@ -43,6 +43,7 @@ const RoomPrice = lazy(() => import('../pages/host-pages/dashboard/room-price/Ro
 const RoomStatus = lazy(() => import('../pages/host-pages/dashboard/room-status/RoomStatus'))
 const Reservation = lazy(() => import('../pages/host-pages/dashboard/reservation/Reservation'))
 const UpdateHotelInfo = lazy(() => import('../pages/host-pages/dashboard/update-hotel-info/UpdateHotelInfo'))
+const Revenue = lazy(() => import('../pages/host-pages/dashboard/revenue/Revenue'))
 
 
 
@@ -189,7 +190,11 @@ const protectedRoutes = [
     path: "/host/reservation",
     component: Reservation,
     layout: HostManageLayout,
-
+  },
+  {
+    path: "/host/revenue",
+    component: Revenue,
+    layout: HostManageLayout,
   },
   {
     path: "/host/register-finished",

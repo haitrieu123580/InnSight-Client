@@ -39,7 +39,10 @@ const initialState = {
     reservation:[],
     totalPrice:0,
     totalCommission:0
-  }
+  },
+  hotelInfo:{},
+  revenueHotelByYear:{},
+  revenueHotelAllYear:{},
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -134,6 +137,19 @@ const hostSlice = createSlice({
       const  reservedRoomInfo  = payload.payload;
       state.reservedRoomInfo=reservedRoomInfo
     },
+    getHotel: (state, { payload }) => {
+      state.hotelInfo = payload
+    },
+    updateHotel:(state, payload)=>{
+      const  {hotel,index} = payload;
+      state.hotel[index]=hotel
+    },
+    listRevenueHotelByYear: (state, { payload }) => {
+      state.revenueHotelByYear = payload
+    },
+    listRevenueHotelAllYear: (state, { payload }) => {
+      state.revenueHotelAllYear = payload
+    },
   },
 });
 export const {
@@ -152,6 +168,10 @@ export const {
   filterRoomAvailable,
   GetListRoomTypes,
   updateRoomType,
-  getReservedRoomInfo
+  getReservedRoomInfo,
+  getHotel,
+  updateHotel,
+  listRevenueHotelByYear, 
+  listRevenueHotelAllYear
 } = hostSlice.actions;
 export default hostSlice.reducer;
