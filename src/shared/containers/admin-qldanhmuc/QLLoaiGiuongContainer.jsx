@@ -140,19 +140,19 @@ const QLLoaiGiuongContainer = () => {
   // }
 
   // Delete BedTypes
-  function handleDeleteBedTypes(id) {
-    dispatch({
-      type: AdminAction.DELETE_BED_TYPES,
-      id : id,
-        onSuccess: () => {
-          ShowToastify.showSuccessToast("Xóa thành công")
-          setReloadData(true);
-        },
-        onError: () => {
-            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-        }
-    });
-  }
+  // function handleDeleteBedTypes(id) {
+  //   dispatch({
+  //     type: AdminAction.DELETE_BED_TYPES,
+  //     id : id,
+  //       onSuccess: () => {
+  //         ShowToastify.showSuccessToast("Xóa thành công")
+  //         setReloadData(true);
+  //       },
+  //       onError: () => {
+  //           ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+  //       }
+  //   });
+  // }
 
   return (
     bedTypes ? (
