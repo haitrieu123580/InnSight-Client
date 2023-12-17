@@ -4,14 +4,10 @@ import DropdownUser from './DropdownUser.tsx';
 import {Input} from 'antd';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import AdminAction from '../../../redux/admin/action.js';
-import ShowToastify from '../../../utils/ShowToastify.js';
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
