@@ -1,71 +1,48 @@
-import React, { useState } from 'react';
-import RevenueDate from '../../components/admin-thongke/RevenueDate'
+import React, { useEffect, useState } from 'react';
 import RevenueMonth from '../../components/admin-thongke/RevenueMonth'
 import RevenueYear from '../../components/admin-thongke/RevenueYear';
 import {CSVLink} from 'react-csv';
+import AdminAction from '../../../redux/admin/action';
+import ShowToastify from '../../../utils/ShowToastify';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ThongkeContainer = () => {
-  const [revenueDate, setRevenueDate] = React.useState([
-    {id:'1', amount:'300000', date:'17-01-2021'},
-    {id:'2', amount:'800000', date:'1-05-2022'},
-    {id:'3', amount:'100000', date:'14-06-2022'},
-    {id:'4', amount:'1200000', date:'11-06-2022'},
-    {id:'5', amount:'1300000', date:'12-07-2022'},
-    {id:'6', amount:'500000', date:'14-07-2022'},
-    {id:'6', amount:'800000', date:'2-10-2022'},
-    {id:'6', amount:'700000', date:'5-10-2022'},
-    {id:'7', amount:'1000000', date:'10-10-2022'},
-    {id:'1', amount:'300000', date:'17-05-2023'},
-    {id:'2', amount:'800000', date:'1-05-2023'},
-    {id:'3', amount:'100000', date:'1-06-2023'},
-    {id:'4', amount:'1200000', date:'2-06-2023'},
-    {id:'5', amount:'1300000', date:'12-07-2023'},
-    {id:'6', amount:'500000', date:'14-07-2023'},
-    {id:'6', amount:'800000', date:'2-10-2023'},
-    {id:'6', amount:'700000', date:'5-10-2023'},
-    {id:'7', amount:'1000000', date:'10-10-2023'},
-  ]);
-  const [revenueMonth, setRevenueMonth] = React.useState([
-    {id:'1', amount:'300000', month:'01', year:'2022'},
-    {id:'2', amount:'800000', month:'02', year:'2022'},
-    {id:'3', amount:'100000', month:'03', year:'2022'},
-    {id:'4', amount:'1200000', month:'04', year:'2022'},
-    {id:'5', amount:'1300000', month:'05', year:'2022'},
-    {id:'6', amount:'500000', month:'06', year:'2022'},
-    {id:'6', amount:'800000', month:'07', year:'2022'},
-    {id:'6', amount:'700000', month:'08', year:'2022'},
-    {id:'7', amount:'1000000', month:'09', year:'2022'},
-    {id:'4', amount:'1200000', month:'10', year:'2022'},
-    {id:'5', amount:'1300000', month:'11', year:'2022'},
-    {id:'6', amount:'500000', month:'12', year:'2022'},
-    {id:'1', amount:'300000', month:'01', year:'2023'},
-    {id:'2', amount:'800000', month:'02', year:'2023'},
-    {id:'3', amount:'100000', month:'03', year:'2023'},
-    {id:'4', amount:'1200000', month:'04', year:'2023'},
-    {id:'5', amount:'1300000', month:'05', year:'2023'},
-    {id:'6', amount:'500000', month:'08', year:'2023'},
-    {id:'6', amount:'800000', month:'10', year:'2023'},
-    {id:'6', amount:'700000', month:'11', year:'2023'},
-    {id:'7', amount:'1000000', month:'12', year:'2023'},
-  ]);
+  const dispatch = useDispatch();
+  const {revenueByYear, revenueAllYear} = useSelector((state) => state.Admin) || {}
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
 
-  const [revenueYear, setRevenueYear] = React.useState([
-    {id:'1', amount:'500000', year:'2017'},
-    {id:'1', amount:'140000', year:'2018'},
-    {id:'1', amount:'700000', year:'2019'},
-    {id:'1', amount:'300000', year:'2020'},
-    {id:'1', amount:'800000', year:'2021'},
-    {id:'1', amount:'300000', year:'2022'},
-    {id:'1', amount:'2100000', year:'2023'},
-  ]);
+  const data = { year: currentYear.toString() };
+  useEffect(() => {
+    dispatch({
+      type: AdminAction.REVENUE_BY_YEAR,
+      data: data,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Lỗi, xin vui lòng thử lại sau!")
+        }
+    });
 
+    dispatch({
+      type: AdminAction.REVENUE_ALL_YEAR,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Lỗi, xin vui lòng thử lại sau!")
+        }
+    });
+
+  }, [dispatch]);
   return (
-    <>
-      {/* <CSVLink data={revenueDate} filename={'Revenue Statistics.csv'} className='border'>Export Data</CSVLink> */}
-      <RevenueDate revenue = {revenueDate}/>
-      <RevenueMonth revenue = {revenueMonth}/>
-      <RevenueYear revenue = {revenueYear}/>
-    </>
+    Object.keys(revenueByYear).length > 0 && Object.keys(revenueAllYear).length > 0 ? (
+      <>
+        <RevenueMonth/>
+        <RevenueYear/>
+      </>
+    ):(
+      null
+    )
   );
 };
 
