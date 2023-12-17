@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styles from './QLLoaiPhongContainer.module.scss'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';

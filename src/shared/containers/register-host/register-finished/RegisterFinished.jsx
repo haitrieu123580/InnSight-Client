@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
@@ -25,6 +26,7 @@ const RegisterFinishedContainer = () => {
   const dispatch = useDispatch();
   const newHotel = useSelector((state) => state.Host.newHotel);
   console.log("new1", newHotel);
+
 
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
@@ -46,6 +48,7 @@ const RegisterFinishedContainer = () => {
       setFinished(false);
     }
   }, [guaranteeChecked, agreeChecked]);
+
 
   const onSubmit = () => {
     
@@ -181,14 +184,7 @@ const RegisterFinishedContainer = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-              {/* <Link
-                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                to={isFinished ? "/host/dashboard" : ""}
-              >
-                <button className="h-full">
-                  Hoàn tất đăng nhập và mở phòng cho khách đặt
-                </button>
-              </Link> */}
+
               <button
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
                 onClick={onSubmit}

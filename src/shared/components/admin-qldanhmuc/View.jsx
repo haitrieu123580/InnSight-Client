@@ -15,7 +15,7 @@ const View = ({ open, onClose, onAddView, onUpdateView, view, setView }) => {
   
   return (
     <Dialog open={open} onClose={onClose}>
-      {view ? (
+      {view?.id ? (
             <DialogTitle>Cập nhật tầm nhìn</DialogTitle>
           ) : (
             <DialogTitle>Thêm tầm nhìn</DialogTitle>
@@ -31,18 +31,18 @@ const View = ({ open, onClose, onAddView, onUpdateView, view, setView }) => {
             className={classes.customInput}
           />
           <br />
-          <TextField
+          {/* <TextField
             style={{ marginTop: '15px', width: '550px' }}
             label="Mô tả"
             value={view ? view.description : ''}
             onChange={(e) => setView({ ...view, description: e.target.value })}
             className={classes.customInput}
-          />
+          /> */}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Hủy</Button>
-        {view ? (
+        {view?.id ? (
           <Button onClick={onUpdateView}>Lưu</Button>
         ) : (
           <Button onClick={onAddView}>Thêm tầm nhìn</Button>
