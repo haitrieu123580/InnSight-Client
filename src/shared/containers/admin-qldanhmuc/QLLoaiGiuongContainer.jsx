@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import AdminAction from '../../../redux/admin/action';
 import ShowToastify from '../../../utils/ShowToastify';
+import { useLocation } from 'react-router';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,10 +43,12 @@ const QLLoaiGiuongContainer = () => {
   const dispatch = useDispatch();
   const {bedTypes} = useSelector((state) => state.Admin) || {}
   const [reloadData, setReloadData] = useState(false);
-
-  const [addBedOpen, setAddBedOpen] = React.useState(false);
-  const [updateBedOpen, setUpdateBedOpen] = React.useState(false);
-  const [selectedBed, setSelectedBed] = React.useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const name = searchParams.get('name') || '';
+  // const [addBedOpen, setAddBedOpen] = React.useState(false);
+  // const [updateBedOpen, setUpdateBedOpen] = React.useState(false);
+  // const [selectedBed, setSelectedBed] = React.useState(null);
   const [bedCount, setBedCount] = React.useState(1);
   const handleIncrementBedCount = () => {
     setBedCount(bedCount + 1);
@@ -53,7 +56,8 @@ const QLLoaiGiuongContainer = () => {
 
   useEffect(() => {
     dispatch({
-      type: AdminAction.GET_LIST_BED_TYPES,
+      type: AdminAction.SEARCH_BED_TYPES,
+      name: name,
         onSuccess: () => {
         },
         onError: () => {
@@ -61,79 +65,94 @@ const QLLoaiGiuongContainer = () => {
         }
     });
     setReloadData(false);
-  }, [dispatch, reloadData]);
+  }, [dispatch, reloadData, name]);
 
-  // Add BedTypes
-  const handleOpenAddBedTypes = () => {
-    setSelectedBed(null);
-    setAddBedOpen(true);
-  };
-  const handleAddBedTypes = () => {
-    if(selectedBed){
-      dispatch({
-        type: AdminAction.ADD_BED_TYPES,
-        data: selectedBed,
-          onSuccess: () => {
-            ShowToastify.showSuccessToast("Thêm thành công");
-            setReloadData(true);
-          },
-          onError: () => {
-              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-          }
-      });
-    }
-    else{
-      ShowToastify.showErrorToast("Không thành công");
-    }
-    setAddBedOpen(false);
-  };
-  const handleCloseAddBedTypes = () => {
-    setAddBedOpen(false);
-  };
+  // // Add BedTypes
+  // const handleOpenAddBedTypes = () => {
+  //   setSelectedBed(null);
+  //   setAddBedOpen(true);
+  // };
+  // const handleAddBedTypes = () => {
+  //   if(selectedBed){
+  //     dispatch({
+  //       type: AdminAction.ADD_BED_TYPES,
+  //       data: selectedBed,
+  //         onSuccess: () => {
+  //           ShowToastify.showSuccessToast("Thêm thành công");
+  //           setReloadData(true);
+  //         },
+  //         onError: () => {
+  //             ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+  //         }
+  //     });
+  //   }
+  //   else{
+  //     ShowToastify.showErrorToast("Không thành công");
+  //   }
+  //   setAddBedOpen(false);
+  // };
+  // const handleCloseAddBedTypes = () => {
+  //   setAddBedOpen(false);
+  // };
 
-  // Update BedTypes
-  const handleOpenUpdateBedTypes = (item) => {
-    setSelectedBed(item);
-    setUpdateBedOpen(true);
-  };
-  const handleUpdateBedTypes = () => {
-    if(selectedBed){
-      dispatch({
-        type: AdminAction.UPDATE_BED_TYPES,
-        id: selectedBed.id,
-        data: selectedBed,
-          onSuccess: () => {
-            ShowToastify.showSuccessToast("Sửa thành công");
-            setReloadData(true);
-        },
-          onError: () => {
-              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
-          }
-      });
-    }
-    else{
-    ShowToastify.showErrorToast("Không thành công");
-    }
-    setUpdateBedOpen(false);
-  };
-  const handleCloseUpdateBedTypes = () => {
-    setUpdateBedOpen(false);
-  };
+  // // Update BedTypes
+  // const handleOpenUpdateBedTypes = (item) => {
+  //   setSelectedBed(item);
+  //   setUpdateBedOpen(true);
+  // };
+  // const handleUpdateBedTypes = () => {
+  //   if(selectedBed){
+  //     dispatch({
+  //       type: AdminAction.UPDATE_BED_TYPES,
+  //       id: selectedBed.id,
+  //       data: selectedBed,
+  //         onSuccess: () => {
+  //           ShowToastify.showSuccessToast("Sửa thành công");
+  //           setReloadData(true);
+  //       },
+  //         onError: () => {
+  //             ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+  //         }
+  //     });
+  //   }
+  //   else{
+  //   ShowToastify.showErrorToast("Không thành công");
+  //   }
+  //   setUpdateBedOpen(false);
+  // };
+  // const handleCloseUpdateBedTypes = () => {
+  //   setUpdateBedOpen(false);
+  // };
+
+  // // Delete BedTypes
+  // function handleDeleteBedTypes(id) {
+  //   dispatch({
+  //     type: AdminAction.DELETE_BED_TYPES,
+  //     id : id,
+  //       onSuccess: () => {
+  //         ShowToastify.showSuccessToast("Xóa thành công")
+  //         setReloadData(true);
+  //       },
+  //       onError: () => {
+  //           ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+  //       }
+  //   });
+  // }
 
   // Delete BedTypes
-  function handleDeleteBedTypes(id) {
-    dispatch({
-      type: AdminAction.DELETE_BED_TYPES,
-      id : id,
-        onSuccess: () => {
-          ShowToastify.showSuccessToast("Xóa thành công")
-          setReloadData(true);
-        },
-        onError: () => {
-            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-        }
-    });
-  }
+  // function handleDeleteBedTypes(id) {
+  //   dispatch({
+  //     type: AdminAction.DELETE_BED_TYPES,
+  //     id : id,
+  //       onSuccess: () => {
+  //         ShowToastify.showSuccessToast("Xóa thành công")
+  //         setReloadData(true);
+  //       },
+  //       onError: () => {
+  //           ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+  //       }
+  //   });
+  // }
 
   return (
     bedTypes ? (
@@ -146,19 +165,19 @@ const QLLoaiGiuongContainer = () => {
                 <StyledTableCell>STT</StyledTableCell>
                 <StyledTableCell style={{ width: 500 }}>Tên loại giường</StyledTableCell>
                 <StyledTableCell style={{ width: 500}}>Mô tả</StyledTableCell>
-                <StyledTableCell align="right">Sửa</StyledTableCell>
-                <StyledTableCell >Xóa</StyledTableCell>
+                {/* <StyledTableCell align="right">Sửa</StyledTableCell>
+                <StyledTableCell >Xóa</StyledTableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(bedTypes) && bedTypes.map((item, index) => (
+              {Array.isArray(bedTypes.content) && bedTypes.content.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {bedCount + index}
                   </StyledTableCell>
                   <StyledTableCell style={{ width: 500}}>{item.name}</StyledTableCell>
                   <StyledTableCell style={{ width: 500 }}>{item.description}</StyledTableCell>
-                  <StyledTableCell align="right" onClick={() => handleOpenUpdateBedTypes(item)}><button><IcUpdate/></button></StyledTableCell>
+                  {/* <StyledTableCell align="right" onClick={() => handleOpenUpdateBedTypes(item)}><button><IcUpdate/></button></StyledTableCell>
                   <Popconfirm
                     title="Xóa loại giường"
                     description="Bạn có chắc chắc muốn xóa loại giường này không?"
@@ -171,22 +190,20 @@ const QLLoaiGiuongContainer = () => {
                       <IcDelete/>
                     </button>
                   </StyledTableCell>
-                  </Popconfirm>
-                  
+                  </Popconfirm> */}
                 </StyledTableRow>
               ))}
-              <Bed
+              {/* <Bed
                 open={updateBedOpen}
                 onClose={handleCloseUpdateBedTypes}
                 onUpdateBed={handleUpdateBedTypes}
                 bed={selectedBed}
                 setBed={setSelectedBed}
-              />
+              /> */}
             </TableBody>
           </Table>
         </TableContainer>
-
-        <div className='mt-3'>
+        {/* <div className='mt-3'>
           <Button variant="outlined" onClick={handleOpenAddBedTypes}>
             Thêm loại giường
           </Button>
@@ -197,7 +214,7 @@ const QLLoaiGiuongContainer = () => {
             bed={selectedBed}
             setBed={setSelectedBed}
           />
-        </div>
+        </div> */}
       </div>
     ) : (
       <div> null </div>
