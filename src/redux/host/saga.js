@@ -99,8 +99,6 @@ function* watchUpdateRoomType() {
     });
 }
 
-
-
 export default function* HostSaga() {
     yield all([
         fork (watchAddHotel),
