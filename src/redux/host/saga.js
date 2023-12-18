@@ -1,6 +1,6 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
-import { AddHotel, AddRoomType, GetRoomAvailable, GetRoomTypes } from '../../api/ApiHost';
+import { AddHotel, AddRoomType, GetRoomAvailable, GetRoomTypes, UpdateRoomType } from '../../api/ApiHost';
 import { GetListRoomTypes, filterRoomAvailable } from './slice';
 
 function* watchAddHotel() {
@@ -27,9 +27,10 @@ function* watchAddRoomType() {
         console.log("payload2", payload);
         try {
             const response = yield call(AddRoomType, id,data);
-            console.log("res",response);
+            console.log("res",response?.roomTypeId);
 
-            if (response?.Data) {
+            if (response) {
+                console.log("roomType Id",response?.roomTypeId)
                 onSuccess && onSuccess();
             }
         } catch (error) {
@@ -80,11 +81,32 @@ function* watchFilterRoomAvailable() {
         }
     });
 }
+function* watchUpdateRoomType() {
+    yield takeEvery(actions.UPDATE_ROOMTYPE, function* (payload) {
+        const { id,data, onSuccess, onError } = payload;
+        console.log("payload2", payload);
+        try {
+            const response = yield call(UpdateRoomType, id,data);
+            console.log("res",response);
+
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+
+
 export default function* HostSaga() {
     yield all([
-        fork(watchAddHotel),
+        fork (watchAddHotel),
         fork(watchAddRoomType),
         fork(watchGetRoomTypes),
         fork(watchFilterRoomAvailable),
+        fork(watchUpdateRoomType),
     ]);
 }

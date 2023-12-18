@@ -45,12 +45,14 @@ export const getDetailUser = async ({ id, token }) => {
   return { Data: response?.data };
 }
 
-export const searchUser = async ({ email, token }) => {
+export const searchUser = async ({ email, token, pageIndex = 1, pageSize = 10 }) => {
   const response = await axios.get(
     `${BASE_URL}/search`,
     {
       params:{
-        email
+        email,
+        pageIndex,
+        pageSize,
       },
       headers: {
         'Content-Type': 'application/json',

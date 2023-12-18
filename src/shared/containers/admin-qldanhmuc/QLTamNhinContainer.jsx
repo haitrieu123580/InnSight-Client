@@ -159,7 +159,7 @@ const QLTamNhinContainer = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(views) && views.map((item, index) => (
+              {Array.isArray(views.content) && views.content.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {viewCount + index}

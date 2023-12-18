@@ -3,10 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   listUser: {},
   detailUser:{},
-  service:{},
   amenity:{},
   bedTypes:{},
   views:{},
+  revenueByYear:{},
+  revenueAllYear:{}
 };
 
 const adminSlice = createSlice({
@@ -19,9 +20,6 @@ const adminSlice = createSlice({
     detailUser: (state, { payload }) => {
       state.detailUser = payload
     },
-    listService: (state, { payload }) => {
-      state.service = payload
-    },
     listAmenity: (state, { payload }) => {
       state.amenity = payload
     },
@@ -31,16 +29,23 @@ const adminSlice = createSlice({
     listViews: (state, { payload }) => {
       state.views = payload
     },
+    listRevenueByYear: (state, { payload }) => {
+      state.revenueByYear = payload
+    },
+    listRevenueAllYear: (state, { payload }) => {
+      state.revenueAllYear = payload
+    },
   },
 });
 
 export const {
   listUser,
   detailUser,
-  listService,
   listAmenity,
   listBedTypes,
   listViews,
+  listRevenueByYear, 
+  listRevenueAllYear
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

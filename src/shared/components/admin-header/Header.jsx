@@ -4,14 +4,10 @@ import DropdownUser from './DropdownUser.tsx';
 import {Input} from 'antd';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import AdminAction from '../../../redux/admin/action.js';
-import ShowToastify from '../../../utils/ShowToastify.js';
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,13 +24,12 @@ const Header = () => {
       navigate(`/qltaikhoan?${queryParams}`);
     }
     else if (location.pathname === '/qldichvu') {
-      console.log('searchValue', searchValue);
-    }
-    else if (location.pathname === '/qldanhmuc/loai_phong') {
-      console.log('searchValue', searchValue);
+      const queryParams = new URLSearchParams({ name: searchValue }).toString();
+      navigate(`/qldichvu?${queryParams}`);
     }
     else if (location.pathname === '/qldanhmuc/loai_giuong') {
-      console.log('searchValue', searchValue);
+      const queryParams = new URLSearchParams({ name: searchValue }).toString();
+      navigate(`/qldanhmuc/loai_giuong?${queryParams}`);
     }
     else if (location.pathname === '/qldanhmuc/tam_nhin') {
       const queryParams = new URLSearchParams({ name: searchValue }).toString();

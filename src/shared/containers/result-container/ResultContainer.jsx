@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './ResultContainer.module.scss'
 import Header from '../../components/header/Header'
 import ResultList from '../../components/result-list/ResultList'
@@ -13,7 +13,7 @@ import HomeAction from '../../../redux/home/action'
 import ShowToastify from '../../../utils/ShowToastify'
 
 const ResultContainer = () => {
-    const { result } = useSelector(state => state.Home) || {}
+    const {result} = useSelector(state => state.Home) || {}
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -31,13 +31,33 @@ const ResultContainer = () => {
         review: searchParams.get('review') !== 'null' ? searchParams.get('review') : null,
         pageSize: searchParams.get('pageSize'),
     };
+    let searchFilter = searchParams.get('filter') || null;
+    useEffect(() => {
+        setPage(1);
+    },[searchFilter]);
+
+    useEffect(() => {
+        setPage(1);
+        filter.pageIndex = page;
+        dispatch({
+            type: HomeAction.SEARCH_HOTELS,
+            filter: filter,
+            onSuccess: () => {
+                const queryParams = new URLSearchParams(filter).toString();
+                navigate(`/searchresults?${queryParams}`);
+            },
+            onError: () => {
+                ShowToastify.showErrorToast("Có lỗi xảy ra, vui lòng thử lại");
+            }
+        });
+    },[dispatch]);
+
     const handleChange = (event, value) => {
         setPage(value);
         filter = {
             ...filter,
             pageIndex: value
         }
-        console.log('filter',filter);
         dispatch({
             type: HomeAction.SEARCH_HOTELS,
             filter: filter,
