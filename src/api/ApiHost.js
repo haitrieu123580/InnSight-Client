@@ -3,6 +3,12 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + "/api";
 
+const config = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+    // 'userId' : {userId}
+  },
+};
 export const AddHotel = async (userID, newHotel) => {
   const response = await axios.post(`${BASE_URL}/hotel`, newHotel, {
     headers: {
@@ -128,61 +134,3 @@ export const GetReservedRoomInfo = async (hotelId, data) => {
     };
   }
 };
-
-export const GetHotelbyId = async (data) =>{
-  try {
-    const response = await axios.post(
-        `${BASE_URL}/hotel/rooms`,
-        JSON.stringify(data), 
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-    );
-    return { Data: response?.data };
-} catch (error) {
-    return { Error: error };
-}
-}
-export const UpdateHotel = async (userId, HotelId, newHotel) => {
-  const response = await axios.put(`${BASE_URL}/hotel/${HotelId}`, newHotel, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      userId: `${userId}`,
-    },
-  });
-  if (response.status === 201) {
-    return { Data: true };
-  } else {
-    return {
-      Data: false,
-    };
-  }
-};
-export const getRevenueHotelByYear = async ({ data,hotelId}) => {
-  console.log("hotelId",Data)
-  const response = await axios.post(
-    `${BASE_URL}/hotel/revenue/by-year`,
-    JSON.stringify(data),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'hotelId':`${hotelId}`
-      },
-    }
-  );
-  return { Data: response?.data };
-}
-export const deleteRoomTypeById = async ({ hotelId, roomTypeId }) => {
-  const response = await axios.delete(
-    `${BASE_URL}/room-types/${roomTypeId}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'hotelId':`${hotelId}`
-      },
-    }
-  );
-  return { Data: response?.data };
-}

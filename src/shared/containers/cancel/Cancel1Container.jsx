@@ -14,16 +14,18 @@ const Cancel1Container = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookingReserved } = useSelector(state => state.Booking);
+  let data = {};
+  data.reservationCode=bookingReserved.reservationCode;
   const handleAcceptCancel = () => {
     dispatch({
       type: BookingAction.RESERVATION_CANCEL,
-      reservationCode: bookingReserved.reservationCode,
+      reservationCode: data,
       onSuccess: () => {
         ShowToastify.showSuccessToast("Bạn đã hủy phòng thành công")
         navigate('/cancel/2');
       },
       onError: () => {
-        ShowToastify.showErrorToast("Xảy ra lỗi, xin hãy thử lại")
+        ShowToastify.showErrorToast("Không thể hủy đơn đơn này!")
       }
     });
   };
@@ -87,7 +89,7 @@ const Cancel1Container = () => {
                 type="button"
                 onClick={handleAcceptCancel}
               >
-                  <Link to={'/cancel/4'}> Xác nhận hủy</Link>
+                Xác nhận hủy
               </button>
               <Link to={'/book/invoice'}>
                 <button
