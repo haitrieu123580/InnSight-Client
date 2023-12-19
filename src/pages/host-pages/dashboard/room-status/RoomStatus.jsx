@@ -1,7 +1,7 @@
 import RoomStatusContainer from "../../../../shared/containers/host-dashboard/room-status/RoomStatus"
 
 
-const RoomPrice = () => {
+const RoomStatus = () => {
 
     return (
         <>
@@ -10,4 +10,4 @@ const RoomPrice = () => {
     )
 }
 
-export default RoomPrice
+export default RoomStatus

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import IcDetail from '../../components/icons/qltaikhoan-icons/IcDetail.jsx'
 import IcDelete from '../../components/icons/qltaikhoan-icons/IcDelete.jsx'
+import SelectMenu from '../../components/admin-qltaikhoan/SelectMenu.tsx'
 import styles from './QLTaiKhoanContainer.module.scss'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import TableContainer from '@mui/material/TableContainer';
@@ -40,27 +41,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const QLTaiKhoanContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {listUser} = useSelector((state) => state.Admin) || {}
   const [page, setPage] = useState(1);
   const [reloadData, setReloadData] = useState(true);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const email = searchParams.get('email') || '';
   
+  const handleSelectChange = (value) => {
+    setPage(value);
+  };
+  
+  const pageIndex = 1;
+  const pageSize = 20;
   useEffect(() => {
-    setPage(1);
+    if (reloadData) {
       dispatch({
-        type: AdminAction.SEARCH_USER,
-        email: email,
-        pageIndex : 1,
-        pageSize: 20,
+        type: AdminAction.GET_LIST_USER,
+        pageIndex : pageIndex,
+        pageSize: pageSize,
           onSuccess: () => {
           },
           onError: () => {
-              ShowToastify.showWarningToast("Không có dữ liệu phù hợp!")
+              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
           }
       });
-  }, [reloadData, email, dispatch]);
+      setReloadData(false);
+    }
+  }, [page, reloadData]);
 
   const getEmailUsername = (email) => {
     const atIndex = email.indexOf('@');
@@ -71,18 +77,18 @@ const QLTaiKhoanContainer = () => {
     }
   };
 
+
   const handleChange = (event, value) => {
     setPage(value);
     dispatch({
-      type: AdminAction.SEARCH_USER,
-      email: email,
+      type: AdminAction.GET_LIST_USER,
       pageIndex : value,
-      pageSize: 20,
-      onSuccess: () => {
-      },
-      onError: () => {
-        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-      }
+      pageSize: pageSize,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+        }
     });
   };
 
@@ -101,32 +107,35 @@ const QLTaiKhoanContainer = () => {
   }
 
   return (
-    listUser ? (
+    listUser && listUser.users ? (
     <div className={`${styles['home']}`}>
       <div className={`flex m-2 ${styles['text']}`}>
         {/* <div className="mr-4 pt-1">Loại người dùng</div>
         <SelectMenu onSelectChange={handleSelectChange} className="mr-4" /> */}
-        <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalElements}</div>
+        <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalItems}</div>
       </div>
       <div>
         <TableContainer component={Paper} className="mr-14">
           <Table>
             <TableHead>
               <TableRow>
-                <StyledTableCell>ID</StyledTableCell>
+                <StyledTableCell>STT</StyledTableCell>
                 <StyledTableCell className="w-96">Tên người dùng</StyledTableCell>
                 <StyledTableCell>Vai trò</StyledTableCell>
                 <StyledTableCell align="center">Hành động</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(listUser.content) && listUser.content.map((item, index) => (
+              {listUser.users.map((item, index) => (
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
-                      {/* {((page - 1) * 20) + index + 1} */}
-                      {item.id}
+                      {((page - 1) * 20) + index + 1}
                     </StyledTableCell>
+                    {item.fullName ? (
+                      <StyledTableCell className="w-96">{item.fullName}</StyledTableCell>
+                    ) : (
                       <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
+                    )}
                     <StyledTableCell>{item.role}</StyledTableCell>
                     <StyledTableCell>
                       <div className="flex justify-center">
@@ -157,9 +166,10 @@ const QLTaiKhoanContainer = () => {
         </TableContainer>
       </div>
       <Pagination
-        count={listUser?.totalPages-1 || 1}
+        count={listUser?.totalPages || 1}
         defaultPage={1}
         page={page}
+        // variant="outlined"
         shape="rounded"
         onChange={handleChange}
         className={`${styles['pagination']}`}

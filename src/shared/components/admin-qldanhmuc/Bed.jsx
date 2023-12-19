@@ -15,7 +15,7 @@ const Bed = ({ open, onClose, onAddBed, onUpdateBed, bed, setBed }) => {
   
   return (
     <Dialog open={open} onClose={onClose}>
-      {bed ? (
+      {bed?.id ? (
             <DialogTitle>Cập nhật loại giường</DialogTitle>
           ) : (
             <DialogTitle>Thêm loại giường</DialogTitle>
@@ -42,7 +42,7 @@ const Bed = ({ open, onClose, onAddBed, onUpdateBed, bed, setBed }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Hủy</Button>
-        {bed ? (
+        {bed?.id ? (
           <Button onClick={onUpdateBed}>Lưu</Button>
         ) : (
           <Button onClick={onAddBed}>Thêm loại giường</Button>

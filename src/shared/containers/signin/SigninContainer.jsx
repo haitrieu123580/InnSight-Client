@@ -2,14 +2,12 @@ import React from 'react'
 import styles from './index.module.scss'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AuthAction from '../../../redux/auth/action';
 import { useNavigate } from 'react-router';
 import ShowToastify from '../../../utils/ShowToastify';
 const SigninContainer = () => {
     const dispath = useDispatch();
-    const { userRole, isLogin } = useSelector(state => state.Auth)
-    console.log('userRole, isLogin', userRole, isLogin)
     const navigate = useNavigate();
     const [typedEmail, setTypedEmail] = useState(false);
     const [email, setEmail] = useState("")
@@ -29,7 +27,6 @@ const SigninContainer = () => {
             setTypedEmail(true);
         }
     };
-    const role = JSON.parse(localStorage.getItem('role'));
     const onSubmit = (data) => {
         dispath({
             type: AuthAction.SIGNIN,

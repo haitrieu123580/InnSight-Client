@@ -32,7 +32,8 @@ const initialState = {
     amenities:[],
     view: "",
     images:[],
-  }
+  },
+  roomAvailableByFilter:[],
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -119,10 +120,24 @@ const hostSlice = createSlice({
       console.log("add roomType ok")
       state.roomTypes=[...state.roomTypes,newRoomType]
     },
+    GetListRoomTypes: (state,  payload ) => {
+      const  roomTypes  = payload.payload.roomTypes;
+      console.log("get roomType ok",roomTypes)
+      state.roomTypes=roomTypes
+    },
+    filterRoomAvailable: (state,  payload ) => {  
+      const  roomAvailableByFilter  = payload.payload;
+      console.log("filterRoomAvailable ok",roomAvailableByFilter)
+      state.roomAvailableByFilter=roomAvailableByFilter
+    },
+    updateRoomType:(state, payload)=>{
+      const  {room,index} = payload;
+      state.roomTypes[index]=room
+    }
   },
 });
 export const {
-  // addHotel,
+  // addHotel,rw42
   addAddressHotel,
   addNameAndRateHotel,
   addExtraAmenityHotel,
@@ -133,6 +148,9 @@ export const {
   addBasicInfoRoomType,
   addRoomType,
   addRoomTypePrice,
-  addImagesRoomType
+  addImagesRoomType,
+  filterRoomAvailable,
+  GetListRoomTypes,
+  updateRoomType
 } = hostSlice.actions;
 export default hostSlice.reducer;

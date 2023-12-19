@@ -6,13 +6,12 @@ import { useEffect } from 'react';
 import SettingAction from '../../../redux/user-settings/action';
 import { useDispatch, useSelector } from 'react-redux';
 import ShowToastify from '../../../utils/ShowToastify';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Segmented } from 'antd';
 import { useState } from 'react';
 
 const SettingsContainer = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {userHistoryReservations} = useSelector((state) => state.Setting) || {}
   
   const id = JSON.parse(localStorage.getItem('id'));
@@ -31,7 +30,7 @@ const SettingsContainer = () => {
           }
       });
     }
-  }, []);
+  }, [dispatch, data]);
 
   const reservationList = userHistoryReservations.reservationList;
   const totalReservation = userHistoryReservations.totalReservation;

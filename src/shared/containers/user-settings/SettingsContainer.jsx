@@ -9,15 +9,13 @@ import { Controller, useForm  } from 'react-hook-form';
 import moment from 'moment';
 import Select from 'react-select';
 import { DatePicker } from 'antd';
-import { useNavigate } from 'react-router';
 
 const SettingsContainer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const {userProfile} = useSelector((state) => state.Setting) || {}
   const id = JSON.parse(localStorage.getItem('id'));
-  const { register, setValue, handleSubmit, watch, control, formState: { errors }} = useForm({
+  const { register, setValue, handleSubmit, control} = useForm({
     criteriaMode: "all"
   });
 
@@ -33,7 +31,7 @@ const SettingsContainer = () => {
           }
       });
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   console.log('id', id)
   const item = userProfile;

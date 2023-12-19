@@ -6,6 +6,7 @@ import SettingLayout from "../shared/components/layout/SettingLayout/SettingLayo
 import MainLayoutAdmin from "../shared/components/layout/MainLayoutAdmin";
 import { lazy } from 'react';
 import RoomPrice from "../pages/host-pages/dashboard/room-price/RoomPrice";
+import RoomStatus from "../pages/host-pages/dashboard/room-status/RoomStatus";
 const HomePage = lazy(() => import('../pages/home-page/HomePage'))
 const ResultPage = lazy(() => import('../pages/result-page/ResultPage'))
 const HotelPage = lazy(() => import('../pages/hotel/HotelPage'))
@@ -31,11 +32,9 @@ const BookingPage4 = lazy(() => import('../pages/booking-pages/BookingPage4'))
 const QLTaiKhoan = lazy(() => import('../pages/qltaikhoan/QLTaiKhoan'))
 const DetailUser = lazy(() => import('../pages/qltaikhoan/DetailUser'))
 const QLDichVu = lazy(() => import('../pages/qldichvu/QLDichVu'))
-const QLLoaiPhong = lazy(() => import('../pages/qldanhmuc/QLLoaiPhong'))
 const QLLoaiGiuong = lazy(() => import('../pages/qldanhmuc/QLLoaiGiuong'))
 const QLTamNhin = lazy(() => import('../pages/qldanhmuc/QLTamNhin'))
 const Thongke = lazy(() => import('../pages/admin-thongke/Thongke'))
-const Setting = lazy(() => import('../pages/admin-setting/Setting'))
 const Changepw = lazy(() => import('../pages/admin-ChangePW/Changepw'))
 const Cancel1 = lazy(() => import('../pages/cancel/Cancel1'))
 const Cancel2 = lazy(() => import('../pages/cancel/Cancel2'))
@@ -174,6 +173,11 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
+    path: "/host/room-status",
+    component: RoomStatus,
+    layout: HostLayout,
+  },
+  {
     path: "/host/register-finished",
     component: RegisterFinished,
     layout: HostLayout,
@@ -211,11 +215,6 @@ const privateRoutes = [
     layout: MainLayoutAdmin,
   },
   {
-    path: '/qldanhmuc/loai_phong',
-    component: QLLoaiPhong,
-    layout: MainLayoutAdmin,
-  },
-  {
     path: '/qldanhmuc/loai_giuong',
     component: QLLoaiGiuong,
     layout: MainLayoutAdmin,
@@ -228,11 +227,6 @@ const privateRoutes = [
   {
     path: '/admin_thongke',
     component: Thongke,
-    layout: MainLayoutAdmin,
-  },
-  {
-    path: '/admin_setting',
-    component: Setting,
     layout: MainLayoutAdmin,
   },
   {

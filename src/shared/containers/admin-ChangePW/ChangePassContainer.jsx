@@ -14,7 +14,6 @@ const ChangePassContainer = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data)
     dispatch({
         type: SettingAction.CHANGEPASS,
         data: data,

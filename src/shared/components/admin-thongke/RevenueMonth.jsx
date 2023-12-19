@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import AdminAction from '../../../redux/admin/action';
+import ShowToastify from '../../../utils/ShowToastify';
+import { useDispatch, useSelector } from "react-redux";
 
 const options = {
   legend: {
@@ -111,20 +114,34 @@ const options = {
   },
 };
 
-const RevenueMonth = ({ revenue }) => {
-  const yearOptions = Array.from(new Set(revenue.map(item => item.year)));
+const RevenueMonth = () => {
+  const dispatch = useDispatch();
+  const {revenueByYear, revenueAllYear} = useSelector((state) => state.Admin) || {}
+  const yearOptions = Array.from(new Set(revenueAllYear.map(item => item.year)));
   const [selectedYear, setSelectedYear] = useState(yearOptions[yearOptions.length - 1]);
   const [series, setSeries] = useState([]);
+  let data = {};
+  console.log('revenueByYear', revenueByYear);
+  console.log('revenueAllYear', revenueAllYear);
+  useEffect(() => {
+    data.year = selectedYear;
+    dispatch({
+      type: AdminAction.REVENUE_BY_YEAR,
+      data: data,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Lỗi, xin vui lòng thử lại sau!")
+        }
+    });
+
+  }, [dispatch, selectedYear]);
 
   useEffect(() => {
-    const filteredData = selectedYear === ''
-      ? revenue
-      : revenue.filter(item => item.year === selectedYear);
-
     const dataForSelectedYear = Array.from({ length: 12 }, (_, i) => {
-      const month = (i + 1).toString().padStart(2, '0');
-      const matchingData = filteredData.find(item => item.month === month);
-      return matchingData ? parseInt(matchingData.amount) : 0;
+      const month = i + 1;
+      const matchingData = revenueByYear.find(item => item.month === month);
+      return matchingData ? Number(matchingData.revenue.replace(/\./g, '')) : 0;
     });
 
     const updatedSeries = [
@@ -133,14 +150,13 @@ const RevenueMonth = ({ revenue }) => {
         data: dataForSelectedYear,
       },
     ];
-
     setSeries(updatedSeries);
-  }, [selectedYear, revenue]);
+  }, []);
 
   const handleSelectChange = event => {
     setSelectedYear(event.target.value);
   };
-  
+
   return (
     <div className="mt-7 col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark-bg-boxdark sm-px-7.5 xl:col-span-8">
       <div className="flex gap-2 ml-24 mt-4 font-semibold text-lg justify-center mb-4">

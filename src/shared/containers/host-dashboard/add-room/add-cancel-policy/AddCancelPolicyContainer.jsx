@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./AddCancelPolicyContainer.module.scss";
 import { Link } from "react-router-dom";
-import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
+import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
 import {
   Box,
   FormControlLabel,
