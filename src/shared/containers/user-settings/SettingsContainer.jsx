@@ -59,10 +59,11 @@ const SettingsContainer = () => {
         onSuccess: () => {
           console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
-            window.location.href = '/mysettings/info';
+            // window.location.href = '/mysettings/info';
         },
         onError: () => {
-          window.location.href = '/mysettings/info';
+          console.log("That bai")
+            // window.location.href = '/mysettings/info';
         }
     })
   }
