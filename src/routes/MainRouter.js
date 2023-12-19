@@ -146,62 +146,6 @@ const protectedRoutes = [
     layout: HostLayout,
   },
   {
-    path: "/host/dashboard",
-    component: RoomPrice,
-    layout: HostManageLayout,
-  },
-  {
-    path: "/host/price-room",
-    component: RoomPrice,
-    layout: HostManageLayout,
-  },
-  {
-    path: "/host/update-hotel-info",
-    component: UpdateHotelInfo,
-    layout: HostManageLayout,
-  },
-  {
-    path: "/host/add-room",
-    component: AddRoom,
-    layout: HostLayout,
-  },
-  {
-    path: "/host/add-room-price",
-    component: AddRoomPrice,
-    layout: HostLayout,
-  },
-  {
-    path: "/host/add-cancel-policy",
-    component: AddCancelPolicy,
-    layout: HostLayout,
-  },
-  {
-    path: "/host/add-room-image",
-    component: AddRoomImage,
-    layout: HostLayout,
-  },
-  {
-    path: "/host/room-status",
-    component: RoomStatus,
-    layout: HostManageLayout,
-
-  },
-  {
-    path: "/host/reservation",
-    component: Reservation,
-    layout: HostManageLayout,
-  },
-  {
-    path: "/host/revenue",
-    component: Revenue,
-    layout: HostManageLayout,
-  },
-  {
-    path: "/host/register-finished",
-    component: RegisterFinished,
-    layout: HostLayout,
-  },
-  {
     path: '/mysettings/password',
     component: AccountAndPassword,
     layout: SettingLayout,
@@ -263,6 +207,56 @@ const privateRoutes = [
     component: Cancel2,
     layout: MainLayout,
   },
- 
+  {
+    path: "/host/dashboard",
+    component: RoomPrice,
+    layout: HostManageLayout,
+  },
+  {
+    path: "/host/price-room",
+    component: RoomPrice,
+    layout: HostManageLayout,
+  },
+  {
+    path: "/host/update-hotel-info",
+    component: UpdateHotelInfo,
+    layout: HostManageLayout,
+  },
+  {
+    path: "/host/add-room",
+    component: AddRoom,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-price",
+    component: AddRoomPrice,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-cancel-policy",
+    component: AddCancelPolicy,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/add-room-image",
+    component: AddRoomImage,
+    layout: HostLayout,
+  },
+  {
+    path: "/host/room-status",
+    component: RoomStatus,
+    layout: HostManageLayout,
+
+  },
+  {
+    path: "/host/reservation",
+    component: Reservation,
+    layout: HostManageLayout,
+  },
+  {
+    path: "/host/revenue",
+    component: Revenue,
+    layout: HostManageLayout,
+  },
 ];
 export { publicRoutes, privateRoutes, protectedRoutes }
