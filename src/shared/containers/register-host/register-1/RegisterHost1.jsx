@@ -66,9 +66,10 @@ const RegisterHost1Container = () => {
 
   const dispath = useDispatch();
   const onSubmit = (data) => {
-    data.province=(provinces.find(province => province.province_id === selectedProvince)?.province_name)&&""
-    data.district=(districts.find(district => district.district_id === selectedDistrict)?.district_name)&&""
-    data.ward=(wards.find(ward => ward.ward_id === selectedWard)?.ward_name)&&""
+    data.province=(provinces.find(province => province.province_id == selectedProvince)?.province_name)
+    data.district=(districts.find(district => district.district_id == selectedDistrict)?.district_name)
+    data.ward=(wards.find(ward => ward.ward_id == selectedWard)?.ward_name)
+    data.street=street
     dispath({
       type: addAddressHotel,
       payload: data,

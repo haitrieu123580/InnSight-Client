@@ -9,7 +9,7 @@ function* watchSignIn() {
             const response = yield call(SignIn, data);
             if (response?.Data !== "") {
                 localStorage.setItem("Token", JSON.stringify(response?.Data?.access_token))
-                localStorage.setItem("role", JSON.stringify(response?.Data?.role))
+                localStorage.setItem("role", JSON.stringify(window.btoa(response?.Data?.role)))
                 localStorage.setItem("id", JSON.stringify(response?.Data?.id))
                 localStorage.setItem("email", JSON.stringify(response?.Data?.email))
                 localStorage.setItem("name", JSON.stringify(response?.Data?.name))
@@ -17,10 +17,21 @@ function* watchSignIn() {
                 yield put(signin({
                     role: response?.Data?.role
                 }))
-                if(response?.Data?.role === "ADMIN"){
+                if (response?.Data?.role === "ADMIN") {
                     onAdmin && onAdmin();
                 }
-                else if(response?.Data?.role === "HOST"){
+                else if (response?.Data?.role === "HOST") {
+                    // localStorage.setItem("listHotels", JSON.stringify(response?.Data?.hotels.map((hotel)=>hotel.id)))
+                    localStorage.setItem(
+                        "listHotels",
+                        JSON.stringify(
+                            response?.Data?.hotels.map((hotel) => ({
+                                hotelId: hotel.id,
+                                name: hotel.name,
+                            }))
+                        )
+                    );
+                    localStorage.setItem("hotelId", JSON.stringify(response?.Data?.hotels[0]?.id))
                     onHost && onHost();
                 }
                 else {
@@ -57,6 +68,7 @@ function* watchLogOut() {
         try {
             const response = yield call(LogOut, token);
             if (response?.Data) {
+                localStorage.clear();
                 onSuccess && onSuccess();
             }
         } catch (error) {
