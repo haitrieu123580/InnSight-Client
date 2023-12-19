@@ -17,20 +17,20 @@ function* watchSignIn() {
                 yield put(signin({
                     role: response?.Data?.role
                 }))
-                if(response?.Data?.role === "ADMIN"){
+                if (response?.Data?.role === "ADMIN") {
                     onAdmin && onAdmin();
                 }
-                else if(response?.Data?.role === "HOST"){
+                else if (response?.Data?.role === "HOST") {
                     // localStorage.setItem("listHotels", JSON.stringify(response?.Data?.hotels.map((hotel)=>hotel.id)))
                     localStorage.setItem(
                         "listHotels",
                         JSON.stringify(
-                          response?.Data?.hotels.map((hotel) => ({
-                            hotelId: hotel.id,
-                            name: hotel.name,
-                          }))
+                            response?.Data?.hotels.map((hotel) => ({
+                                hotelId: hotel.id,
+                                name: hotel.name,
+                            }))
                         )
-                      );
+                    );
                     localStorage.setItem("hotelId", JSON.stringify(response?.Data?.hotels[0]?.id))
                     onHost && onHost();
                 }
@@ -68,6 +68,7 @@ function* watchLogOut() {
         try {
             const response = yield call(LogOut, token);
             if (response?.Data) {
+                localStorage.clear();
                 onSuccess && onSuccess();
             }
         } catch (error) {

@@ -6,11 +6,12 @@ import { Fragment, Suspense } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Roles from './utils/Roles';
-
+import { useSelector } from 'react-redux';
 function App() {
-  // const { userRole, isLogin } = useSelector(state => state.Auth)
-  const isLogin=localStorage.getItem("isLogin")||""
-  const userRole=localStorage.getItem("role")?.replace(/"/g, '')||""
+  const { userRole, isLogin } = useSelector(state => state.Auth)
+  // const isLogin = localStorage.getItem("isLogin") || ""
+  // const userRole = localStorage.getItem("role")?.replace(/"/g, '') || ""
+  console.log(userRole)
   return (
     <>
       <ToastContainer
@@ -63,9 +64,9 @@ function App() {
                     isLogin ? (
                       <Layout>
                         {/* <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin }> */}
-                          <Suspense fallback={<div>Loading...</div>}>
-                            {<route.component />}
-                          </Suspense>
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {<route.component />}
+                        </Suspense>
                         {/* </ProtectedRoute> */}
                       </Layout>
                     ) : (
@@ -90,11 +91,11 @@ function App() {
                   element={
                     isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
                       <Layout>
-                       
-                          <Suspense fallback={<div>Loading...</div>}>
-                            {<route.component />}
-                          </Suspense>
-                      
+
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {<route.component />}
+                        </Suspense>
+
                       </Layout>
                     ) : (
                       <Navigate to="/" replace={true} />
