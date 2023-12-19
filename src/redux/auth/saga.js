@@ -9,7 +9,7 @@ function* watchSignIn() {
             const response = yield call(SignIn, data);
             if (response?.Data !== "") {
                 localStorage.setItem("Token", JSON.stringify(response?.Data?.access_token))
-                localStorage.setItem("role", JSON.stringify(response?.Data?.role))
+                localStorage.setItem("role", JSON.stringify(window.btoa(response?.Data?.role)))
                 localStorage.setItem("id", JSON.stringify(response?.Data?.id))
                 localStorage.setItem("email", JSON.stringify(response?.Data?.email))
                 localStorage.setItem("name", JSON.stringify(response?.Data?.name))
