@@ -25,14 +25,12 @@ const RegisterFinishedContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const newHotel = useSelector((state) => state.Host.newHotel);
-  console.log("new1", newHotel);
 
 
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
 
-  console.log("isFinished", isFinished);
 
   const handleChangeGuaranteeChecked = (event) => {
     setGuaranteeChecked(event.target.checked);
@@ -52,7 +50,6 @@ const RegisterFinishedContainer = () => {
 
   const onSubmit = () => {
     if (isFinished) {
-      console.log("new Hotel", newHotel);
 
       const formData = new FormData();
       formData.append("name", newHotel.name || "");
@@ -79,7 +76,6 @@ const RegisterFinishedContainer = () => {
 
       if (newHotel.extraServices && Array.isArray(newHotel.extraServices)) {
         newHotel.extraServices.forEach((extraService, i) => {
-          console.log("ex", extraService);
           if (extraService && extraService.name) {
             formData.append(
               `extraServices[${i}].name`,
@@ -99,7 +95,6 @@ const RegisterFinishedContainer = () => {
       if (newHotel.images[0]) {
         newHotel.images[0].forEach((image, index) => {
           if (image) {
-            console.log("aa", image.file);
             formData.append(`images[${index}]`, image.file || null);
           }
         });
@@ -107,9 +102,7 @@ const RegisterFinishedContainer = () => {
         formData.append(`images[0]`, null);
       }
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
+      formData.append('status','ACTIVE')
       dispatch({
         type: HostAction.ADD_HOTEL,
         id: id,

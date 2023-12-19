@@ -9,39 +9,17 @@ import {
   FormGroup,
   FormLabel,
   Input,
-  Select,
   TextField,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
 import { useDispatch } from "react-redux";
 import { addBasicInfoRoomType } from "../../../../../redux/host/slice";
-import { MenuItem } from "material-ui";
+import Constants from "../../../../../utils/Contants";
 const AddRoomContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const bedTypes = [
-    {
-      id: 1,
-      name: "Giường đơn",
-      description: "Rộng 90-130cm",
-    },
-    {
-      id: 2,
-      name: "Giường đôi",
-      description: "Rộng 131-150cm",
-    },
-    {
-      id: 3,
-      name: "Giường lớn (cỡ King)",
-      description: "Rộng 151-180cm",
-    },
-    {
-      id: 4,
-      name: "Giường cực lớn (cỡ Super-King)",
-      description: "Rộng 181-210cm",
-    },
-  ];
+  const bedTypes = Constants.bedTypes;
   const roomAmenities = [
     {
       id: 1,
@@ -70,7 +48,7 @@ const AddRoomContainer = () => {
   const [roomType, setRoomType] = useState("");
   const handleChangeRoomType = (event) => {
     setRoomType(event.target.value);
-  };
+  };  
   const [roomCount, setRoomCount] = useState(0);
   const handleChangeRoomCount = (event) => {
     setRoomCount(event.target.value);
@@ -304,23 +282,20 @@ const AddRoomContainer = () => {
                 <h3 className="font-bold">Phòng này có view như thế nào?</h3>
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                      <FormControl fullWidth>
-                        <select
-                          id="select-view"
-                          value={view}
-                          onChange={handleChangeView}
-                          className="my-2 h-10 border rounded-sm border-[#dedfe0] w-full"
-                        >
-
-
-                          {views?.map((viewItem) => (
-                            <option key={viewItem.name} value={viewItem.name}>
-                              {viewItem.name}
-                            </option>
-                          ))}
-                        </select>
-                      </FormControl>
-              
+                    <FormControl fullWidth>
+                      <select
+                        id="select-view"
+                        value={view}
+                        onChange={handleChangeView}
+                        className="my-2 h-10 border rounded-sm border-[#dedfe0] w-full"
+                      >
+                        {views?.map((viewItem) => (
+                          <option key={viewItem.name} value={viewItem.name}>
+                            {viewItem.name}
+                          </option>
+                        ))}
+                      </select>
+                    </FormControl>
                   </div>
                 </div>
               </div>

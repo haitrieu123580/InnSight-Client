@@ -307,7 +307,6 @@ const AddRoom = () => {
               helperText="Bao gồm các loại thuế, phí và hoa hồng"
               onChange={(e) => {
                 setPrice(e.target.value);
-                console.log(price);
               }}
             />
           </Stack>

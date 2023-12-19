@@ -31,7 +31,7 @@ const RegisterHost2Container = () => {
   };
 
   return (
-    <div className={`h-max sm:h-screen ${styles["register-2"]}`}>
+    <div className={` ${styles["register-2"]}`}>
       <div className={`${styles["content"]}`}>
         <div className="title">
           <h2 className="text-3xl overflow-hidden">
@@ -60,6 +60,24 @@ const RegisterHost2Container = () => {
                 ></input>
                 <span className="pt-2 px-6 opacity-70 hidden lg:block">
                   Tên này sẽ được hiển thị tới khách khi họ tìm kiếm chỗ nghỉ
+                </span>
+              </div>
+
+              <div className={`px-5 flex flex-col pb-5 $styles['info-hotel']`}>
+                <h3 className="py-3 text-lg ">
+                  Thêm mô tả cho khách sạn của bạn?
+                  <span className="text-red-600"> *</span>
+                </h3>
+
+                <textarea
+                  className={`border-2 py-2 px-5 text-xl`}
+                  placeholder="Mô tả"
+                  id="description"
+                  {...register("description")}
+
+                ></textarea>
+                <span className="pt-2 px-6 opacity-70 hidden lg:block">
+                  Mô tả một số ưu điểm, và dịch vụ của khách sạn để thu hút khách đặt phòng
                 </span>
               </div>
 
