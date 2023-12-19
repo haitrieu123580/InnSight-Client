@@ -52,7 +52,7 @@ const QLTaiKhoanContainer = () => {
       dispatch({
         type: AdminAction.SEARCH_USER,
         email: email,
-        pageIndex : page-1,
+        pageIndex : 1,
         pageSize: 20,
           onSuccess: () => {
           },
@@ -76,7 +76,7 @@ const QLTaiKhoanContainer = () => {
     dispatch({
       type: AdminAction.SEARCH_USER,
       email: email,
-      pageIndex : value-1,
+      pageIndex : value,
       pageSize: 20,
       onSuccess: () => {
       },

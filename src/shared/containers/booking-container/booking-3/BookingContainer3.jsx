@@ -11,7 +11,6 @@ const BookingContainer3 = () => {
     const navigate = useNavigate();
 
     const reservation = JSON.parse(localStorage.getItem('reservation'));
-    reservation.paymentMethod = 'credit card';
 
     const searchParams = new URLSearchParams(window.location.search);
     const vnp_TransactionStatus = searchParams.get('vnp_TransactionStatus');
