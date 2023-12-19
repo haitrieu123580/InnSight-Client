@@ -16,6 +16,7 @@ const Room = ({ room }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(null);
   const [hotelId, setHotelId] = useState(null);
+  const [canClick, setCanClick] = useState(false)
   const handleAddRoomToCart = () => {
     dispatch({
       type: addRoomToCart,
@@ -37,6 +38,14 @@ const Room = ({ room }) => {
       setHotelId(hotel?.id)
     }
   }, [hotel])
+  useEffect(() => {
+    if (quantity > 0) {
+      setCanClick(true)
+    }
+    else {
+      setCanClick(false)
+    }
+  }, [quantity])
   return (
     <div className={styles['room']}>
       <div className={styles['room-title']}>
@@ -57,7 +66,7 @@ const Room = ({ room }) => {
                   <div key={index} className='text-xs mb-1'>
                   </div>))}
                 <div className='flex items-center text-xs mb-1'>
-                  <AddCircleIcon className='mr-1'/> <span className='text-xs text-cyan-400'> Xem thêm tiện ích</span>
+                  <AddCircleIcon className='mr-1' /> <span className='text-xs text-cyan-400'> Xem thêm tiện ích</span>
                 </div>
               </CardContent>
             </Card>
@@ -111,6 +120,7 @@ const Room = ({ room }) => {
                   style={{ backgroundColor: "#3182D3" }}
                   className='text-black font-bold'
                   onClick={handleAddRoomToCart}
+                  disabled={!canClick}
                 >
                   Tôi sẽ đặt
                 </Button>
