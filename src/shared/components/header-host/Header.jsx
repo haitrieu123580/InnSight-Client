@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
-
 import IcAvatar from "../icons/header-icons/IcAvatar";
 import IcPencil from "../icons/header-icons/IcPencil";
 const Header = () => {
   const isLogin = localStorage.getItem("isLogin") || false;
+
   useEffect(() => {}, [isLogin]);
   return (
-    <header className={`hidden md:flex ${styles["header"]}`}>
-      <Link
-        to={"/"}
-        className={` flex items-center font-bold  ${styles["logo-text"]}`}
-      >
-        InnSight
-      </Link>
-      <div className="flex items-center md:px-4 lg:px-6 xl:px-8">
+    <header className={`hidden md:flex justify-between ${styles["header"]}`}>
+      <div className="flex items-baseline gap-8">
+        <Link to={"/"} className={` font-bold  ${styles["logo-text"]}`}>
+          InnSight
+        </Link>
+
+      </div>
+
+      <div className="flex items-center md:px-4 lg:px-6 xl:px-8 ">
         {isLogin ? (
           <>
             <div className="pr-44 mr-2">

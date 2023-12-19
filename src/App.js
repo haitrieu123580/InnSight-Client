@@ -1,17 +1,17 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { publicRoutes, protectedRoutes, privateRoutes } from './routes/MainRouter';
 import "./Common.scss";
-import { ProtectedRoute } from './routes/ProtectedRoute';
 import MainLayout from './shared/components/layout/MainLayout';
 import { Fragment, Suspense } from 'react';
-import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Roles from './utils/Roles';
-
+import { useSelector } from 'react-redux';
 function App() {
-  const user = true;
   const { userRole, isLogin } = useSelector(state => state.Auth)
+  // const isLogin = localStorage.getItem("isLogin") || ""
+  // const userRole = localStorage.getItem("role")?.replace(/"/g, '') || ""
+  console.log(userRole)
   return (
     <>
       <ToastContainer
@@ -61,16 +61,16 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    isLogin || true ? (
+                    isLogin ? (
                       <Layout>
-                        <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin || true}>
-                          <Suspense fallback={<div>Loading...</div>}>
-                            {<route.component />}
-                          </Suspense>
-                        </ProtectedRoute>
+                        {/* <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin }> */}
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {<route.component />}
+                        </Suspense>
+                        {/* </ProtectedRoute> */}
                       </Layout>
                     ) : (
-                      <Navigate to="/" replace={true} />
+                      <Navigate to="/sign-in" replace={true} />
                     )
                   }
                 />
@@ -91,11 +91,11 @@ function App() {
                   element={
                     isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
                       <Layout>
-                        <ProtectedRoute user={user}>
-                          <Suspense fallback={<div>Loading...</div>}>
-                            {<route.component />}
-                          </Suspense>
-                        </ProtectedRoute>
+
+                        <Suspense fallback={<div>Loading...</div>}>
+                          {<route.component />}
+                        </Suspense>
+
                       </Layout>
                     ) : (
                       <Navigate to="/" replace={true} />
@@ -113,3 +113,4 @@ function App() {
 }
 
 export default App;
+

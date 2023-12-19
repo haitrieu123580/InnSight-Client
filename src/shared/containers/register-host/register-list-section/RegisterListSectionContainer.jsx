@@ -10,7 +10,6 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 const RegisterListSectionContainer = () => {
   const { sectionStatus } = useParams();
-  console.log(sectionStatus);
   const CustomButton = styled(Button)({
     height: "25px",
   });

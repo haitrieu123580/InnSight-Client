@@ -1,9 +1,9 @@
+import { Data } from "@react-google-maps/api";
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + "/api";
 
 const config = {
-
   headers: {
     "Content-Type": "multipart/form-data",
     // 'userId' : {userId}
@@ -16,7 +16,6 @@ export const AddHotel = async (userID, newHotel) => {
       userId: `${userID}`,
     },
   });
-  console.log("res call", response);
   if (response.status === 200) {
     return { Data: response?.data };
   } else {
@@ -32,7 +31,6 @@ export const AddRoomType = async (hotelId, newRoomType) => {
       hotelId: `${hotelId}`,
     },
   });
-  console.log("res call", response);
   if (response.status === 201) {
     return { Data: response?.data  };
   } else {
@@ -44,7 +42,6 @@ export const AddRoomType = async (hotelId, newRoomType) => {
 
 export const GetRoomTypes = async (hotelId) => {
   try {
-    console.log("hotelId",hotelId)
     const response = await axios.get(`${BASE_URL}/room-types`, {
       headers: {
         'Content-Type': 'application/json',
@@ -79,9 +76,6 @@ export const GetRoomAvailable = async (hotelId, data) => {
         },
       }
     );
-
-    console.log("res api", response.status);
-
     if (response.status === 200) {
       return { Data: response?.data };
     } else {
@@ -97,19 +91,46 @@ export const GetRoomAvailable = async (hotelId, data) => {
   }
 };
 
-export const UpdateRoomType = async (hotelId, newRoomType) => {
-  const response = await axios.put(`${BASE_URL}/room-types`, newRoomType, {
+export const UpdateRoomType = async (hotelId, roomTypeId, newRoomType) => {
+  const response = await axios.put(`${BASE_URL}/room-types/${roomTypeId}`, newRoomType, {
     headers: {
       "Content-Type": "multipart/form-data",
       hotelId: `${hotelId}`,
     },
   });
-  console.log("res call", response);
   if (response.status === 201) {
     return { Data: true };
   } else {
     return {
       Data: false,
+    };
+  }
+};
+
+export const GetReservedRoomInfo = async (hotelId, data) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/rooms/reserved-room-info`,
+      JSON.stringify(data),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          hotelId: hotelId,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return { Data: response?.data };
+    } else {
+      return {
+        Data: "error",
+      };
+    }
+  } catch (error) {
+    console.error("Error in API request", error);
+    return {
+      Data: "error",
     };
   }
 };

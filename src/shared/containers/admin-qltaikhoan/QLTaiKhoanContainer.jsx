@@ -157,7 +157,7 @@ const QLTaiKhoanContainer = () => {
         </TableContainer>
       </div>
       <Pagination
-        count={listUser?.totalPages || 1}
+        count={listUser?.totalPages-1 || 1}
         defaultPage={1}
         page={page}
         shape="rounded"

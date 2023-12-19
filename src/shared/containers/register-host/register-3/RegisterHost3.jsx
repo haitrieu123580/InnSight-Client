@@ -145,7 +145,6 @@ const RegisterHost3Container = () => {
         : [...selectedAmenities, {name:e.target.name,price:0}]
     );
 
-    console.log(selectedAmenities);
   };
   return (
     <div className={` ${styles["register-3"]}`}>

@@ -23,14 +23,14 @@ $inputWidthLg: 375px;
 }
 
 body {
-    font-family: $roboto-regular-font !important;
-    font-size: $fontSizeSmall !important;
-    font-weight: $font-weight-nomal !important;
-    color: $textColor !important;
+    font-family: $roboto-regular-font ;
+    font-size: $fontSizeSmall ;
+    font-weight: $font-weight-nomal ;
+    color: $textColor ;
     // width: 1366px;   
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important;
+    margin: 0 ;
+    padding: 0 ;
+    overflow-x: hidden ;
 }
 
 * {
