@@ -52,7 +52,7 @@ const QLTaiKhoanContainer = () => {
       dispatch({
         type: AdminAction.SEARCH_USER,
         email: email,
-        pageIndex : 1,
+        pageIndex : page-1,
         pageSize: 20,
           onSuccess: () => {
           },
@@ -76,7 +76,7 @@ const QLTaiKhoanContainer = () => {
     dispatch({
       type: AdminAction.SEARCH_USER,
       email: email,
-      pageIndex : value,
+      pageIndex : value-1,
       pageSize: 20,
       onSuccess: () => {
       },
@@ -157,7 +157,7 @@ const QLTaiKhoanContainer = () => {
         </TableContainer>
       </div>
       <Pagination
-        count={listUser?.totalPages-1 || 1}
+        count={listUser?.totalPages || 1}
         defaultPage={1}
         page={page}
         shape="rounded"
