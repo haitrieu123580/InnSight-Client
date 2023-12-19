@@ -60,10 +60,28 @@ const NavHost = () => {
       </div>
 
       <div className="">
+        <Link to='/host/room-status' >
         <button
-          class={`sm:py-2 drop-shadow-md inline-flex items-center justify-between  ${
-            isActive(["/host/income"]) ? "text-blue-400" : ""
-          }  `}
+          class={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between  `}
+        >
+          <DateRangeIcon />
+          <span className="pl-3 text-xl">Tình trạng phòng trống</span>
+        </button>
+        </Link>
+      </div>
+
+      <div className="">
+        <button
+          class={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between  `}
+        >
+          <ReceiptLongIcon />
+          <span className="pl-3 text-xl">Đặt phòng</span>
+        </button>
+      </div>
+
+      <div className="">
+        <button
+          class={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between  `}
         >
           <BarChartIcon />
           <span className="pl-3 text-xl">Tài chính</span>

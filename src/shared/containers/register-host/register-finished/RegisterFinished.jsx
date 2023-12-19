@@ -27,6 +27,7 @@ const RegisterFinishedContainer = () => {
   const newHotel = useSelector((state) => state.Host.newHotel);
 
 
+
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
