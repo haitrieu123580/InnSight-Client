@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
+function isBase64(str) {
+    // Biểu thức chính quy để kiểm tra chuỗi Base64
+    const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
+    return base64Regex.test(str);
+}
+console.log("role",window.localStorage.getItem("role"))
 const initialState = {
     isLogin: localStorage.getItem("isLogin") || false,
     userProfile: {},
-    userRole: window.localStorage.getItem("role") ? atob(JSON.parse(window.localStorage.getItem("role"))) : ""
+    userRole: isBase64(localStorage.getItem("role")) ? window.atob(localStorage.getItem("role")) : ""
 }
 
 const authSlice = createSlice({

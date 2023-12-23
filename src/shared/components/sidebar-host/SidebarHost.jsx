@@ -4,13 +4,16 @@ import PriceChangeIcon from "@mui/icons-material/PriceChange";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import IcPencil from "../icons/header-icons/IcPencil";
+import { useDispatch } from "react-redux";
+import HostAction from "../../../redux/host/action";
+import ShowToastify from "../../../utils/ShowToastify";
 
 const SidebarHost = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
   const { pathname } = location;
-
+  const dispatch = useDispatch();
+  const [reloadData, setReloadData] = useState(false);
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
@@ -62,10 +65,8 @@ const SidebarHost = ({ sidebarOpen, setSidebarOpen }) => {
     const selectedHotel = event.target.value;
     setHotelId(selectedHotel);
     localStorage.setItem("hotelId", selectedHotel);
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
+
   return (
     <aside
       ref={sidebar}
@@ -104,7 +105,7 @@ const SidebarHost = ({ sidebarOpen, setSidebarOpen }) => {
           <NavLink
             to="/host/price-room"
             className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out dark:hover:bg-meta-4 ${
-              pathname.includes("price-room") && "bg-slate-300"
+              pathname.includes("price-room"||"dashboard") && "bg-slate-300"  
             }`}
           >
             <PriceChangeIcon />
@@ -142,17 +143,6 @@ const SidebarHost = ({ sidebarOpen, setSidebarOpen }) => {
           >
              <BarChartIcon />
             Tài chính
-          </NavLink>
-        </ul>
-        <ul className="flex flex-col gap-1.5">
-          <NavLink
-            to=""
-            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
-              pathname.includes("favourite") && "bg-slate-300"
-            }`}
-          >
-            <FavoriteIcon />
-            Đánh giá của khách hàng
           </NavLink>
         </ul>
         <ul className="flex flex-col gap-1.5">

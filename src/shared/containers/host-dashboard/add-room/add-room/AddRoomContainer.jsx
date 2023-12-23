@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AddRoomContainer.module.scss";
 import Box from "@mui/material/Box";
 import {
@@ -13,23 +13,15 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBasicInfoRoomType } from "../../../../../redux/host/slice";
 import Constants from "../../../../../utils/Contants";
+import HostAction from "../../../../../redux/host/action";
+import ShowToastify from "../../../../../utils/ShowToastify";
 const AddRoomContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const bedTypes = Constants.bedTypes;
-  const roomAmenities = [
-    {
-      id: 1,
-      name: "Điều hòa nhiệt độ",
-    },
-    {
-      id: 2,
-      name: "Bồn tắm nóng/Bể sục",
-    },
-  ];
   const views = [
     {
       id: 1,
@@ -40,6 +32,16 @@ const AddRoomContainer = () => {
       name: "View sân vườn",
     },
   ];
+  useEffect(() => {
+    dispatch({
+      type: HostAction.GET_AMENITIES,
+      onSuccess: () => {},
+      onError: () => {
+        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+      },
+    });
+  }, []);
+  const roomAmenities = useSelector((state) => state.Host.roomAmenities) || [];
   const handleAddRoomAmenities = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
@@ -210,8 +212,6 @@ const AddRoomContainer = () => {
                 })}
               </div>
             </div>
-          </div>
-          <div className="xl:flex-1 xl:pl-10">
             <div className="flex-1 flex-col justify-between border-2 my-4 px-5 rounded-md">
               <div className={`my-3  ${styles[""]}`}>
                 <h3 className="font-bold">
@@ -300,6 +300,9 @@ const AddRoomContainer = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="xl:flex-1 xl:pl-10">
+            
             <div
               className={`border-2 my-4 px-5 rounded-md  flex flex-col   ${styles[""]}  `}
             >

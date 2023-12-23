@@ -43,6 +43,8 @@ const initialState = {
   hotelInfo:{},
   revenueHotelByYear:{},
   revenueHotelAllYear:{},
+  services:[],
+  roomAmenities:[],
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -150,6 +152,12 @@ const hostSlice = createSlice({
     listRevenueHotelAllYear: (state, { payload }) => {
       state.revenueHotelAllYear = payload
     },
+   getServices: (state, { payload }) => {
+      state.services = payload
+    },
+    getRoomAmenities: (state, { payload }) => {
+      state.roomAmenities = payload
+    },
   },
 });
 export const {
@@ -172,6 +180,8 @@ export const {
   getHotel,
   updateHotel,
   listRevenueHotelByYear, 
-  listRevenueHotelAllYear
+  listRevenueHotelAllYear,
+  getServices,
+  getRoomAmenities
 } = hostSlice.actions;
 export default hostSlice.reducer;
