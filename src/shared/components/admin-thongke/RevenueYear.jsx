@@ -24,7 +24,7 @@ const RevenueYear = () => {
 
     const updatedSeries = [
       {
-        name: 'Hoa hồng',
+        name: 'Doanh thu',
         data: dataForSelectedYears,
       },
     ];
