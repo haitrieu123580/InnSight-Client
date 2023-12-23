@@ -3,10 +3,12 @@ import actions from "./action";
 import {
   AddHotel,
   AddRoomType,
+  GetAmenities,
   GetHotelbyId,
   GetReservedRoomInfo,
   GetRoomAvailable,
   GetRoomTypes,
+  GetServices,
   UpdateHotel,
   UpdateRoomType,
   deleteRoomTypeById,
@@ -17,6 +19,8 @@ import {
   filterRoomAvailable,
   getHotel,
   getReservedRoomInfo,
+  getRoomAmenities,
+  getServices,
   listRevenueHotelByYear,
 } from "./slice";
 
@@ -134,9 +138,9 @@ function* watchGetHotel() {
 
 function* watchUpdateHotel() {
   yield takeEvery(actions.UPDATE_HOTEL, function* (payload) {
-    const { userId, HotelId, data, onSuccess, onError } = payload;
+    const { userId, hotelId, data, onSuccess, onError } = payload;
     try {
-      const response = yield call(UpdateHotel, userId, HotelId, data);
+      const response = yield call(UpdateHotel, userId, hotelId, data);
       if (response?.Data) {
         onSuccess && onSuccess();
       }
@@ -176,8 +180,37 @@ function* watchDeleteRoomTypeById() {
       }
   });
 }
+function* watchGetServices() {
+  yield takeEvery(actions.GET_SERVICES, function* (payload) {
+    const { onSuccess, onError } = payload;
+    try {
+      const response = yield call(GetServices);
+      if (response?.Data) {
+        yield put(getServices(response?.Data));
+        onSuccess && onSuccess();
+      }
+    } catch (error) {
+      onError && onError();
+    } finally {
+    }
+  });
+}
 
-
+function* watchGetAmenities() {
+  yield takeEvery(actions.GET_AMENITIES, function* (payload) {
+    const { onSuccess, onError } = payload;
+    try {
+      const response = yield call(GetAmenities);
+      if (response?.Data) {
+        yield put(getRoomAmenities(response?.Data));
+        onSuccess && onSuccess();
+      }
+    } catch (error) {
+      onError && onError();
+    } finally {
+    }
+  });
+}
 
 export default function* HostSaga() {
   yield all([
@@ -191,5 +224,8 @@ export default function* HostSaga() {
     fork(watchUpdateHotel),
     fork(watchRevenueHotelByYear),
     fork(watchDeleteRoomTypeById),
+    fork(watchGetServices),
+    fork(watchGetAmenities),
+
   ]);
 }

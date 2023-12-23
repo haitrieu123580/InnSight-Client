@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./RegisterHost3.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
@@ -15,93 +15,107 @@ import {
   Input,
 } from "@mui/material";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addAmenitiesHotel,
   addExtraAmenityHotel,
   addExtraServiceHotel,
 } from "../../../../redux/host/slice";
+import HostAction from "../../../../redux/host/action";
+import ShowToastify from "../../../../utils/ShowToastify";
 const RegisterHost3Container = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let amenities = [
-    {
-      id: 1,
-      name: "Nhà hàng",
-      price: 100,
-    },
-    {
-      id: 2,
-      name: "Quầy bar",
-      price: 100,
-    },
-    {
-      id: 3,
-      name: "Lễ tân 24 giờ",
-      price: 100,
-    },
-    {
-      id: 4,
-      name: "Trung tâm thể dục",
-      price: 100,
-    },
-    {
-      id: 5,
-      name: "Phòng xông hơi",
-      price: 100,
-    },
-    {
-      id: 6,
-      name: "Sân vườn",
-      price: 100,
-    },
-    {
-      id: 7,
-      name: "Sân thượng/hiên",
-      price: 100,
-    },
-    {
-      id: 8,
-      name: "Phòng không hút thuốc",
-      price: 100,
-    },
-    {
-      id: 9,
-      name: "Trung tâm Spa & chăm sóc sức khỏe",
-      price: 100,
-    },
-    {
-      id: 10,
-      name: "Wifi miễn phí",
-      price: 100,
-    },
+  // let amenities = [
+  //   {
+  //     id: 1,
+  //     name: "Nhà hàng",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Quầy bar",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Lễ tân 24 giờ",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Trung tâm thể dục",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Phòng xông hơi",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Sân vườn",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Sân thượng/hiên",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Phòng không hút thuốc",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Trung tâm Spa & chăm sóc sức khỏe",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Wifi miễn phí",
+  //     price: 100,
+  //   },
 
-    {
-      id: 11,
-      name: "Trạm sạc xe điện",
-      price: 100,
-    },
-    {
-      id: 12,
-      name: "Hồ bơi",
-      price: 100,
-    },
-    {
-      id: 13,
-      name: "Bãi biển",
-      price: 100,
-    },
-    {
-      id: 14,
-      name: "Bồn tắm nóng",
-      price: 100,
-    },
-  ];
+  //   {
+  //     id: 11,
+  //     name: "Trạm sạc xe điện",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 12,
+  //     name: "Hồ bơi",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 13,
+  //     name: "Bãi biển",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 14,
+  //     name: "Bồn tắm nóng",
+  //     price: 100,
+  //   },
+  // ];
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [extraAmenity, setExtraAmenity] = useState();
   const [extraAmenityName, setExtraAmenityName] = useState("");
   const [extraAmenityPrice, setExtraAmenityPrice] = useState(0);
   const [serveBreakfast, setServeBreakfast] = useState("yes");
+
+  useEffect(() => {
+    dispatch({
+      type: HostAction.GET_SERVICES,
+      onSuccess: () => {},
+      onError: () => {
+        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+      },
+    });
+  }, []);
+  const amenities = useSelector((state) => state.Host.services) || [];
+
   const handleServeBreakfastChange = (event) => {
     setServeBreakfast(event.target.value);
   };
@@ -132,7 +146,10 @@ const RegisterHost3Container = () => {
   };
   const handleAddExtraAmenity = () => {
     setExtraAmenity({ name: extraAmenityName, price: extraAmenityPrice });
-    setSelectedAmenities([...selectedAmenities,{ name: extraAmenityName, price: extraAmenityPrice }]);
+    setSelectedAmenities([
+      ...selectedAmenities,
+      { name: extraAmenityName, price: extraAmenityPrice },
+    ]);
   };
 
   const handleCheckedAmenities = (e) => {
@@ -142,9 +159,8 @@ const RegisterHost3Container = () => {
     setSelectedAmenities(
       checkedAmenity
         ? selectedAmenities.filter((amenity) => amenity.name !== e.target.name)
-        : [...selectedAmenities, {name:e.target.name,price:0}]
+        : [...selectedAmenities, { name: e.target.name, price: 0 }]
     );
-
   };
   return (
     <div className={` ${styles["register-3"]}`}>

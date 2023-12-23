@@ -208,7 +208,7 @@ const QLTamNhinContainer = () => {
         </div>
       </div>
     ) : (
-      <div> null </div>
+      <div> Loading... </div>
     )
   );
 };

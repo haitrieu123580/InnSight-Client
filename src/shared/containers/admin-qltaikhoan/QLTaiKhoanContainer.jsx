@@ -42,7 +42,7 @@ const QLTaiKhoanContainer = () => {
   const dispatch = useDispatch();
   const {listUser} = useSelector((state) => state.Admin) || {}
   const [page, setPage] = useState(1);
-  const [reloadData, setReloadData] = useState(true);
+  const [reloadData, setReloadData] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const email = searchParams.get('email') || '';
@@ -123,8 +123,7 @@ const QLTaiKhoanContainer = () => {
               {Array.isArray(listUser.content) && listUser.content.map((item, index) => (
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
-                      {/* {((page - 1) * 20) + index + 1} */}
-                      {item.id}
+                      {((page - 1) * 20) + index + 1}
                     </StyledTableCell>
                       <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
                     <StyledTableCell>{item.role}</StyledTableCell>
@@ -166,7 +165,7 @@ const QLTaiKhoanContainer = () => {
       />
     </div>
     ) : (
-      <div></div>
+      <div>Loading...</div>
     )
   );
 };
