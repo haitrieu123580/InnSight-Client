@@ -61,7 +61,7 @@ const BookingContainer1 = () => {
             },
             onError: () => {
             }
-            });
+        });
     }
     useEffect(() => {
     }, [cart])
@@ -118,6 +118,8 @@ const BookingContainer1 = () => {
                                                 type="text"
                                                 {...register('phoneNumber', {
                                                     required: 'Vui lòng nhập số điện thoại',
+                                                    maxLength: 10,
+                                                    minLength: 10,
                                                 })}
                                             />
                                             {errors.phoneNumber && <p className="error" style={{ color: "red" }}>{errors.phoneNumber.message}</p>}

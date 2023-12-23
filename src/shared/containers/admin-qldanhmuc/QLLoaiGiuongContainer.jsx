@@ -217,7 +217,7 @@ const QLLoaiGiuongContainer = () => {
         </div> */}
       </div>
     ) : (
-      <div> null </div>
+      <div> Loading... </div>
     )
   );
 };

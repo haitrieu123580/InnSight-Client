@@ -50,7 +50,7 @@ const AddRoomContainer = () => {
   const [roomType, setRoomType] = useState("");
   const handleChangeRoomType = (event) => {
     setRoomType(event.target.value);
-  };
+  };  
   const [roomCount, setRoomCount] = useState(0);
   const handleChangeRoomCount = (event) => {
     setRoomCount(event.target.value);

@@ -42,7 +42,7 @@ const QLTaiKhoanContainer = () => {
   const dispatch = useDispatch();
   const {listUser} = useSelector((state) => state.Admin) || {}
   const [page, setPage] = useState(1);
-  const [reloadData, setReloadData] = useState(true);
+  const [reloadData, setReloadData] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const email = searchParams.get('email') || '';
@@ -52,7 +52,7 @@ const QLTaiKhoanContainer = () => {
       dispatch({
         type: AdminAction.SEARCH_USER,
         email: email,
-        pageIndex : 1,
+        pageIndex : page-1,
         pageSize: 20,
           onSuccess: () => {
           },
@@ -76,7 +76,7 @@ const QLTaiKhoanContainer = () => {
     dispatch({
       type: AdminAction.SEARCH_USER,
       email: email,
-      pageIndex : value,
+      pageIndex : value-1,
       pageSize: 20,
       onSuccess: () => {
       },
@@ -123,8 +123,7 @@ const QLTaiKhoanContainer = () => {
               {Array.isArray(listUser.content) && listUser.content.map((item, index) => (
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
-                      {/* {((page - 1) * 20) + index + 1} */}
-                      {item.id}
+                      {((page - 1) * 20) + index + 1}
                     </StyledTableCell>
                       <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
                     <StyledTableCell>{item.role}</StyledTableCell>
@@ -157,7 +156,7 @@ const QLTaiKhoanContainer = () => {
         </TableContainer>
       </div>
       <Pagination
-        count={listUser?.totalPages-1 || 1}
+        count={listUser?.totalPages || 1}
         defaultPage={1}
         page={page}
         shape="rounded"
@@ -166,7 +165,7 @@ const QLTaiKhoanContainer = () => {
       />
     </div>
     ) : (
-      <div></div>
+      <div>Loading...</div>
     )
   );
 };

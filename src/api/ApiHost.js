@@ -161,6 +161,7 @@ export const UpdateHotel = async (userId, HotelId, newHotel) => {
   }
 };
 export const getRevenueHotelByYear = async ({ data,hotelId}) => {
+  console.log("hotelId",Data)
   const response = await axios.post(
     `${BASE_URL}/hotel/revenue/by-year`,
     JSON.stringify(data),
@@ -185,50 +186,3 @@ export const deleteRoomTypeById = async ({ hotelId, roomTypeId }) => {
   );
   return { Data: response?.data };
 }
-
-export const GetServices = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/hotel/services`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.status === 200) {
-      return { Data: response?.data };
-    } else {
-      return {
-        Data: 'error',
-      };
-    }
-  } catch (error) {
-    console.error('Error in API request', error);
-    return {
-      Data: 'error',
-    };
-  }
-};
-
-
-export const GetAmenities = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/room-types/amenities`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (response.status === 200) {
-      return { Data: response?.data };
-    } else {
-      return {
-        Data: 'error',
-      };
-    }
-  } catch (error) {
-    console.error('Error in API request', error);
-    return {
-      Data: 'error',
-    };
-  }
-};

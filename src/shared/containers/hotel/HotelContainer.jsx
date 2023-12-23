@@ -48,7 +48,7 @@ const HotelContainer = () => {
     const [showButton, setShowButton] = React.useState(false);
     const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
     console.log('hotel', hotel);
-    
+
     useEffect(() => {
         if (Object.keys(cart?.rooms).length !== 0) {
             setShowButton(true);
@@ -69,6 +69,9 @@ const HotelContainer = () => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY
     })
+    const handleStartFillInfo = () => {
+        
+    }
     const settings = {
         dots: false,
         arrows: false,
