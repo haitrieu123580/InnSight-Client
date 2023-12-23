@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import NavHost from "../../../components/nav-host/NavHost";
-import { List, ListItem } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Skeleton } from "@mui/material";
 import dayjs from "dayjs";
-
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch, useSelector } from "react-redux";
-import { filterRoomAvailable } from "../../../../redux/host/slice";
 import HostAction from "../../../../redux/host/action";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const RoomStatusContainer = () => {
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const dispatch = useDispatch();
   let roomAvailable = useSelector(
     (state) => state.Host.roomAvailableByFilter)  
-  console.log("rooom", roomAvailable);
-
   const [dateFilterStart, setDateFilterStart] = useState(dayjs());
   const [dateFilterEnd, setDateFilterEnd] = useState(dayjs(dayjs()));
   
@@ -32,12 +33,6 @@ const RoomStatusContainer = () => {
     setDateFilterEnd(newValue);
   };
   const handleFilter = (startDay, endDay) => {
-    console.log(
-      "start",
-      startDay.format("YYYY-MM-DD"),
-      "end",
-      endDay.format("YYYY-MM-DD")
-    );
     const bodyFilter = {
       startDay: startDay.format("YYYY-MM-DD"),
       endDay: endDay.format("YYYY-MM-DD"),
@@ -47,12 +42,10 @@ const RoomStatusContainer = () => {
       id: hotelId,
       data: bodyFilter,
     });
-  };
+  };  
 
   return (
-    <div>
-      <NavHost />
-      <div className="px-48 py-5">
+    <>
         <div className="flex justify-between ">
           <div>
             <h1>Lịch</h1>
@@ -77,35 +70,34 @@ const RoomStatusContainer = () => {
           </div>
         </div>
         <div className={"bg-white min-h-screen"}>
-          {roomAvailable ? (
-            roomAvailable.map((room, index) => (
-              <div key={index}>
-                <div className="flex flex-col  py-5 border-2 px-10 my-5 rounded-md">
-                  <div className="flex items-center justify-between">
-                    <h2 className="font-bold text-xl pb-5">
-                      Tên phòng:{" "}
-                      <span className="font-bold text-[blue]">
-                        {room.roomName}
-                      </span>
-                    </h2>
-                    <h2 className="font-bold text-lg">
-                      Số phòng này:{" "}
-                      <span className="font-medium">{room.count}</span>
-                    </h2>
-                    <h2 className="font-bold text-lg">
-                      Giá: <span className="font-medium">{room.price}</span>
-                    </h2>
-                  </div>
-                
-                </div>
-              </div>
-            ))
-          ) : (
-            <Skeleton variant="rectangular" width={210} height={118} />
-          )}
+             <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Tên phòng</TableCell>
+                  <TableCell align="right">Số phòng</TableCell>
+                  <TableCell align="right">Giá</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {roomAvailable?.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.roomName}
+                    </TableCell>
+                    <TableCell align="right">{row.count}</TableCell>
+                    <TableCell align="right">{row.price }</TableCell>
+
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
-      </div>
-    </div>
+      </>
   );
 };
 

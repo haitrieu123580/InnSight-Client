@@ -25,14 +25,13 @@ const RegisterFinishedContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const newHotel = useSelector((state) => state.Host.newHotel);
-  console.log("new1", newHotel);
+
 
 
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
 
-  console.log("isFinished", isFinished);
 
   const handleChangeGuaranteeChecked = (event) => {
     setGuaranteeChecked(event.target.checked);
@@ -51,57 +50,60 @@ const RegisterFinishedContainer = () => {
 
 
   const onSubmit = () => {
-    
     if (isFinished) {
-      console.log("new Hotel", newHotel);
 
       const formData = new FormData();
-      formData.append('name', newHotel.name||'');
-      formData.append('checkInTime', newHotel.checkInTime||'');
-      formData.append('checkOutTime', newHotel.checkOutTime||'');
-      formData.append('description', newHotel.description||'');
-      formData.append('province', newHotel.province||'');
-      formData.append('district', newHotel.district||'');
-      formData.append('ward', newHotel.ward||'');
-      formData.append('street', newHotel.street||'');
-      formData.append('rate', newHotel.rate||'');
+      formData.append("name", newHotel.name || "");
+      formData.append("checkInTime", newHotel.checkInTime || "");
+      formData.append("checkOutTime", newHotel.checkOutTime || "");
+      formData.append("description", newHotel.description || "");
+      formData.append("province", newHotel.province || "");
+      formData.append("district", newHotel.district || "");
+      formData.append("ward", newHotel.ward || "");
+      formData.append("street", newHotel.street || "");
+      formData.append("rate", newHotel.rate || "");
 
       if (newHotel.amenities && Array.isArray(newHotel.amenities)) {
         newHotel.amenities.forEach((amenity, i) => {
-          if (amenity && amenity.name ) {
-            formData.append(`amenities[${i}].name`, amenity.name||'');
-            formData.append(`amenities[${i}].price`, amenity.price||'');
+          if (amenity && amenity.name) {
+            formData.append(`amenities[${i}].name`, amenity.name || "");
+            formData.append(`amenities[${i}].price`, amenity.price || "");
           }
         });
-      }else{
-        formData.append('amenities[0].name', '');
-        formData.append('amenities[0].price', 0);
+      } else {
+        formData.append("amenities[0].name", "");
+        formData.append("amenities[0].price", 0);
       }
 
       if (newHotel.extraServices && Array.isArray(newHotel.extraServices)) {
         newHotel.extraServices.forEach((extraService, i) => {
-          console.log("ex",extraService)
           if (extraService && extraService.name) {
-            formData.append(`extraServices[${i}].name`, extraService.name||'');
-            formData.append(`extraServices[${i}].price`, extraService.price||'');
+            formData.append(
+              `extraServices[${i}].name`,
+              extraService.name || ""
+            );
+            formData.append(
+              `extraServices[${i}].price`,
+              extraService.price || ""
+            );
           }
         });
-      } else{
-        formData.append('extraServices[0].name', '');
-        formData.append('extraServices[0].price', '');
+      } else {
+        formData.append("extraServices[0].name", "");
+        formData.append("extraServices[0].price", "");
       }
 
-      if (newHotel.images[0] ) {
+      if (newHotel.images[0]) {
         newHotel.images[0].forEach((image, index) => {
-          if (image ) {
-            console.log("aa",image.file)
-            formData.append(`images[${index}]`, image.file||null);
+          if (image) {
+            formData.append(`images[${index}]`, image.file || null);
           }
         });
+      } else {
+        formData.append(`images[0]`, null);
       }
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
+
+      formData.append('status','ACTIVE')
       dispatch({
         type: HostAction.ADD_HOTEL,
         id: id,

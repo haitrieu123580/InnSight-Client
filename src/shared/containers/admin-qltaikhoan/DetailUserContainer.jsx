@@ -168,16 +168,17 @@ const Profile = () => {
                       <span className="ml-2">{detailUser.reservationCount}</span>
                     </div>
                     {detailUser.reservationCount ? (
-                      detailUser.reservationList.map((reservation, index) => (
+                    detailUser.reservationList.map((reservation, index) => (
+                      <div>
                         <li key={index} className='text-left pl-36'>
-                          <span>Tên khách sạn:</span>
-                          <span className='font-bold ml-2'>{reservation?.hotelName}</span>
-                          <span className='ml-5'>({reservation?.status})</span>
+                          <span>Mã đặt phòng:</span>
+                          <span className='font-bold ml-2'>{reservation}</span>
                         </li>
-                      ))
-                    ) : (
-                      <div></div>
-                    )}
+                      </div>
+                    ))
+                  ) : (
+                    <div></div>
+                  )}
                   </div>
                 </>
               )}

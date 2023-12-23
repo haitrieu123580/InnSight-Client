@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import IcProfile from '../icons/sidebar-icons/IcProfile.jsx'
 import IcThongke from '../icons/sidebar-icons/IcThongke.jsx'
-import IcSetting from '../icons/sidebar-icons/IcSetting.jsx'
+import KeyOutlinedIcon from '@mui/icons-material/KeyOutlined';
 import IcQLtaikhoan from '../icons/sidebar-icons/IcQLtaikhoan.jsx'
 import IcQLdichvu from '../icons/sidebar-icons/IcQLdichvu.jsx'
 import IcQLdanhmuc from '../icons/sidebar-icons/IcQLdanhmuc.jsx'
@@ -195,14 +194,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <NavLink
-                  to="/admin_setting"
+                  to="/admin_changepw"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-slate-50 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('setting') &&
                     'bg-cyan-900 dark:bg-cyan-900'
                   }`}
                 >
-                  <IcSetting/>
-                  Cài đặt tài khoản
+                  <KeyOutlinedIcon className='text-3xl'/>
+                  Đổi mật khẩu
                 </NavLink>
               </li>
             </ul>

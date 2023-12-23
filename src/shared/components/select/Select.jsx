@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "../select/Select.module.scss";
 
-const SelectComponent = ({ options, value, setValue, type }) => {
+const SelectComponent = ({ options, value, setValue, type, defaultValue }) => {
   return (
     <select
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={
+        (e) => setValue(e.target.value)
+      }
       className={`border-2 px-3 py-2 ${styles["select"]}`}
     >
       {
@@ -27,6 +29,7 @@ const SelectComponent = ({ options, value, setValue, type }) => {
                ? option?.district_id
                : option?.ward_id
            }
+           defaultValue=" "
          >
            {type === "province"
              ? option?.province_name

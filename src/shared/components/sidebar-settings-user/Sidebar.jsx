@@ -4,12 +4,9 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import SecurityIcon from '@mui/icons-material/Security';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useDispatch } from 'react-redux';
-import ShowToastify from '../../../utils/ShowToastify';
-import AuthAction from '../../../redux/auth/action';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const dispatch = useDispatch();
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -47,16 +44,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   }, [sidebarExpanded]);
 
   const handleLogOut = ()=>{
-    // dispatch({
-      //   type: AuthAction.LOG_OUT,
-      //     onSuccess: () => {
-      //       localStorage.clear();
-      //       window.location.href = ('/');
-      //     },
-      //     onError: () => {
-      //         ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-      //     }
-      // });
       localStorage.clear();
       window.location.href = ('/');
   }

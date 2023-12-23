@@ -15,7 +15,6 @@ import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import HostAction from "../../../../redux/host/action";
 import { useNavigate } from "react-router";
 import { addAddressHotel } from "../../../../redux/host/slice";
 
@@ -24,9 +23,9 @@ const RegisterHost1Container = () => {
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const [street, setStreet] = useState("");
-  const [selectedProvince, setSelectedProvince] = useState();
-  const [selectedDistrict, setSelectedDistrict] = useState();
-  const [selectedWard, setSelectedWard] = useState();
+  const [selectedProvince, setSelectedProvince] = useState(92);
+  const [selectedDistrict, setSelectedDistrict] = useState(925);
+  const [selectedWard, setSelectedWard] = useState(31261);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchProvince = async () => {
@@ -38,7 +37,7 @@ const RegisterHost1Container = () => {
     fetchProvince();
   }, []);
   useEffect(() => {
-    setSelectedDistrict(null);
+    
     const fetchDistrict = async () => {
       const response = await apiGetDistricts(selectedProvince);
       if (response.status === 200) {
@@ -50,14 +49,13 @@ const RegisterHost1Container = () => {
   }, [selectedProvince]);
 
   useEffect(() => {
-    setSelectedWard(null);
+  
     const fetchWard = async () => {
       const response = await apiGetWards(selectedDistrict);
       if (response.status === 200) {
         setWards(response?.data.results);
       }
     };
-
     districts && fetchWard();
     !selectedDistrict && setWards([]);
   }, [selectedDistrict]);
@@ -68,9 +66,10 @@ const RegisterHost1Container = () => {
 
   const dispath = useDispatch();
   const onSubmit = (data) => {
-    data.province=provinces.find(province => province.province_id === selectedProvince).province_name
-    data.district=districts.find(district => district.district_id === selectedDistrict).district_name
-    data.ward=wards.find(ward => ward.ward_id === selectedWard).ward_name
+    data.province=(provinces.find(province => province.province_id == selectedProvince)?.province_name)
+    data.district=(districts.find(district => district.district_id == selectedDistrict)?.district_name)
+    data.ward=(wards.find(ward => ward.ward_id == selectedWard)?.ward_name)
+    data.street=street
     dispath({
       type: addAddressHotel,
       payload: data,
@@ -137,7 +136,6 @@ const RegisterHost1Container = () => {
                     options={wards}
                     id="ward"
                     {...register("ward")}
-
                   />
                 </div>
 

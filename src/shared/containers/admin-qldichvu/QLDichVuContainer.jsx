@@ -15,7 +15,7 @@ import IcDelete from '../../components/icons/qldichvu-icons/IcDelete';
 import IcUpdate from '../../components/icons/qldichvu-icons/IcUpdate';
 import styles from './QLDichVuContainer.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AdminAction from '../../../redux/admin/action';
@@ -46,6 +46,9 @@ const QLDichVuContainer = () => {
   const dispatch = useDispatch();
   const {service, amenity} = useSelector((state) => state.Admin) || {}
   const [reloadData, setReloadData] = useState(false);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const name = searchParams.get('name') || '';
 
   //Service 
   const [addServiceOpen, setAddServiceOpen] = React.useState(false);
@@ -57,17 +60,18 @@ const QLDichVuContainer = () => {
   const [dataAmentity, setDataAmentity] = React.useState(null);
 
   useEffect(() => {
-      dispatch({
-        type: AdminAction.GET_LIST_SERVICE,
-          onSuccess: () => {
-          },
-          onError: () => {
-              ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-          }
-      });
+      // dispatch({
+      //   type: AdminAction.GET_LIST_SERVICE,
+      //     onSuccess: () => {
+      //     },
+      //     onError: () => {
+      //         ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
+      //     }
+      // });
 
       dispatch({
-        type: AdminAction.GET_LIST_AMENITY,
+        type: AdminAction.SEARCH_AMENITY,
+        name: name,
           onSuccess: () => {
           },
           onError: () => {
@@ -75,7 +79,7 @@ const QLDichVuContainer = () => {
           }
       });
       setReloadData(false);
-  }, [reloadData]);
+  }, [reloadData, dispatch, name]);
 
   const [serviceCount, setServiceCount] = React.useState(1);
   const [amentityCount, setAmentityCount] = React.useState(1);
@@ -231,7 +235,7 @@ const QLDichVuContainer = () => {
   }
 
   return (
-    service && amenity ? (
+    amenity?.hotelAmenities && amenity?.roomAmenities ? (
     <div className={`${styles['home']} flex justify-between`}>
       <div >
         <h2 className="ml-60 text-2xl font-bold text-sky-900 mb-2">Dịch vụ</h2>
@@ -246,7 +250,7 @@ const QLDichVuContainer = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(service) && service.map((item, index) => (
+              {Array.isArray(amenity?.hotelAmenities) && amenity?.hotelAmenities.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {serviceCount + index}
@@ -307,7 +311,7 @@ const QLDichVuContainer = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(amenity) && amenity?.map((item, index) => (
+              {Array.isArray(amenity?.roomAmenities) && amenity?.roomAmenities.map((item, index) => (
                 <StyledTableRow key={item.id}>
                   <StyledTableCell component="th" scope="row">
                     {amentityCount + index}

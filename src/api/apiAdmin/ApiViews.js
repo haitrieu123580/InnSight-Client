@@ -2,19 +2,6 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/admin/views'
 
-export const getListViews = async (token ) => {
-  const response = await axios.get(
-    `${BASE_URL}/list`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return { Data: response?.data };
-}
-
 export const updateViews = async ({id, data, token}) => {
   const response = await axios.put(
     `${BASE_URL}/${id}`,

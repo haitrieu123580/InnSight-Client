@@ -3,11 +3,17 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/admin'
 
 // SERVICE
-export const getListService = async (token) => {
+export const searchServiceAndAmenity = async ({ name, token, pageIndex = 0, pageSize = 100 }) => {
   const response = await axios.get(
-    `${BASE_URL}/hotelService/list`,
+    `${BASE_URL}/roomAmenity/search`,
     {
+      params:{
+        name,
+        pageIndex,
+        pageSize,
+      },
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     }
@@ -57,17 +63,6 @@ export const deleteService = async ({id, token}) => {
 }
 
 // AMENITY
-export const getListAmenity = async (token) => {
-  const response = await axios.get(
-    `${BASE_URL}/roomAmenity/list`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return { Data: response?.data };
-}
 
 export const updateAmenity = async ({data, token}) => {
   const response = await axios.put(
@@ -109,3 +104,4 @@ export const deleteAmenity = async ({id, token}) => {
   );
   return { Data: response?.data };
 }
+

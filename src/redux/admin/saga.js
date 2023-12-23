@@ -1,28 +1,29 @@
 import { all, call, fork, put, takeEvery } from '@redux-saga/core/effects';
 import actions from './action';
 import { getListUser, deleteUserById, getDetailUser, searchUser } from '../../api/apiAdmin/ApiUser';
-import { getListBedTypes, updateBedTypes, addBedTypes, deleteBedTypes } from '../../api/apiAdmin/ApiBedType';
-import { getListViews, updateViews, addViews, deleteViews, searchViews } from '../../api/apiAdmin/ApiViews';
-import { getListService, updateService, addService, deleteService, getListAmenity, updateAmenity, addAmenity, deleteAmenity} from '../../api/apiAdmin/ApiServiceAmenity';
-import { listUser, detailUser, listService, listAmenity, listBedTypes, listViews } from './slice';
+import { searchBedTypes } from '../../api/apiAdmin/ApiBedType';
+import { updateViews, addViews, deleteViews, searchViews } from '../../api/apiAdmin/ApiViews';
+import { updateService, addService, deleteService, updateAmenity, addAmenity, deleteAmenity, searchServiceAndAmenity} from '../../api/apiAdmin/ApiServiceAmenity';
+import { getRevenueByYear, getRevenueAllYear } from '../../api/apiAdmin/ApiRevenue';
+import { listUser, detailUser, listAmenity, listBedTypes, listViews, listRevenueByYear, listRevenueAllYear } from './slice';
 
 // USER
-function* watchGetListUser() {
-  yield takeEvery(actions.GET_LIST_USER, function* (payload) {
-      const {pageIndex, pageSize, onSuccess, onError } = payload;
-      const token = JSON.parse(localStorage.getItem('Token'));
-      try {
-          const response = yield call(getListUser, {pageIndex, pageSize, token });
-          if (response?.Data) {
-              yield put(listUser(response?.Data))
-              onSuccess && onSuccess();
-          }
-      } catch (error) {
-          onError && onError();
-      } finally {
-      }
-  });
-}
+// function* watchGetListUser() {
+//   yield takeEvery(actions.GET_LIST_USER, function* (payload) {
+//       const {pageIndex, pageSize, onSuccess, onError } = payload;
+//       const token = JSON.parse(localStorage.getItem('Token'));
+//       try {
+//           const response = yield call(getListUser, {pageIndex, pageSize, token });
+//           if (response?.Data) {
+//               yield put(listUser(response?.Data))
+//               onSuccess && onSuccess();
+//           }
+//       } catch (error) {
+//           onError && onError();
+//       } finally {
+//       }
+//   });
+// }
 
 function* watchDeleteUserById() {
   yield takeEvery(actions.DELETE_USER, function* (payload) {
@@ -59,11 +60,10 @@ function* watchGetDetailUser() {
 
 function* watchSearchUser() {
     yield takeEvery(actions.SEARCH_USER, function* (payload) {
-        const {email, onSuccess, onError } = payload;
+        const {email, pageIndex, pageSize, onSuccess, onError } = payload;
         const token = JSON.parse(localStorage.getItem('Token'));
         try {
-            const response = yield call(searchUser, {email, token });
-            console.log('response', response)
+            const response = yield call(searchUser, {email, token, pageIndex, pageSize });
             if (response?.Data) {
                 yield put(listUser(response?.Data))
                 onSuccess && onSuccess();
@@ -76,22 +76,6 @@ function* watchSearchUser() {
 }
 
 // SERVICE
-function* watchGetListService() {
-    yield takeEvery(actions.GET_LIST_SERVICE, function* (payload) {
-        const {onSuccess, onError } = payload;
-        const token = JSON.parse(localStorage.getItem('Token'));
-      try {
-            const response = yield call(getListService, token);
-            if (response?.Data) {
-                yield put(listService(response?.Data))
-                onSuccess && onSuccess();
-            }
-        } catch (error) {
-            onError && onError();
-        } finally {
-        }
-    });
-}
 
 function* watchUpdateService() {
     yield takeEvery(actions.UPDATE_SERVICE, function* (payload) {
@@ -142,12 +126,13 @@ function* watchDeleteService() {
 }
 
 // AMENITY
-function* watchGetListAmenity() {
-    yield takeEvery(actions.GET_LIST_AMENITY, function* (payload) {
-        const {onSuccess, onError } = payload;
+
+function* watchSearchServiceAndAmenity() {
+    yield takeEvery(actions.SEARCH_AMENITY, function* (payload) {
+        const {name, pageIndex, pageSize, onSuccess, onError } = payload;
         const token = JSON.parse(localStorage.getItem('Token'));
         try {
-            const response = yield call(getListAmenity, token);
+            const response = yield call(searchServiceAndAmenity, {name, token, pageIndex, pageSize });
             if (response?.Data) {
                 yield put(listAmenity(response?.Data))
                 onSuccess && onSuccess();
@@ -208,12 +193,12 @@ function* watchDeleteAmenity() {
 }
 
 // BEDTYPES
-function* watchGetListBedTypes() {
-    yield takeEvery(actions.GET_LIST_BED_TYPES, function* (payload) {
-        const {onSuccess, onError } = payload;
+function* watchSearchBedTypes() {
+    yield takeEvery(actions.SEARCH_BED_TYPES, function* (payload) {
+        const {name, pageIndex, pageSize, onSuccess, onError } = payload;
         const token = JSON.parse(localStorage.getItem('Token'));
-      try {
-            const response = yield call(getListBedTypes, token);
+        try {
+            const response = yield call(searchBedTypes, {name, token, pageIndex, pageSize });
             if (response?.Data) {
                 yield put(listBedTypes(response?.Data))
                 onSuccess && onSuccess();
@@ -225,71 +210,7 @@ function* watchGetListBedTypes() {
     });
 }
 
-function* watchUpdateBedTypes() {
-    yield takeEvery(actions.UPDATE_BED_TYPES, function* (payload) {
-        const {id, data, onSuccess, onError } = payload;
-        const token = JSON.parse(localStorage.getItem('Token'));
-        try {
-            const response = yield call(updateBedTypes, {id, data, token });
-            if (response?.Data) {
-                onSuccess && onSuccess();
-            }
-        } catch (error) {
-            onError && onError();
-        } finally {
-        }
-    });
-}
-
-function* watchAddBedTypes() {
-    yield takeEvery(actions.ADD_BED_TYPES, function* (payload) {
-        const {data, onSuccess, onError } = payload;
-        const token = JSON.parse(localStorage.getItem('Token'));
-        try {
-            const response = yield call(addBedTypes, {data, token });
-            if (response?.Data) {
-                onSuccess && onSuccess();
-            }
-        } catch (error) {
-            onError && onError();
-        } finally {
-        }
-    });
-}
-
-function* watchDeleteBedTypes() {
-    yield takeEvery(actions.DELETE_BED_TYPES, function* (payload) {
-        const {id, onSuccess, onError } = payload;
-        const token = JSON.parse(localStorage.getItem('Token'));
-        try {
-            const response = yield call(deleteBedTypes, {id, token });
-            if (response?.Data) {
-                onSuccess && onSuccess();
-            }
-        } catch (error) {
-            onError && onError();
-        } finally {
-        }
-    });
-}
-
 // VIEWS
-function* watchGetListViews() {
-    yield takeEvery(actions.GET_LIST_VIEWS, function* (payload) {
-        const {onSuccess, onError } = payload;
-        const token = JSON.parse(localStorage.getItem('Token'));
-      try {
-            const response = yield call(getListViews, token);
-            if (response?.Data) {
-                yield put(listViews(response?.Data))
-                onSuccess && onSuccess();
-            }
-        } catch (error) {
-            onError && onError();
-        } finally {
-        }
-    });
-}
 
 function* watchUpdateViews() {
     yield takeEvery(actions.UPDATE_VIEWS, function* (payload) {
@@ -356,28 +277,60 @@ function* watchSearchViews() {
     });
 }
 
+// REVENUE
+function* watchRevenueByYear() {
+    yield takeEvery(actions.REVENUE_BY_YEAR, function* (payload) {
+        const {data, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(getRevenueByYear, {data, token });
+            if (response?.Data) {
+                yield put(listRevenueByYear(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchRevenueAllYear() {
+    yield takeEvery(actions.REVENUE_ALL_YEAR, function* (payload) {
+        const { onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(getRevenueAllYear,  token);
+            if (response?.Data) {
+                yield put(listRevenueAllYear(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
 export default function* AdminSaga() {
   yield all([
-    fork(watchGetListUser),
+    // fork(watchGetListUser),
     fork(watchDeleteUserById),
     fork(watchSearchUser),
     fork(watchGetDetailUser),
-    fork(watchGetListService),
     fork(watchUpdateService),
     fork(watchAddService),
     fork(watchDeleteService),
-    fork(watchGetListAmenity),
+    fork(watchSearchServiceAndAmenity),
     fork(watchUpdateAmenity),
     fork(watchAddAmenity),
     fork(watchDeleteAmenity),
-    fork(watchGetListBedTypes),
-    fork(watchUpdateBedTypes),
-    fork(watchAddBedTypes),
-    fork(watchDeleteBedTypes),
-    fork(watchGetListViews),
+    fork(watchSearchBedTypes),
     fork(watchUpdateViews),
     fork(watchAddViews),
     fork(watchDeleteViews),
     fork(watchSearchViews),
+    fork(watchRevenueByYear),
+    fork(watchRevenueAllYear)
   ]);
 }
