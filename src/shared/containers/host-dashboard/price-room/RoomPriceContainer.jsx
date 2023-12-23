@@ -9,7 +9,6 @@ import PriceRoomCard from "../../../components/host-manage/priceRoom/PriceRoomCa
 const RoomPriceContainer = () => {
   const dispatch = useDispatch();
   const [reloadData, setReloadData] = useState(false);
-  const [reloadData, setReloadData] = useState(false);
   const roomTypes = useSelector((state) => state.Host.roomTypes);
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   useEffect(() => {

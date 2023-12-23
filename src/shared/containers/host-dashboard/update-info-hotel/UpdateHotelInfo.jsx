@@ -16,6 +16,8 @@ const UpdateHotelInfoContainer = () => {
     criteriaMode: "all",
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [loadData, setLoadData] = useState(false);
+
   useEffect(() => {
     dispatch({
       type: HostAction.GET_SERVICES,
@@ -42,7 +44,8 @@ const UpdateHotelInfoContainer = () => {
         },
       });
     }
-  }, [dispatch, hotelId]);
+    setLoadData(false)
+  }, [dispatch, hotelId,loadData]);
   const item = hotelInfo;
   const handleClickEdit = () => {
     setIsEditing(!isEditing);
@@ -132,6 +135,7 @@ const UpdateHotelInfoContainer = () => {
         ShowToastify.showErrorToast("Cập nhật thất bại, kiểm tra lại thông tin");
       },
     });
+    setLoadData(true)
   };
   return (
     <>
