@@ -124,7 +124,6 @@ const QLTaiKhoanContainer = () => {
                   <StyledTableRow key={item.id}>
                     <StyledTableCell component="th" scope="row">
                       {((page - 1) * 20) + index + 1}
-                      {/* {item.id} */}
                     </StyledTableCell>
                       <StyledTableCell className="w-96">{getEmailUsername(item.email)}</StyledTableCell>
                     <StyledTableCell>{item.role}</StyledTableCell>
