@@ -355,7 +355,7 @@ const QLDichVuContainer = () => {
       </div>
     </div>
     ) : (
-      <div> null </div>
+      <div> Loading... </div>
     )
   );
 };
