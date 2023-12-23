@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../redux/host/action";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ShowToastify from "../../../../utils/ShowToastify";
 import styles from "./UpdateHotelInfo.module.scss";
 import { Switch } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 const UpdateHotelInfoContainer = () => {
   const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const userId = JSON.parse(localStorage.getItem("id"));
   const dispatch = useDispatch();
   const hotelInfo = useSelector((state) => state.Host.hotelInfo) || {};
-  const { register, setValue, handleSubmit, control } = useForm({
+  const { register, handleSubmit } = useForm({
     criteriaMode: "all",
   });
   const [isEditing, setIsEditing] = useState(false);
+  useEffect(() => {
+    dispatch({
+      type: HostAction.GET_SERVICES,
+      onSuccess: () => {},
+      onError: () => {
+        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+      },
+    });
+  }, []);
+  const services = useSelector((state) => state.Host.services) || [];
+  const hotelAmenities = hotelInfo.hotelAmenities || [];
   useEffect(() => {
     if (hotelId) {
       dispatch({
@@ -31,27 +44,94 @@ const UpdateHotelInfoContainer = () => {
     }
   }, [dispatch, hotelId]);
   const item = hotelInfo;
-  console.log("A", item);
   const handleClickEdit = () => {
     setIsEditing(!isEditing);
   };
-  const [status, setStatus] = useState(item.status||null);
-
+  const [status, setStatus] = useState(item.status == "ACTIVE");
   const handleChange = () => {
-    setStatus((prevValue) => (prevValue === "ACTIVE" ? null : "ACTIVE"));
+    setStatus(!status);
   };
+
+  const [timeCheckinFrom, setTimeCheckinFrom] = useState(hotelInfo.checkIn);
+  const [timeCheckoutFrom, setTimeCheckoutFrom] = useState(hotelInfo.checkOut);
+
+  const updateHotelAmenities = hotelAmenities.slice(); 
+  const handleCheckedAmenities = (e) => {
+    const statusAmenity = hotelAmenities.includes(e.target.name);
+    if (statusAmenity) {
+      const filteredAmenities = updateHotelAmenities.filter(
+        (amenity) => amenity !== e.target.name
+      );
+      updateHotelAmenities.length = 0;
+      updateHotelAmenities.push(...filteredAmenities);
+    } else {
+      updateHotelAmenities.push(e.target.name);
+    }
+  };
+
   const onSubmit = (data) => {
-    console.log(data)
-    // dispatch({
-    //   type: HostAction.UPDATE_HOTEL,
-    //   userId: userId,
-    //   hotelId: hotelId,
-    //   data: data,
-    //   onSuccess: () => {
-    //     ShowToastify.showSuccessToast("Thành công");
-    //   },
-    //   onError: () => {},
-    // });
+    data.checkIn = timeCheckinFrom;
+    data.checkOut = timeCheckoutFrom;
+    data.hotelAmenities = updateHotelAmenities;
+    data.extraServices = hotelInfo.extraServices;
+    const addressString = data.address.split(", ");
+    const formData = new FormData();
+    formData.append("name", data.hotelName || "");
+    formData.append("checkInTime", data.checkIn || "");
+    formData.append("checkOutTime", data.checkOut || "");
+    formData.append("description", data.description || "");
+    formData.append("province", addressString[0] || "");
+    formData.append("district", addressString[1] || "");
+    formData.append("ward", addressString[2] || "");
+    formData.append("street", addressString[3] || "");
+    formData.append("rate", hotelInfo.rate || "3");
+    formData.append("status", status ? "ACTIVE" : "");
+
+    if (updateHotelAmenities) {
+      for (let i = 0; i < updateHotelAmenities.length; i++) {
+        formData.append(`amenities[${i}].name`, updateHotelAmenities[i]);
+        formData.append(`amenities[${i}].price`, 0);
+      }
+    } else {
+      formData.append(`amenities[0]`, null);
+    }
+
+    if (data.extraServices && Array.isArray(data.extraServices)) {
+      data.extraServices.forEach((extraService, i) => {
+        if (extraService && extraService.name) {
+          formData.append(`extraServices[${i}].name`, extraService.name || "");
+          formData.append(
+            `extraServices[${i}].price`,
+            extraService.price || ""
+          );
+        }
+      });
+    } else {
+      formData.append("extraServices[0].name", "");
+      formData.append("extraServices[0].price", "");
+    }
+    if (data.images[0]) {
+      for (let i = 0; i < data.images.length; i++) {
+        const file = data.images[i];
+        
+        formData.append(`images[${i}]`, file);
+      }
+    } else {
+      formData.append(`images[0]`, null);
+    }
+    dispatch({
+      type: HostAction.UPDATE_HOTEL,
+      userId: userId,
+      hotelId: hotelId,
+      data: formData,
+      onSuccess: () => {
+        ShowToastify.showSuccessToast("Thành công");
+        setIsEditing(false)
+      },
+      onError: () => {
+        ShowToastify.showErrorToast("Cập nhật thất bại, kiểm tra lại thông tin");
+      },
+    });
   };
   return (
     <>
@@ -62,7 +142,7 @@ const UpdateHotelInfoContainer = () => {
           {!isEditing ? (
             <>
               <div className={`${styles["content"]} mt-4 border`}>
-                <div className="text-lg mt-4 my-2 items-center grid grid-cols-4">
+                <div className="text-lg py-2 border-b mt-4 my-2 items-center grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Tên khách sạn:</h2>
                   <div className="col-span-3">
                     {item.hotelName ? (
@@ -74,7 +154,7 @@ const UpdateHotelInfoContainer = () => {
                     )}
                   </div>
                 </div>
-                <div className=" text-lg my-2  items-center grid grid-cols-4">
+                <div className="text-lg py-2 border-b my-2  items-center grid grid-cols-4">
                   <h2 className="col-span-1 font-semibold">Địa chỉ :</h2>
                   <div className="col-span-3">
                     {item.address ? (
@@ -86,7 +166,7 @@ const UpdateHotelInfoContainer = () => {
                     )}
                   </div>
                 </div>
-                <div className=" text-lg my-2 items-center  grid grid-cols-4">
+                <div className="text-lg py-2 border-b my-2 items-center  grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Mô tả:</h2>
                   <div className="col-span-3">
                     {item.description ? (
@@ -98,43 +178,64 @@ const UpdateHotelInfoContainer = () => {
                     )}
                   </div>
                 </div>
-                <div className=" text-lg my-2 items-center  grid grid-cols-4">
+                <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                  <h2 className={`col-span-1 font-semibold`}>
+                    Thời gian nhận phòng:
+                  </h2>
+                  <div className="col-span-3">
+                    <input disabled type="time" value={hotelInfo.checkIn} />
+                  </div>
+                </div>
+                <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                  <h2 className={`col-span-1 font-semibold`}>
+                    Thời gian trả phòng:
+                  </h2>
+                  <div className="col-span-3">
+                    <input type="time" value={hotelInfo.checkOut} disabled />
+                  </div>
+                </div>
+
+                <div className="text-lg py-2 border-b my-2 items-center  grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Hình ảnh:</h2>
-                  <div className="col-span-3">
-                    {item.hotelImages? (
-                      <h2>{item.hotelImages.length} ảnh</h2>
-                    ) : (
-                      <h2 className=" text-slate-500">
-                        Cập nhật thêm ảnh để thu hút khách đặt phòng
-                      </h2>
-                    )}
+                  <div className="col-span-3 flex flex-wrap gap-3">
+                    {item.hotelImages?.map((image, index) => (
+                      <Fragment key={index}>
+                        <img class="rounded-md h-20 w-20" src={image} alt="" />
+                      </Fragment>
+                    ))}
                   </div>
                 </div>
-                <div className=" text-lg my-2 items-center  grid grid-cols-4">
+
+                <div className="text-lg py-2 border-b my-2 items-center  grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Tiện ích:</h2>
-                  <div className="col-span-3">
-                    {item.hotelAmenities? (
-                      <h2>{item.hotelAmenities.length} tiện ích</h2>
+                  <div className="col-span-3 grid grid-cols-2">
+                    {item.hotelAmenities ? (
+                      item.hotelAmenities?.map((amenity) => (
+                        <span>{amenity}</span>
+                      ))
                     ) : (
                       <h2 className=" text-slate-500">
-                        Cập nhật thêm tiện ích khách sạn bạn sẵn có để thu hút khách đặt phòng
+                        Cập nhật thêm tiện ích khách sạn bạn sẵn có để thu hút
+                        khách đặt phòng
                       </h2>
                     )}
                   </div>
                 </div>
-                <div className=" text-lg my-2 items-center  grid grid-cols-4">
+                <div className="text-lg py-2 border-b my-2 items-center  grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Dịch vụ thêm:</h2>
                   <div className="col-span-3">
-                    {item.extraServices? (
+                    {item.extraServices ? (
                       <h2>{item.extraServices.length} dịch vụ</h2>
                     ) : (
                       <h2 className=" text-slate-500">
-                        Cập nhật thêm dịch vụ khách sạn bạn sẵn có để thu hút khách đặt phòng
+                        Cập nhật thêm dịch vụ khách sạn bạn sẵn có để thu hút
+                        khách đặt phòng
                       </h2>
                     )}
                   </div>
                 </div>
-                <div className=" text-lg my-2 items-center  grid grid-cols-4">
+
+                <div className="text-lg py-2 border-b my-2 items-center  grid grid-cols-4">
                   <h2 className={`font-semibold col-span-1`}>Trạng thái:</h2>
                   <div className="col-span-3">
                     <h2>{item.status}</h2>
@@ -152,7 +253,7 @@ const UpdateHotelInfoContainer = () => {
             <>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={`${styles["content"]} mt-4 border`}>
-                  <div className="text-lg mt-4 my-2 items-center grid grid-cols-4">
+                  <div className="text-lg py-2 border-b mt-4 my-2 items-center grid grid-cols-4">
                     <h2 className={`col-span-1  font-semibold`}>
                       Tên khách sạn:
                     </h2>
@@ -164,7 +265,7 @@ const UpdateHotelInfoContainer = () => {
                       {...register("hotelName", { required: "" })}
                     />
                   </div>
-                  <div className="text-lg mt-4 my-2 items-center grid grid-cols-4">
+                  <div className="text-lg py-2 border-b mt-4 my-2 items-center grid grid-cols-4">
                     <h2 className={`col-span-1  font-semibold`}>Địa chỉ:</h2>
                     <input
                       type="text"
@@ -178,10 +279,8 @@ const UpdateHotelInfoContainer = () => {
                     Ví dụ: Thành phố Đà Nẵng, Quận Liên Chiểu, Phường Hòa Khánh
                     Bắc, 54 Nguyễn Lương Bằng
                   </h3>
-                  <div className="text-lg my-2 items-center grid grid-cols-4">
-                    <h2 className={`col-span-1 font-semibold`}>
-                      Mô tả:
-                    </h2>
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                    <h2 className={`col-span-1 font-semibold`}>Mô tả:</h2>
                     <div>
                       <textarea
                         type="text"
@@ -192,25 +291,82 @@ const UpdateHotelInfoContainer = () => {
                       />
                     </div>
                   </div>
-                  <div className="text-lg my-2 items-center grid grid-cols-4">
-                    <h2 className={`col-span-1  font-semibold`}>
-                      Hình ảnh:
+
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                    <h2 className={`col-span-1 font-semibold`}>
+                      Thời gian nhận phòng:
                     </h2>
+                    <div className="col-span-3">
+                      <input
+                        type="time"
+                        value={timeCheckinFrom}
+                        onChange={(e) => {
+                          setTimeCheckinFrom(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                    <h2 className={`col-span-1 font-semibold`}>
+                      Thời gian trả phòng:
+                    </h2>
+                    <div className="col-span-3">
+                      <input
+                        type="time"
+                        value={timeCheckoutFrom}
+                        onChange={(e) => {
+                          setTimeCheckoutFrom(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                    <h2 className={`col-span-1  font-semibold`}>Hình ảnh:</h2>
                     <div>
                       <input
                         type="file"
-                        {...register("images")}
+                        accept="image/*"
+                        multiple
+                        {...register("images")} 
+
                       />
                     </div>
                   </div>
 
-                  <div className="text-lg my-2 items-center grid grid-cols-4">
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
+                    <h2 className={`col-span-1  font-semibold`}>Tiện ích:</h2>
+                    <div className="col-span-3  flex flex-wrap gap-3">
+                      {/* <FormGroup> */}
+                      {services?.map((amenity) => {
+                        return (
+                          <FormControlLabel
+                            key={amenity.id}
+                            control={
+                              <Checkbox
+                                checked={hotelAmenities.find(
+                                  (hotelAmenity) => hotelAmenity == amenity.name
+                                )}
+                              />
+                            }
+                            label={amenity.name}
+                            name={amenity.name}
+                            className="items-center"
+                            onChange={(e) => {
+                              handleCheckedAmenities(e);
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="text-lg py-2 border-b my-2 items-center grid grid-cols-4">
                     <h2 className={`col-span-1 font-semibold`}>Trạng thái:</h2>
                     <div>
                       <Switch
-                        value={status}
-                        onChange={handleChange}
-                        inputProps={{ "aria-label": "Switch" }}
+                        checked={status}
+                        onChange={() => {
+                          handleChange();
+                        }}
                       />
                     </div>
                   </div>

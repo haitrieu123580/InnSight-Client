@@ -1,0 +1,22 @@
+.text-modal{
+    font-size: 20px;
+}
+.content{
+    width: 500px;
+    display: flex;
+    row-gap: 1.125rem;
+    flex-direction: column;
+
+    input{
+        border: 1px solid rgb(212, 210, 210);
+        height:20px;
+        border-radius: 4px;
+    }
+    .bed-type-count{
+       display: flex;
+       row-gap: 1rem;
+       column-gap: 0.5rem;
+       align-items: flex-start;
+    }
+  
+}
