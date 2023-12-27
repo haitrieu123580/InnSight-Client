@@ -22,16 +22,6 @@ const AddRoomContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const bedTypes = Constants.bedTypes;
-  const views = [
-    {
-      id: 1,
-      name: "View sông",
-    },
-    {
-      id: 2,
-      name: "View sân vườn",
-    },
-  ];
   useEffect(() => {
     dispatch({
       type: HostAction.GET_AMENITIES,
@@ -41,7 +31,19 @@ const AddRoomContainer = () => {
       },
     });
   }, []);
+
+  useEffect(() => {
+    dispatch({
+      type: HostAction.GET_VIEWS,
+      onSuccess: () => {},
+      onError: () => {
+        ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
+      },
+    });
+  }, []);
   const roomAmenities = useSelector((state) => state.Host.roomAmenities) || [];
+  const views = useSelector((state) => state.Host.views) || [];
+
   const handleAddRoomAmenities = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
@@ -98,12 +100,14 @@ const AddRoomContainer = () => {
     setView(event.target.value);
   };
   const [extraAmenityName, setExtraAmenityName] = useState("");
+  const [extraAmenities, setExtraAmenities] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const handleAddExtraAmenity = () => {
-    setSelectedAmenities([...selectedAmenities, extraAmenityName]);
+    setExtraAmenities([...extraAmenities,extraAmenityName])
+    setSelectedAmenities([...selectedAmenities, extraAmenities]);
   };
 
-  const handleCheckedAmenities = (e) => {
+  const handleCheckedAmenities = (e) => { 
     const checkedAmenity = selectedAmenities.find(
       (amenity) => amenity.name === e.target.name
     );
@@ -321,6 +325,18 @@ const AddRoomContainer = () => {
                       />
                     );
                   })}
+                  {extraAmenities?.map((roomAmenity,index)=>{
+                    return (
+                      <FormControlLabel
+                        key={index}
+                        control={<Checkbox checked/>}
+                        label={roomAmenity}
+                        name={roomAmenity}
+                      />
+                    );
+                  })
+
+                  }
                   <div className={`flex flex-col `}>
                     <FormControlLabel
                       control={<Checkbox />}
