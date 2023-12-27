@@ -6,6 +6,7 @@ import ReservationBox from '../../../components/booking/booking1/reservation-box
 import HotelPolicyBox from '../../../components/booking/booking2/hotel-policy/HotelPolicyBox';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const BookingContainer2 = () => {
     const { reservation, cart, linkVnpay } = useSelector(state => state.Booking);
@@ -14,13 +15,11 @@ const BookingContainer2 = () => {
 
     const handleSubmitReservation = () => {
         window.location.href = linkVnpay;
-        console.log('linkVnPay', linkVnpay);
-        console.log('reservation', localStorage.getItem('reservation'));
     };
 
     return (
         <div className='w-full px-20 sm:px-3 lg:px-60'>
-            <div className='text-3xl w-full my-14 font-bold'>
+            <div className='text-3xl w-full my-8 font-bold'>
                 Bạn vui lòng kiểm tra lại đặt chỗ
                 <div className='text-sm text-gray-500 mt-2 font-semibold'>
                     Vui lòng xem lại chi tiết đặt phòng của bạn trước khi tiếp tục đến bước thanh toán
@@ -43,15 +42,15 @@ const BookingContainer2 = () => {
                                     </div>
                                     <div className={`${styles['line']} my-2`}></div>
                                     <div className='flex justify-between'>
-                                        <div className='w-fit flex flex-col text-center'>
-                                            <div className='text-sm text-gray-400'>Ngày nhận phòng</div>
-                                            <div className='font-semibold text-lg my-1'>{reservation?.startDay}</div>
-                                            <div>{reservation?.checkInTime}</div>
+                                        <div className='w-fit flex flex-col '>
+                                            <div className='text-sm text-gray-500'>Ngày nhận phòng</div>
+                                            <div className='font-semibold text-lg my-1'>{`${moment(reservation?.startDay, 'YYYY-MM-DD').format('DD [tháng] MM[,] YYYY')}` || "Today"}</div>
+                                            <div>{`Từ ${cart?.hotel?.checkIn}`}</div>
                                         </div>
-                                        <div className='w-fit flex flex-col text-center'>
-                                            <div className='text-sm text-gray-400'>Ngày trả phòng</div>
-                                            <div className='font-semibold text-lg my-1'>{reservation?.endDay}</div>
-                                            <div>{reservation?.checkInTime}</div>
+                                        <div className='w-fit flex flex-col '>
+                                            <div className='text-sm text-gray-500'>Ngày trả phòng</div>
+                                            <div className='font-semibold text-lg my-1'>{`${moment(reservation?.endDay, 'YYYY-MM-DD').format('DD [tháng] MM[,] YYYY')}` || "Today"}</div>
+                                            <div>{`Trước ${cart?.hotel?.checkOut}`}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -64,7 +63,7 @@ const BookingContainer2 = () => {
                                     {room?.roomName}
                                 </div>
                                 <div className='w-full flex justify-between gap-2 mb-1'>
-                                    <span className='w-1/6 text-gray-400'>{`Khách/Phòng`}</span> <span className='w-5/6'>{`${room?.adult} Người lớn ${room?.children || 0} trẻ em`}</span>
+                                    <span className='w-1/6 text-gray-500'>{`Khách/Phòng`}</span> <span className='w-5/6'>{`${room?.adult} Người lớn ${room?.children || 0} trẻ em`}</span>
                                 </div>
                                 {/* <div className='w-full flex justify-between gap-2 mb-1'>
                                     <span className='w-1/6 text-gray-400'>{`Kiểu giường`}</span> <span className='w-5/6'>{room?.bedTye}</span>

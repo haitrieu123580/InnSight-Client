@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import IcDetail from '../../components/icons/qltaikhoan-icons/IcDetail.jsx'
-import IcDelete from '../../components/icons/qltaikhoan-icons/IcDelete.jsx'
 import styles from './QLTaiKhoanContainer.module.scss'
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import TableContainer from '@mui/material/TableContainer';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -13,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
-import { Button, Popconfirm } from 'antd';
+import { Button } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import ShowToastify from '../../../utils/ShowToastify';
 import AdminAction from "../../../redux/admin/action.js";
@@ -86,26 +84,10 @@ const QLTaiKhoanContainer = () => {
     });
   };
 
-  function handleDelete(id) {
-    dispatch({
-      type: AdminAction.DELETE_USER,
-      id : id,
-        onSuccess: () => {
-          ShowToastify.showSuccessToast("Xóa thành công")
-          setReloadData(true);
-        },
-        onError: () => {
-            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-        }
-    });
-  }
-
   return (
     listUser ? (
     <div className={`${styles['home']}`}>
       <div className={`flex m-2 ${styles['text']}`}>
-        {/* <div className="mr-4 pt-1">Loại người dùng</div>
-        <SelectMenu onSelectChange={handleSelectChange} className="mr-4" /> */}
         <div className="flex-grow text-right pt-1 font-bold">Tổng: {listUser.totalElements}</div>
       </div>
       <div>
@@ -135,18 +117,6 @@ const QLTaiKhoanContainer = () => {
                             Xem chi tiết
                           </Button>
                         </NavLink>
-                        <Popconfirm
-                          title="Xóa người dùng"
-                          description={`Bạn chắc chắn muốn xóa ${item.role} này?`}
-                          icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-                          onConfirm={() => handleDelete(item.id)}
-                          okText="OK"
-                        >
-                          <Button className="flex ml-5 gap-2 ">
-                            <IcDelete />
-                            Xóa
-                          </Button>
-                        </Popconfirm>
                       </div>
                     </StyledTableCell>
                   </StyledTableRow>

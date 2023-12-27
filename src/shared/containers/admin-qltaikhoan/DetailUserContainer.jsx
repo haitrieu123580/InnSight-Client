@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
 import Breadcrumb from '../../components/admin-qltaikhoan/Breadcrumb.tsx';
 import image from '../../../assets/images/user.png';
 import styles from './DetailUserContainer.module.scss';
@@ -16,31 +8,9 @@ import AdminAction from '../../../redux/admin/action.js';
 import ShowToastify from '../../../utils/ShowToastify.js';
 import moment from 'moment/moment';
 
-function PaperComponent(props) {
-  return (
-    <Draggable
-      handle="#draggable-dialog-title"
-      cancel={'[class*="MuiDialogContent-root"]'}
-    >
-      <Paper {...props} />
-    </Draggable>
-  );
-}
-
 const Profile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { detailUser } = useSelector((state) => state.Admin) || {};
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
@@ -57,19 +27,6 @@ const Profile = () => {
       },
     });
   }, []);
-
-  const handleDelete = () => {
-    dispatch({
-      type: AdminAction.DELETE_USER,
-      id : id,
-        onSuccess: () => {
-          navigate('/qltaikhoan');
-        },
-        onError: () => {
-            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
-        }
-    });
-  };
 
   return (
     <>
@@ -187,34 +144,6 @@ const Profile = () => {
             <p>Không tìm thấy thông tin</p>
           )}
         </div>
-      </div>
-      <div>
-        <Button variant="outlined" onClick={handleClickOpen} color='error'>
-          Xóa
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          PaperComponent={PaperComponent}
-          aria-labelledby="draggable-dialog-title"
-        >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-            Xóa dữ liệu người dùng
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Bạn có chắc chắn muốn xóa?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose} color='secondary'>
-              Hủy
-            </Button>
-            <Button onClick={handleDelete} color='error'>
-              Xóa
-            </Button>
-          </DialogActions>
-        </Dialog>
       </div>
     </>
   );

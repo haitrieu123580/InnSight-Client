@@ -90,7 +90,7 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
+                    // isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
                       <Layout>
 
                         <Suspense fallback={<div>Loading...</div>}>
@@ -98,9 +98,9 @@ function App() {
                         </Suspense>
 
                       </Layout>
-                    ) : (
-                      <Navigate to="/" replace={true} />
-                    )
+                    // ) : (
+                    //   <Navigate to="/" replace={true} />
+                    // )
                   }
                 />
               );

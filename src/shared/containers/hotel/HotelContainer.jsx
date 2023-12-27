@@ -10,16 +10,15 @@ import StarIcon from '@mui/icons-material/Star';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import getLatLngFromAddress from "../../../api/ApiGoogleMap"
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ViewImage from '../../components/room-list/ViewImage';
 //slick slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick"
 import "./SlickSlider.scss"
 //
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
-import HomeAction from '../../../redux/home/action';
-import ShowToastify from '../../../utils/ShowToastify';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 const style = {
     position: 'absolute',
@@ -47,7 +46,14 @@ const HotelContainer = () => {
     const [open, setOpen] = React.useState(false);
     const [showButton, setShowButton] = React.useState(false);
     const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
-    console.log('hotel', hotel);
+
+    const [image, setImage] = React.useState(false);
+    const handleOpenViewImage = () => {
+        setImage(true);
+    };
+    const handleCloseViewImage = () => {
+        setImage(false);
+    };
 
     useEffect(() => {
         if (Object.keys(cart?.rooms).length !== 0) {
@@ -122,25 +128,31 @@ const HotelContainer = () => {
                     </div>
                 </div>
 
-                <div className={styles['content-block']}>
+                <ViewImage
+                  open={image}
+                  onClose={handleCloseViewImage}
+                  hotel={hotel}
+                />
+
+                <button className={styles['content-block']} onClick={() => handleOpenViewImage()}>
                     <div className='grid grid-cols-10 gap-2'>
-                        <div className='col-span-6'><img src={hotel?.hotelImages?.[0]} alt="" /></div>
+                        <div className='col-span-6'>{hotel?.hotelImages?.[0] && <img src={hotel.hotelImages[0]} alt="" />}</div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[1]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[2]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[3]} alt="" /></div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[1] && <img src={hotel.hotelImages[1]} alt="" />}</div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[2] && <img src={hotel.hotelImages[2]} alt="" />}</div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[3] && <img src={hotel.hotelImages[3]} alt="" />}</div>
                             </div>
                         </div>
                         <div className='col-span-2'>
                             <div className='grid grid-rows-3 gap-2'>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[4]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[5]} alt="" /></div>
-                                <div className='row-span-1'><img src={hotel?.hotelImages?.[6]} alt="" /></div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[4] && <img src={hotel.hotelImages[4]} alt="" />}</div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[5] && <img src={hotel.hotelImages[5]} alt="" />}</div>
+                                <div className='row-span-1'>{hotel?.hotelImages?.[6] && <img src={hotel.hotelImages[6]} alt="" />}</div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </button>
 
                 <div className={`${styles['content-bg-gray']} ${styles['content-block']} w-full`}>
                     <div className={styles['block-title']}>Giới thiệu nơi cư trú</div>
@@ -148,17 +160,18 @@ const HotelContainer = () => {
                 </div>
                 <div className={`w-full`}>
                     <div className='grid grid-cols-12 gap-2'>
-                        <div className={`col-span-4 ${styles['content-bg-gray']} ${styles['content-block']}`}>
+                        <div className={`col-span-6 ${styles['content-bg-gray']} ${styles['content-block']}`}>
                             <div className={styles['block-title']}>Tiện ích</div>
                             <div className='flex flex-wrap w-full'>
                                 {Array.from({ length: hotel?.hotelAmenities?.length || 0 })?.map((_, index) => (
                                     <div key={index} className='w-1/2'>
+                                        <ChevronRightIcon className='pb-1 text-base text-green-500'/> 
                                         {hotel?.hotelAmenities[index]}
-                                    </div>))}
-
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className={`col-span-8 ${styles['content-bg-gray']} ${styles['content-block']}`}>
+                        <div className={`col-span-6 ${styles['content-bg-gray']} ${styles['content-block']}`}>
                             <div className={styles['block-title']}>Khách nói gì về kì nghỉ của họ</div>
                             <div className={styles['slider-list']}>
                                 <Slider {...settings}>
@@ -166,8 +179,8 @@ const HotelContainer = () => {
                                         <div className={styles['slider-wrapper']}>
                                             <div key={index} className={`shadow-md bg-white ${styles['slider-item']}`}>
                                                 <div >
-                                                    <span><EmojiEmotionsIcon style={{ color: "#C9CC2C" }} className='text-xl' /> <span className='text-xl text-blue-600'>{review?.rate}</span></span>
-                                                    <span className='text-xl text-gray-400'>/10</span>
+                                                    <span><EmojiEmotionsIcon style={{ color: "#C9CC2C" }} className='text-base mb-1' /> <span className='text-base text-blue-600'>{review?.rate}</span></span>
+                                                    <span className='text-base text-gray-400'>/10</span>
                                                 </div>
                                                 <div>
                                                     {review?.review}

@@ -1,18 +1,14 @@
 import axios from 'axios';
-
 const BASE_URL = process.env.REACT_APP_SERVER_URL + '/api/reservation/history'
-
-const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-};
-
-export const getHistoryById = async (requestData) => {
-  const response = await axios.post(
+export const getHistoryById = async (token) => {
+  const response = await axios.get(
     BASE_URL,
-    JSON.stringify(requestData),
-    config
+    {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      },
+    }
     );
   return { Data: response?.data };
 }
