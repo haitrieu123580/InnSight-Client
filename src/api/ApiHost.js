@@ -233,3 +233,26 @@ export const GetAmenities = async () => {
     };
   }
 };
+
+export const GetViews = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/room-types/views`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      return { Data: response?.data };
+    } else {
+      return {
+        Data: 'error',
+      };
+    }
+  } catch (error) {
+    console.error('Error in API request', error);
+    return {
+      Data: 'error',
+    };
+  }
+};

@@ -9,6 +9,7 @@ import {
   GetRoomAvailable,
   GetRoomTypes,
   GetServices,
+  GetViews,
   UpdateHotel,
   UpdateRoomType,
   deleteRoomTypeById,
@@ -20,6 +21,7 @@ import {
   getHotel,
   getReservedRoomInfo,
   getRoomAmenities,
+  getRoomViews,
   getServices,
   listRevenueHotelByYear,
 } from "./slice";
@@ -212,6 +214,23 @@ function* watchGetAmenities() {
   });
 }
 
+function* watchGetViews() {
+  yield takeEvery(actions.GET_VIEWS, function* (payload) {
+    const { onSuccess, onError } = payload;
+    try {
+      const response = yield call(GetViews);
+      if (response?.Data) {
+        yield put(getRoomViews(response?.Data));
+        onSuccess && onSuccess();
+      }
+    } catch (error) {
+      onError && onError();
+    } finally {
+    }
+  });
+}
+
+
 export default function* HostSaga() {
   yield all([
     fork(watchAddHotel),
@@ -226,6 +245,6 @@ export default function* HostSaga() {
     fork(watchDeleteRoomTypeById),
     fork(watchGetServices),
     fork(watchGetAmenities),
-
+    fork(watchGetViews)
   ]);
 }

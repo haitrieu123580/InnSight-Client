@@ -18,7 +18,6 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addAmenitiesHotel,
-  addExtraAmenityHotel,
   addExtraServiceHotel,
 } from "../../../../redux/host/slice";
 import HostAction from "../../../../redux/host/action";
@@ -26,81 +25,8 @@ import ShowToastify from "../../../../utils/ShowToastify";
 const RegisterHost3Container = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // let amenities = [
-  //   {
-  //     id: 1,
-  //     name: "Nhà hàng",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Quầy bar",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Lễ tân 24 giờ",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Trung tâm thể dục",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Phòng xông hơi",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Sân vườn",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "Sân thượng/hiên",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "Phòng không hút thuốc",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 9,
-  //     name: "Trung tâm Spa & chăm sóc sức khỏe",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 10,
-  //     name: "Wifi miễn phí",
-  //     price: 100,
-  //   },
-
-  //   {
-  //     id: 11,
-  //     name: "Trạm sạc xe điện",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 12,
-  //     name: "Hồ bơi",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 13,
-  //     name: "Bãi biển",
-  //     price: 100,
-  //   },
-  //   {
-  //     id: 14,
-  //     name: "Bồn tắm nóng",
-  //     price: 100,
-  //   },
-  // ];
   const [selectedAmenities, setSelectedAmenities] = useState([]);
-  const [extraAmenity, setExtraAmenity] = useState();
+  const [extraAmenity, setExtraAmenity] = useState([]);
   const [extraAmenityName, setExtraAmenityName] = useState("");
   const [extraAmenityPrice, setExtraAmenityPrice] = useState(0);
   const [serveBreakfast, setServeBreakfast] = useState("yes");
@@ -123,11 +49,14 @@ const RegisterHost3Container = () => {
   const handleBreakfastIncludedChange = (event) => {
     setBreakfastIncluded(event.target.value);
   };
+
   const handleToggleAddAmenity = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
     infoAmenity.classList.toggle("hidden");
+
   };
+  
 
   const onSubmit = () => {
     const extraServices = {
@@ -145,7 +74,7 @@ const RegisterHost3Container = () => {
     navigate("/host/register-4");
   };
   const handleAddExtraAmenity = () => {
-    setExtraAmenity({ name: extraAmenityName, price: extraAmenityPrice });
+    setExtraAmenity([...extraAmenity,{ name: extraAmenityName, price: extraAmenityPrice }]);
     setSelectedAmenities([
       ...selectedAmenities,
       { name: extraAmenityName, price: extraAmenityPrice },
@@ -194,6 +123,16 @@ const RegisterHost3Container = () => {
                       />
                     );
                   })}
+                  {extraAmenity?.map((extraAmenity) => {
+                    return (
+                      <FormControlLabel
+                        key={extraAmenity.id}
+                        control={<Checkbox checked />}
+                        label={extraAmenity.name}
+                        name={extraAmenity.name}
+                      />
+                    );
+                  })}
 
                   <div className={`flex flex-col `}>
                     <FormControlLabel
@@ -221,6 +160,7 @@ const RegisterHost3Container = () => {
                         Thêm
                       </Button>
                     </div>
+                  
                   </div>
                 </FormGroup>
               </div>
