@@ -30,7 +30,7 @@ const SettingsContainer = () => {
           }
       });
     }
-  }, [dispatch, data]);
+  }, []);
 
   const reservationList = userHistoryReservations.reservationList;
   const totalReservation = userHistoryReservations.totalReservation;
@@ -106,7 +106,7 @@ const SettingsContainer = () => {
                       <span className='ml-1'>phòng</span>
                     </div>
                     <div className='font-bold text-2xl'>
-                      <span className='text-green-600'>{item.total}</span>
+                      <span className='text-green-600'>{item.total.toLocaleString('vi-VN')}</span>
                       <span className='ml-1'>VND</span>
                     </div>
                   </div>
@@ -120,7 +120,6 @@ const SettingsContainer = () => {
           }
         </>
         ) : (
-                            // Đã hủy
         <>
           <h1 className='font-bold text-right -mb-3 text-base'>Đặt phòng đã hủy: {totalCancel}</h1>
           {cancelList ? (
@@ -162,7 +161,7 @@ const SettingsContainer = () => {
                     <div className='border mb-4'></div>
                     <div className=' mb-2 text-base'>
                       <span className='ml-1'>Hóa đơn:</span>
-                      <span className='ml-3  font-bold'>{item.paidAmount}</span>
+                      <span className='ml-3  font-bold'>{item.paidAmount.toLocaleString('vi-VN')}</span>
                       <span className='ml-1'>VND</span>
                     </div>
                     <div className=' mb-2 text-base'>
@@ -172,7 +171,7 @@ const SettingsContainer = () => {
                     </div>
                     <div className='text-base'>
                       <span className='ml-1'>Hoàn trả:</span>
-                      <span className='ml-3 text-green-600 font-bold'>{item.refundAmount}</span>
+                      <span className='ml-3 text-green-600 font-bold'>{item.refundAmount.toLocaleString('vi-VN')}</span>
                       <span className='ml-1'>VND</span>
                     </div>
                   </div>

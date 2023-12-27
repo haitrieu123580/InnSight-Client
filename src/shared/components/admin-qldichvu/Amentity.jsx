@@ -23,7 +23,7 @@ const Amentity = ({ open, onClose, onAddAmentity, onUpdateAmentity, amentity, se
       <DialogContent>
         <DialogContentText>
           <TextField
-            style={{ marginTop: '8px', width: '550px', height: '50px' }}
+            style={{ marginTop: '8px', width: '550px', height: '50px' , paddingTop: '10px'}}
             label="Tên tiện ích"
             value={amentity ? amentity.name : ''}
             onChange={(e) => setAmentity({ ...amentity, name: e.target.value })}

@@ -68,27 +68,12 @@ const BookingContainer1 = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className='w-full px-20 sm:px-3 lg:px-60'>
-                <div className='text-3xl w-full my-14'>
+                <div className='text-3xl w-full my-8'>
                     Đặt phòng khách sạn
                     <div className='text-sm text-gray-500 mt-2'>Hãy chắc chắn rằng tất cả thông tin trên trang này là chính xác trước khi tiến hành thanh toán.</div>
                 </div>
                 <div className='grid grid-cols-10 gap-7'>
                     <div className='col-span-6'>
-                        {/* <div className={`${styles['box-wrapper']}`}>
-                            <div className={`${styles['box']} flex items-center`}>
-                                <div className="w-1/12">
-                                    <AccountCircleIcon className='w-full h-full' />
-                                </div>
-                                <div className='w-11/12'>
-                                    <div className='text-xl font-bold'>
-                                        Bạn đã được đăng nhập
-                                    </div>
-                                    <div className='text-base'>
-                                        Tên email ....
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                         <div className={`${styles['box-wrapper']}`}>
                             <div className='font-bold text-xl mb-3'>
                                 Chi tiết liên hệ (cho Vé điện tử/Phiếu xác nhận)

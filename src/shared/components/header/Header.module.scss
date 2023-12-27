@@ -45,8 +45,13 @@ header {
             width: 100%;
 
             .item-label {
-
                 font-weight: $font-weight-bold;
+            }
+            .item-label-province {
+                font-weight: $font-weight-bold;
+                padding-left: 13px;
+                margin-top: 13px;
+                margin-bottom: -5px;
             }
         }
 
