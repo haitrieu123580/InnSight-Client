@@ -4,7 +4,6 @@ import {
   AddHotel,
   AddRoomType,
   GetAmenities,
-  GetAmenities,
   GetHotelbyId,
   GetReservedRoomInfo,
   GetRoomAvailable,
