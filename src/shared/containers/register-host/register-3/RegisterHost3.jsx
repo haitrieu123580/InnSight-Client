@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./RegisterHost3.module.scss";
 import IcChevronLeft from "../../../components/icons/home-icons/IcChevronLeft";
 import { Link } from "react-router-dom";
@@ -20,6 +21,8 @@ import {
   addAmenitiesHotel,
   addExtraServiceHotel,
 } from "../../../../redux/host/slice";
+import HostAction from "../../../../redux/host/action";
+import ShowToastify from "../../../../utils/ShowToastify";
 import HostAction from "../../../../redux/host/action";
 import ShowToastify from "../../../../utils/ShowToastify";
 const RegisterHost3Container = () => {
