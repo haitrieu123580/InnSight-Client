@@ -27,7 +27,7 @@ const Service = ({ open, onClose, onAddService, onUpdateService, service, setSer
       <DialogContent>
         <DialogContentText>
           <TextField
-            style={{ marginTop: '8px', width: '550px', height: '50px' }}
+            style={{ marginTop: '8px', width: '550px', height: '50px' , paddingTop: '10px'}}
             label="Tên dịch vụ"
             value={service ? service.name : ''}
             onChange={handleNameChange}

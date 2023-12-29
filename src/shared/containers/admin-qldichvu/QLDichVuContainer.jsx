@@ -60,15 +60,6 @@ const QLDichVuContainer = () => {
   const [dataAmentity, setDataAmentity] = React.useState(null);
 
   useEffect(() => {
-      // dispatch({
-      //   type: AdminAction.GET_LIST_SERVICE,
-      //     onSuccess: () => {
-      //     },
-      //     onError: () => {
-      //         ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau")
-      //     }
-      // });
-
       dispatch({
         type: AdminAction.SEARCH_AMENITY,
         name: name,

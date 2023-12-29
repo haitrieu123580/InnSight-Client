@@ -19,7 +19,6 @@ const SearchResultItem = ({ item }) => {
             checkInDay: searchParams.get('checkinDay'),
             checkOutDay: searchParams.get('checkoutDay')
         }
-        console.log('data', data)
         dispatch({
             type: HomeAction.GET_HOTEL,
             data: data,

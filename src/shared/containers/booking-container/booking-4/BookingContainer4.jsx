@@ -116,7 +116,7 @@ const BookingContainer4 = () => {
                         <div>
                             <span>Từ </span>
                             <span >{moment(bookingReserved?.startDay, 'YYYY-MM-DD').subtract(1, 'days').format('DD [tháng] MM[,] YYYY')} 23:59 [+07]: </span>
-                            <span className='text-red-500'>mức phí {bookingReserved.total *0.1} VND - Bạn sẽ trả cho hủy đặt phòng</span>
+                            <span className='text-red-500'>mức phí {(bookingReserved.total *0.1).toLocaleString('vi-VN')} VND - Bạn sẽ trả cho hủy đặt phòng</span>
                         </div>
                     </div>
                 </div>

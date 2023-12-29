@@ -11,12 +11,22 @@ import { useSelector, useDispatch } from 'react-redux';
 // import BookingAction from '../../../redux/booking/action';
 import { addRoomToCart } from '../../../redux/booking/slice'
 import ShowToastify from '../../../utils/ShowToastify';
+import ViewAmenity from '../../components/room-list/ViewAmenity';
+
 const Room = ({ room }) => {
   const { hotel } = useSelector(state => state.Home);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(null);
   const [hotelId, setHotelId] = useState(null);
   const [canClick, setCanClick] = useState(false)
+  const [serviceOpen, setServiceOpen] = useState(false);
+  const handleOpenViewService = () => {
+    setServiceOpen(true);
+  };
+  const handleCloseViewService = () => {
+    setServiceOpen(false);
+  };
+
   const handleAddRoomToCart = () => {
     dispatch({
       type: addRoomToCart,
@@ -61,13 +71,18 @@ const Room = ({ room }) => {
                 title="hotel image"
               />
               <CardContent>
-                <div className='text-xs text-cyan-400 text-center mb-1'>Xem ảnh và chi tiết</div>
-                {Array?.from({ length: 3 })?.map((_, index) => (
+                {/* <div className='text-xs text-cyan-400 text-center mb-1'>Xem ảnh và chi tiết</div> */}
+                {/* {Array?.from({ length: 3 })?.map((_, index) => (
                   <div key={index} className='text-xs mb-1'>
-                  </div>))}
-                <div className='flex items-center text-xs mb-1'>
-                  <AddCircleIcon className='mr-1' /> <span className='text-xs text-cyan-400'> Xem thêm tiện ích</span>
-                </div>
+                  </div>))} */}
+                <button className='flex items-center text-xs' onClick={() => handleOpenViewService()}>
+                  <AddCircleIcon className='mr-1' /> <span className='text-xs text-cyan-400' > Xem thêm tiện ích</span>
+                </button>
+                <ViewAmenity
+                  open={serviceOpen}
+                  onClose={handleCloseViewService}
+                  amenity={room}
+                />
               </CardContent>
             </Card>
           </div>

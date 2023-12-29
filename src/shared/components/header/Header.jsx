@@ -4,7 +4,7 @@ import IcCalendar from '../icons/header-icons/IcCalendar';
 import IcGlass from '../icons/header-icons/IcGlass'
 import { useState, useRef, useEffect } from 'react';
 import { DateRange } from "react-date-range";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useOnClickOutside from '../../../hooks/use-click-outside'
@@ -15,15 +15,14 @@ import HomeAction from '../../../redux/home/action';
 import ShowToastify from '../../../utils/ShowToastify';
 import ProvinceDropdown from './province-dropdown/ProvinceDropdown';
 import { setCheckInOut } from '../../../redux/booking/slice';
-import BookingAction from '../../../redux/booking/action';
 const Header = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const filter = {
     province: searchParams.get('province') || '',
-    checkinDay: searchParams.get('checkinDay') ? new Date(searchParams.get('checkinDay')) : new Date(),
-    checkoutDay: searchParams.get('checkoutDay') ? new Date(searchParams.get('checkoutDay')) : new Date().setDate(new Date().getDate() + 1),
+    checkinDay: searchParams.get('checkinDay') ? new Date(searchParams.get('checkinDay')) : new Date().setDate(new Date().getDate() + 1),
+    checkoutDay: searchParams.get('checkoutDay') ? new Date(searchParams.get('checkoutDay')) : new Date().setDate(new Date().getDate() + 2),
     room: searchParams.get('count') || 1,
     adultCount: searchParams.get('adultCount') || 2,
     childrenCount: searchParams.get('childrenCount') || 0,
@@ -98,8 +97,6 @@ const Header = () => {
     setOpenOptions(false);
   });
 
-
-
   return (
     <header >
       <div className={` ${styles['header-image']}`}>
@@ -109,7 +106,7 @@ const Header = () => {
         <div className={`${styles['header-search-item']} flex items-center`}>
           <IcLocation />
           <div className={`${styles['search-item-right']} flex flex-col ml-2`}>
-            <span className={styles['item-label']}>Điểm đến</span>
+            <span className={styles['item-label-province']}>Điểm đến</span>
             <ProvinceDropdown selectProvince={(text) => { setDestination(text) }} defaultOption={filter?.province} />
           </div>
         </div>
@@ -134,6 +131,7 @@ const Header = () => {
               onChange={item => setDate([item.selection])}
               moveRangeOnFirstSelection={false}
               ranges={date}
+              minDate={addDays(new Date(), 1)}
               className="date"
             />}
           </div>
