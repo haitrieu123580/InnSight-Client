@@ -18,27 +18,21 @@ function* watchSignIn() {
                     role: response?.Data?.role
                 }))
                 if (response?.Data?.role === "ADMIN") {
+                    console.log(response?.Data?.role);
                     onAdmin && onAdmin();
                 }
                 else if (response?.Data?.role === "HOST") {
-                    // localStorage.setItem("listHotels", JSON.stringify(response?.Data?.hotels.map((hotel)=>hotel.id)))
-                    localStorage.setItem(
-                        "listHotels",
-                        JSON.stringify(
-                            response?.Data?.hotels.map((hotel) => ({
-                                hotelId: hotel.id,
-                                name: hotel.name,
-                            }))
-                        )
-                    );
-                    localStorage.setItem("hotelId", JSON.stringify(response?.Data?.hotels[0]?.id))
+
+                    console.log(response?.Data?.role);
                     onHost && onHost();
                 }
                 else {
+                    console.log(response?.Data?.role);
                     onSuccess && onSuccess();
                 }
             }
         } catch (error) {
+            console.log('error');
             onError && onError();
         } finally {
         }
