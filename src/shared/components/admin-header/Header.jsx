@@ -4,6 +4,10 @@ import DropdownUser from './DropdownUser.tsx';
 import {Input} from 'antd';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import Badge from '@mui/material/Badge';
+import BallotIcon from '@mui/icons-material/Ballot';
+import { NavLink } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -54,6 +58,14 @@ const Header = () => {
               </button>
             </div>
         </div>
+        <NavLink to={'/requestHotels'} >
+          <Tooltip title="Yêu cầu phê duyệt" arrow>
+            <Badge color="success">
+            {/* <Badge badgeContent={7} color="success"> */}
+              <BallotIcon color="action" className='text-4xl text-green-700' />
+            </Badge>
+          </Tooltip>
+        </NavLink>
         <div className="flex items-center gap-3 2xsm:gap-7">
           <DropdownUser />
         </div>
