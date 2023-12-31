@@ -7,6 +7,7 @@ import IcQLdichvu from '../icons/sidebar-icons/IcQLdichvu.jsx'
 import IcQLdanhmuc from '../icons/sidebar-icons/IcQLdanhmuc.jsx'
 import SidebarLinkGroup from './SidebarLinkGroup.tsx';
 import IcUp from '../icons/sidebar-icons/IcUp.jsx';
+import BallotIcon from '@mui/icons-material/Ballot';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -138,17 +139,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                          {/* <li>
-                            <NavLink
-                              to="/qldanhmuc/loai_phong"
-                              className={({ isActive }) =>
-                                'text-sm group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-slate-400 duration-300 ease-in-out hover:text-white ' +
-                                (isActive && '!text-white')
-                              }
-                            >
-                              Loại phòng
-                            </NavLink>
-                          </li> */}
                           <li>
                             <NavLink
                               to="/qldanhmuc/loai_giuong"
@@ -194,9 +184,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5">
               <li>
                 <NavLink
+                  to="/requestHotels"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-slate-50 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('requestHotels') &&
+                    'bg-cyan-900 dark:bg-cyan-900'
+                  }`}
+                >
+                  <BallotIcon className='text-3xl'/>
+                  Yêu cầu phê duyệt
+                </NavLink>
+              </li>
+            </ul>
+            <ul className="mb-6 flex flex-col gap-1.5">
+              <li>
+                <NavLink
                   to="/admin_changepw"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-slate-50 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('setting') &&
+                    pathname.includes('admin_changepw') &&
                     'bg-cyan-900 dark:bg-cyan-900'
                   }`}
                 >

@@ -35,6 +35,7 @@ const QLLoaiGiuong = lazy(() => import('../pages/qldanhmuc/QLLoaiGiuong'))
 const QLTamNhin = lazy(() => import('../pages/qldanhmuc/QLTamNhin'))
 const Thongke = lazy(() => import('../pages/admin-thongke/Thongke'))
 const Changepw = lazy(() => import('../pages/admin-ChangePW/Changepw'))
+const RequestHotels = lazy(() => import('../pages/admin-ApproveHotels/RequestHotels'))
 const Cancel1 = lazy(() => import('../pages/cancel/Cancel1'))
 const Cancel2 = lazy(() => import('../pages/cancel/Cancel2'))
 const BookingHistory = lazy(() => import('../pages/user-settings-page/BookingHistory'))
@@ -195,6 +196,11 @@ const privateRoutes = [
   {
     path: '/admin_changepw',
     component:Changepw,
+    layout: MainLayoutAdmin,
+  },
+  {
+    path: '/requestHotels',
+    component: RequestHotels,
     layout: MainLayoutAdmin,
   },
   {

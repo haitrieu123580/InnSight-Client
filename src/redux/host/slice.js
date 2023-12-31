@@ -163,10 +163,14 @@ const hostSlice = createSlice({
     getRoomViews: (state, { payload }) => {
       state.views = payload
     },
+
+    getListHotels: (state, { payload }) => {
+      console.log("payload",payload)
+      state.listHotels = payload
+    },
   },
 });
 export const {
-  // addHotel,rw42
   addAddressHotel,
   addNameAndRateHotel,
   addExtraAmenityHotel,
@@ -188,6 +192,7 @@ export const {
   listRevenueHotelAllYear,
   getServices,
   getRoomAmenities,
-  getRoomViews
+  getRoomViews,
+  getListHotels
 } = hostSlice.actions;
 export default hostSlice.reducer;
