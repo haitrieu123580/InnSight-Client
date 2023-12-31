@@ -111,7 +111,6 @@ export const getHotelById = async (id) => {
     return { Data: response };
 }
 export const searchHotels = (filter) => {
-    console.log('api', filter)
     const tempData = {
         totalItems: 30,
         location: 'Đà Nẵng',

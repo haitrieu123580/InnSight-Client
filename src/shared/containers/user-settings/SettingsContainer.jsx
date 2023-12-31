@@ -33,7 +33,6 @@ const SettingsContainer = () => {
     }
   }, [dispatch, id]);
 
-  console.log('id', id)
   const item = userProfile;
 
   const handleClickEdit = () => {
@@ -51,18 +50,15 @@ const SettingsContainer = () => {
   
 
   const onSubmit = (data) => {
-    console.log(data)
     dispatch({
         type: SettingAction.UPDATE_PROFILE,
         data: data,
         id: id,
         onSuccess: () => {
-          console.log("Thanh cong")
           ShowToastify.showSuccessToast("Thành công")
             window.location.href = '/mysettings/info';
         },
         onError: () => {
-          console.log("That bai")
             window.location.href = '/mysettings/info';
         }
     })

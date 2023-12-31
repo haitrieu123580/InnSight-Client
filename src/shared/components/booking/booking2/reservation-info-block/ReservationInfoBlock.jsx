@@ -3,8 +3,6 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import moment from 'moment';
 
 const ReservationInfoBlock = (reservation, cart) => {
-  console.log('cpnreservation', reservation)
-  console.log('cpncart', cart)
   return (
     <div className={styles['box']}>
       <div className='font-bold text-xl'>

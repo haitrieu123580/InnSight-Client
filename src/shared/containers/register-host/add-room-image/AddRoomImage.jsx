@@ -14,7 +14,6 @@ const AddRoomImageContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const newRoomType = useSelector((state) => state.Host.newRoomType);
-  console.log("new roomtype", newRoomType);
   const [previewImages, setPreviewImages] = useState([]);
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -41,7 +40,6 @@ const AddRoomImageContainer = () => {
   };
 
   const AddRoomTypeFinished = ()=>{
-    console.log("new Hotel", newRoomType);
       const formData = new FormData();
       formData.append('name', newRoomType.name||'');
       formData.append('count', newRoomType.count||'');
@@ -73,7 +71,6 @@ const AddRoomImageContainer = () => {
       if (previewImages[0] ) {
         previewImages.forEach((image, index) => {
           if (image ) {
-            console.log("aa",image.file)
             formData.append(`images[${index}]`, image.file||null);
           }
         });
@@ -94,7 +91,6 @@ const AddRoomImageContainer = () => {
       }
 
       for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
       }
 
       dispatch({

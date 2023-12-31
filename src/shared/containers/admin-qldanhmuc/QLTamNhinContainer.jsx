@@ -74,7 +74,6 @@ const QLTamNhinContainer = () => {
     setAddViewOpen(true);
   };
   const handleAddView = () => {
-    console.log(selectedView);
     if(selectedView){
       dispatch({
         type: AdminAction.ADD_VIEWS,
@@ -103,7 +102,6 @@ const QLTamNhinContainer = () => {
     setUpdateViewOpen(true);
   };
   const handleUpdateView = () => {
-    console.log(selectedView);
     if(selectedView){
       dispatch({
         type: AdminAction.UPDATE_VIEWS,
@@ -129,7 +127,6 @@ const QLTamNhinContainer = () => {
 
   // Delete view
   function handleDeleteView(id) {
-    console.log(id);
     dispatch({
       type: AdminAction.DELETE_VIEWS,
       id : id,
