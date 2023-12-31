@@ -16,7 +16,7 @@ export const getListHotels = async (token) => {
 }
 
 export const declineRequest = async ({token, hotelId}) => {
-    const response = await axios.get(
+    const response = await axios.post(
       `${BASE_URL}/${hotelId}/decline`,
       {
         headers: {
@@ -29,7 +29,7 @@ export const declineRequest = async ({token, hotelId}) => {
 }
 
 export const approveRequest = async ({token, hotelId}) => {
-  const response = await axios.get(
+  const response = await axios.post(
     `${BASE_URL}/${hotelId}/approve`,
     {
       headers: {

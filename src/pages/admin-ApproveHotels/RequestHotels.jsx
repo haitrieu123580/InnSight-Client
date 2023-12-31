@@ -1,9 +1,9 @@
-import ApproveHotels from "../../shared/containers/admin-approveHotels/ApproveHotels"
+import ApproveHotelsContainer from "../../shared/containers/admin-approveHotels/ApproveHotelsContainer"
 const RequestHotels = () => {
 
     return (
         <>
-            <ApproveHotels />
+            <ApproveHotelsContainer />
         </>
     )
 }

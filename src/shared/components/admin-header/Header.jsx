@@ -8,11 +8,15 @@ import Badge from '@mui/material/Badge';
 import BallotIcon from '@mui/icons-material/Ballot';
 import { NavLink } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import AdminAction from '../../../redux/admin/action.js';
+import ShowToastify from '../../../utils/ShowToastify.js';
 
 const Header = () => {
   const [searchValue, setSearchValue] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSearchValue('');
@@ -41,6 +45,18 @@ const Header = () => {
     }
   };
 
+  const {listPending} = useSelector((state) => state.Admin) || {}
+  useEffect(() => {
+    dispatch({
+      type: AdminAction.PENDING_HOTEL,
+        onSuccess: () => {
+        },
+        onError: () => {
+            ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại 1")
+        }
+    });
+  }, [dispatch]);
+
   return (
     <header className="sticky top-0 flex w-full border bg-slate-300 drop-shadow-1 dark:bg-slate-300 dark:drop-shadow-none z-50">
       <div className="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
@@ -60,8 +76,7 @@ const Header = () => {
         </div>
         <NavLink to={'/requestHotels'} >
           <Tooltip title="Yêu cầu phê duyệt" arrow>
-            <Badge color="success">
-            {/* <Badge badgeContent={7} color="success"> */}
+            <Badge badgeContent={listPending.length} color="success">
               <BallotIcon color="action" className='text-4xl text-green-700' />
             </Badge>
           </Tooltip>

@@ -319,7 +319,6 @@ function* watchPendingHotels() {
     yield takeEvery(actions.PENDING_HOTEL, function* (payload) {
         const { onSuccess, onError } = payload;
         const token = JSON.parse(localStorage.getItem('Token'));
-        console.log(token)
         try {
             const response = yield call(getListHotels,  token);
             if (response?.Data) {
@@ -353,6 +352,7 @@ function* watchApproveHotel() {
     yield takeEvery(actions.APPROVE_HOTEL, function* (payload) {
         const { hotelId, onSuccess, onError } = payload;
         const token = JSON.parse(localStorage.getItem('Token'));
+        console.log('object', token)
         try {
             const response = yield call(approveRequest,  {token, hotelId});
             if (response?.Data) {

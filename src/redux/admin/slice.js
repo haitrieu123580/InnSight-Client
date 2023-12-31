@@ -8,7 +8,7 @@ const initialState = {
   views:{},
   revenueByYear:{},
   revenueAllYear:{},
-  hotel:{}
+  listPending:{}
 };
 
 const adminSlice = createSlice({
@@ -37,7 +37,7 @@ const adminSlice = createSlice({
       state.revenueAllYear = payload
     },
     listHotel: (state, { payload }) => {
-      state.hotel = payload
+      state.listPending = payload
     },
   },
 });
