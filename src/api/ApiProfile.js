@@ -12,25 +12,21 @@ const config = {
 };
 
 export const getProfileById = async (id) => {
-  console.log('token:', token)
   const response = await axios.get(
     `${BASE_URL}/${id}`,
     config
   );
-  console.log('data', response.data);
   return { Data: response?.data };
 }
 
 export const updateProfileById = async (id, data) => {
   const apiUrl = `${BASE_URL}/${id}`;
-  console.log("Request URL:", apiUrl);
   try {
     const response = await axios.put(
       `${BASE_URL}/${id}`,
       JSON.stringify(data),
       config
     );
-    console.log('Update successfully');
     return response.data;
   } catch (error) {
     console.error('Đã xảy ra lỗi:', error.response ? error.response.data : error.message);

@@ -11,7 +11,6 @@ const RegisterHost2Container = () => {
   const rates = Constants.rates;
   const onStarChange = (e) => {
     setStar(e.target.value);
-    console.log(e.target.value)
   };
 
   return (
