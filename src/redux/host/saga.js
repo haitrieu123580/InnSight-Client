@@ -5,6 +5,7 @@ import {
   AddRoomType,
   GetAmenities,
   GetHotelbyId,
+  GetListHotels,
   GetReservedRoomInfo,
   GetRoomAvailable,
   GetRoomTypes,
@@ -19,6 +20,7 @@ import {
   GetListRoomTypes,
   filterRoomAvailable,
   getHotel,
+  getListHotels,
   getReservedRoomInfo,
   getRoomAmenities,
   getRoomViews,
@@ -154,7 +156,6 @@ function* watchUpdateHotel() {
 }
 function* watchRevenueHotelByYear() {
   yield takeEvery(actions.REVENUE_HOTEL_BY_YEAR, function* (payload) {
-    console.log("payload",payload)
     const { data, hotelId,onSuccess, onError } = payload;
     try {
       const response = yield call(getRevenueHotelByYear, { data, hotelId });
@@ -231,6 +232,23 @@ function* watchGetViews() {
 }
 
 
+function* watchGetListHotels() {
+  yield takeEvery(actions.GET_LIST_HOTELS, function* (payload) {
+    const { onSuccess, onError } = payload;
+    try {
+      const response = yield call(GetListHotels);
+      if (response?.Data) {
+        localStorage.setItem("hotelId", JSON.stringify(response?.Data[0]?.id));
+        yield put(getListHotels(response?.Data));
+        onSuccess && onSuccess();
+      }
+    } catch (error) {
+      onError && onError();
+    } finally {
+    }
+  });
+}
+
 export default function* HostSaga() {
   yield all([
     fork(watchAddHotel),
@@ -245,6 +263,7 @@ export default function* HostSaga() {
     fork(watchDeleteRoomTypeById),
     fork(watchGetServices),
     fork(watchGetAmenities),
-    fork(watchGetViews)
+    fork(watchGetViews),
+    fork(watchGetListHotels),
   ]);
 }

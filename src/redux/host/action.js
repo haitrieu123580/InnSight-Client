@@ -12,8 +12,7 @@ const HostAction = {
     GET_SERVICES: 'GET_SERVICES',
     GET_AMENITIES: 'GET_AMENITIES',
     GET_VIEWS: 'GET_VIEWS',
+    GET_LIST_HOTELS: 'GET_LIST_HOTELS'
 
-
-    
 }
 export default HostAction
