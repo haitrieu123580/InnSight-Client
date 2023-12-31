@@ -10,8 +10,6 @@ import { useSelector } from 'react-redux';
 function App() {
   const { userRole, isLogin } = useSelector(state => state.Auth)
   console.log("role: ", userRole, "is login: ", isLogin)
-  // const isLogin = localStorage.getItem("isLogin") || ""
-  // const userRole = localStorage.getItem("role")?.replace(/"/g, '') || ""
 
   return (
     <>
