@@ -80,7 +80,8 @@ const RoomStatusContainer = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {roomAvailable?.map((row) => (
+                {roomAvailable[0]&&
+                roomAvailable?.map((row) => (
                   <TableRow
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

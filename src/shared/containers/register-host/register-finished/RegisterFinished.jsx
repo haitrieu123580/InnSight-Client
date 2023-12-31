@@ -103,7 +103,7 @@ const RegisterFinishedContainer = () => {
         formData.append(`images[0]`, null);
       }
 
-      // formData.append('status','ACTIVE')
+      formData.append('status','PENDING')
       dispatch({
         type: HostAction.ADD_HOTEL,
         id: id,
