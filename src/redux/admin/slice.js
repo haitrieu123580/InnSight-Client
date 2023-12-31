@@ -7,7 +7,8 @@ const initialState = {
   bedTypes:{},
   views:{},
   revenueByYear:{},
-  revenueAllYear:{}
+  revenueAllYear:{},
+  listPending:{}
 };
 
 const adminSlice = createSlice({
@@ -35,6 +36,9 @@ const adminSlice = createSlice({
     listRevenueAllYear: (state, { payload }) => {
       state.revenueAllYear = payload
     },
+    listHotel: (state, { payload }) => {
+      state.listPending = payload
+    },
   },
 });
 
@@ -45,7 +49,8 @@ export const {
   listBedTypes,
   listViews,
   listRevenueByYear, 
-  listRevenueAllYear
+  listRevenueAllYear,
+  listHotel
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

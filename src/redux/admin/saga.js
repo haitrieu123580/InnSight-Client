@@ -5,7 +5,8 @@ import { searchBedTypes } from '../../api/apiAdmin/ApiBedType';
 import { updateViews, addViews, deleteViews, searchViews } from '../../api/apiAdmin/ApiViews';
 import { updateService, addService, deleteService, updateAmenity, addAmenity, deleteAmenity, searchServiceAndAmenity} from '../../api/apiAdmin/ApiServiceAmenity';
 import { getRevenueByYear, getRevenueAllYear } from '../../api/apiAdmin/ApiRevenue';
-import { listUser, detailUser, listAmenity, listBedTypes, listViews, listRevenueByYear, listRevenueAllYear } from './slice';
+import { listUser, detailUser, listAmenity, listBedTypes, listViews, listRevenueByYear, listRevenueAllYear, listHotel } from './slice';
+import { getListHotels, approveRequest, declineRequest } from '../../api/apiAdmin/ApiApproveHotels';
 
 // USER
 // function* watchGetListUser() {
@@ -312,6 +313,58 @@ function* watchRevenueAllYear() {
     });
 }
 
+// APPROVE HOTELS
+
+function* watchPendingHotels() {
+    yield takeEvery(actions.PENDING_HOTEL, function* (payload) {
+        const { onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(getListHotels,  token);
+            if (response?.Data) {
+                yield put(listHotel(response?.Data))
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchDeclineHotel() {
+    yield takeEvery(actions.DECLINE_HOTEL, function* (payload) {
+        const { hotelId, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        try {
+            const response = yield call(declineRequest,  {token, hotelId});
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
+function* watchApproveHotel() {
+    yield takeEvery(actions.APPROVE_HOTEL, function* (payload) {
+        const { hotelId, onSuccess, onError } = payload;
+        const token = JSON.parse(localStorage.getItem('Token'));
+        console.log('object', token)
+        try {
+            const response = yield call(approveRequest,  {token, hotelId});
+            if (response?.Data) {
+                onSuccess && onSuccess();
+            }
+        } catch (error) {
+            onError && onError();
+        } finally {
+        }
+    });
+}
+
 export default function* AdminSaga() {
   yield all([
     // fork(watchGetListUser),
@@ -331,6 +384,9 @@ export default function* AdminSaga() {
     fork(watchDeleteViews),
     fork(watchSearchViews),
     fork(watchRevenueByYear),
-    fork(watchRevenueAllYear)
+    fork(watchRevenueAllYear),
+    fork(watchPendingHotels),
+    fork(watchDeclineHotel),
+    fork(watchApproveHotel),
   ]);
 }
