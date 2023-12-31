@@ -50,9 +50,17 @@ const UpdateHotelInfoContainer = () => {
   const handleClickEdit = () => {
     setIsEditing(!isEditing);
   };
-  const [status, setStatus] = useState(item.status == "ACTIVE");
+  const [status, setStatus] = useState(hotelInfo.status);
+  console.log("a",status)
+
   const handleChange = () => {
-    setStatus(!status);
+    console.log("a",status)
+    if(status==="ACTIVE"){
+      setStatus("INACTIVE")
+    }
+    else if(status==="INACTIVE"){
+      setStatus("ACTIVE")
+    }
   };
 
   const [timeCheckinFrom, setTimeCheckinFrom] = useState(hotelInfo.checkIn);
@@ -88,7 +96,7 @@ const UpdateHotelInfoContainer = () => {
     formData.append("ward", addressString[2] || "");
     formData.append("street", addressString[3] || "");
     formData.append("rate", hotelInfo.rate || "3");
-    formData.append("status", status ? "ACTIVE" : "");
+    formData.append("status", status);
 
     if (updateHotelAmenities) {
       for (let i = 0; i < updateHotelAmenities.length; i++) {
@@ -367,10 +375,11 @@ const UpdateHotelInfoContainer = () => {
                     <h2 className={`col-span-1 font-semibold`}>Trạng thái:</h2>
                     <div>
                       <Switch
-                        checked={status}
+                        checked={status==="ACTIVE"}
                         onChange={() => {
                           handleChange();
                         }}
+                        disabled={status==="PENDING"}
                       />
                     </div>
                   </div>
