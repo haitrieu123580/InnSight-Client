@@ -9,8 +9,6 @@ import Roles from './utils/Roles';
 import { useSelector } from 'react-redux';
 function App() {
   const { userRole, isLogin } = useSelector(state => state.Auth)
-  console.log("role: ", userRole, "is login: ", isLogin)
-
   return (
     <>
       <ToastContainer

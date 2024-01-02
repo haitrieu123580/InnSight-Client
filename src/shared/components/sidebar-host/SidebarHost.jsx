@@ -85,9 +85,8 @@ const SidebarHost = () => {
         <ul className="flex flex-col gap-1.5">
           <NavLink
             to="/host/room-status"
-            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out dark:hover:bg-meta-4 ${
-              pathname.includes("room-status") && "bg-slate-300"
-            }`}
+            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out dark:hover:bg-meta-4 ${pathname.includes("room-status") && "bg-slate-300"
+              }`}
           >
             <DateRangeIcon />
             Tình trạng phòng trống
@@ -96,9 +95,8 @@ const SidebarHost = () => {
         <ul className="flex flex-col gap-1.5">
           <NavLink
             to="/host/reservation"
-            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
-              pathname.includes("reservation") && "bg-slate-300"
-            }`}
+            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${pathname.includes("reservation") && "bg-slate-300"
+              }`}
           >
             <ReceiptLongIcon />
             Đặt phòng
@@ -107,9 +105,8 @@ const SidebarHost = () => {
         <ul className="flex flex-col gap-1.5">
           <NavLink
             to="/host/revenue"
-            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
-              pathname.includes("revenue") && "bg-slate-300"
-            }`}
+            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${pathname.includes("revenue") && "bg-slate-300"
+              }`}
           >
             <BarChartIcon />
             Tài chính
@@ -118,9 +115,8 @@ const SidebarHost = () => {
         <ul className="flex flex-col gap-1.5">
           <NavLink
             to="/host/update-hotel-info"
-            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${
-              pathname.includes("update-hotel-info") && "bg-slate-300"
-            }`}
+            className={`mt-7 group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover-bg-meta-4 ${pathname.includes("update-hotel-info") && "bg-slate-300"
+              }`}
           >
             <IcPencil />
             Chỉnh sửa khách sạn

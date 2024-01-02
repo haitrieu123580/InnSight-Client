@@ -39,7 +39,6 @@ const SettingsContainer = () => {
 
   const handleViewReservationClick = (reservationCode) => {
     localStorage.setItem('reservationCode', JSON.stringify(reservationCode));
-    console.log('reservationCode', reservationCode);
     window.location.href =  '/book/invoice/detail';
   };
   const [value, setValue] = useState('Đã đặt');

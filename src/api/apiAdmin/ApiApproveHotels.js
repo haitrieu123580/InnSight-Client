@@ -15,22 +15,24 @@ export const getListHotels = async (token) => {
   return { Data: response?.data };
 }
 
-export const declineRequest = async ({token, hotelId}) => {
-    const response = await axios.post(
-      `${BASE_URL}/${hotelId}/decline`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return { Data: response?.data };
+export const declineRequest = async ({ token, hotelId }) => {
+  const response = await axios.post(
+    `${BASE_URL}/${hotelId}/decline`,
+    {},
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return { Data: response?.data };
 }
 
-export const approveRequest = async ({token, hotelId}) => {
+export const approveRequest = async ({ token, hotelId }) => {
   const response = await axios.post(
     `${BASE_URL}/${hotelId}/approve`,
+    {},
     {
       headers: {
         'Content-Type': 'application/json',
