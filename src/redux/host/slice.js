@@ -49,6 +49,7 @@ const initialState = {
   roomAmenities: [],
   views: [],
   roomTypeDetail:{},
+  currentHotel:0,
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -175,6 +176,9 @@ const hostSlice = createSlice({
     },
     getRoomTypeDetail: (state, {payload})=>{
       state.roomTypeDetail = payload
+    },
+    getCurentHotel: (state, {payload})=>{
+      state.currentHotel = payload
     }
   },
 });
@@ -203,5 +207,6 @@ export const {
   getRoomViews,
   getListHotels,
   getRoomTypeDetail,
+  getCurentHotel,
 } = hostSlice.actions;
 export default hostSlice.reducer;

@@ -8,10 +8,12 @@ import { Switch } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 const UpdateHotelInfoContainer = () => {
-  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  const { currentHotel } = useSelector((state) => state.Host);
+  const hotelId= currentHotel
   const userId = JSON.parse(localStorage.getItem("id"));
   const dispatch = useDispatch();
   const hotelInfo = useSelector((state) => state.Host.hotelInfo) || {};
+
   const { register, handleSubmit } = useForm({
     criteriaMode: "all",
   });
@@ -51,8 +53,7 @@ const UpdateHotelInfoContainer = () => {
     setIsEditing(!isEditing);
   };
   const [status, setStatus] = useState(hotelInfo.status);
-
-  const handleChange = () => {
+   const handleChange = () => {
     if(status==="ACTIVE"){
       setStatus("INACTIVE")
     }
@@ -125,7 +126,9 @@ const UpdateHotelInfoContainer = () => {
         formData.append(`images[${i}]`, file);
       }
     } else {
-      formData.append(`images[0]`, null);
+      for (let i = 0; i < hotelInfo.hotelImages.length; i++) {
+        formData.append(`images[${i}]`, hotelInfo.hotelImages[i]);
+      }
     }
     dispatch({
       type: HostAction.UPDATE_HOTEL,
