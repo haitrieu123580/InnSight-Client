@@ -17,7 +17,6 @@ const SidebarHost = () => {
     dispatch({
       type: HostAction.GET_LIST_HOTELS,
       onSuccess: () => {
-        console.log("sdf");
       },
       onError: () => {
         ShowToastify.showErrorToast("Xảy ra lỗi, xin thử lại sau");
@@ -26,7 +25,6 @@ const SidebarHost = () => {
   }, []);
 
   const listHotels = useSelector((state) => state.Host.listHotels) || [];
-  console.log("list", listHotels);
   const initialHotelId = parseInt(localStorage.getItem("hotelId"));
 
   const [hotelId, setHotelId] = useState(initialHotelId);
