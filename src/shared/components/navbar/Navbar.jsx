@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.scss'
-import IcHotel from '../icons/header-icons/IcHotel'
-import IcSell from '../icons/header-icons/IcSell'
 import IcGroup from '../icons/header-icons/IcGroup'
 import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
+import roles from '../../../utils/Roles'
 const Navbar = () => {
     const isLogin = localStorage.getItem('isLogin') || false;
+    const role = window.atob(JSON.parse(localStorage.getItem("role")));
     return (
         <div className={`flex  ${styles['navbar']}`}>
             <Link
@@ -40,13 +40,22 @@ const Navbar = () => {
                     </>
                 ) : (
                     <>
+                        {role == roles.admin ? 
+                        <Link to={'/qltaikhoan'}>
+                            <h1 className='font-bold'>DASHBOARD</h1>
+                        </Link>
+                        : ""}
+                        {role == roles.host ? 
+                        <Link to={'/host/dashboard'}>
+                            <h1 className='font-bold'>DASHBOARD</h1>
+                        </Link>
+                        : ""}
                         <div className="pr-10">
                             <Link to={'/mysettings/info'}>
                                 <button
                                     className={`sm:py-2 sm:px-4 drop-shadow-md inline-flex items-center justify-between ${styles["button-account"]}`}
                                 >
                                     <IcAvatar />
-                                    {/* <span>{name !== null ? name : email}</span> */}
                                     <span>Tài khoản của bạn</span>
                                 </button>
                             </Link>

@@ -9,22 +9,6 @@ import { listUser, detailUser, listAmenity, listBedTypes, listViews, listRevenue
 import { getListHotels, approveRequest, declineRequest } from '../../api/apiAdmin/ApiApproveHotels';
 
 // USER
-// function* watchGetListUser() {
-//   yield takeEvery(actions.GET_LIST_USER, function* (payload) {
-//       const {pageIndex, pageSize, onSuccess, onError } = payload;
-//       const token = JSON.parse(localStorage.getItem('Token'));
-//       try {
-//           const response = yield call(getListUser, {pageIndex, pageSize, token });
-//           if (response?.Data) {
-//               yield put(listUser(response?.Data))
-//               onSuccess && onSuccess();
-//           }
-//       } catch (error) {
-//           onError && onError();
-//       } finally {
-//       }
-//   });
-// }
 
 function* watchDeleteUserById() {
   yield takeEvery(actions.DELETE_USER, function* (payload) {
@@ -366,7 +350,6 @@ function* watchApproveHotel() {
 
 export default function* AdminSaga() {
   yield all([
-    // fork(watchGetListUser),
     fork(watchDeleteUserById),
     fork(watchSearchUser),
     fork(watchGetDetailUser),
