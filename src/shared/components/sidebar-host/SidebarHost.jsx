@@ -72,8 +72,9 @@ const SidebarHost = () => {
         <ul className="mb-6 flex flex-col gap-1.5">
           <NavLink
             to="/host/price-room"
-            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out dark:hover:bg-meta-4 ${pathname.includes("price-room" || "dashboard") && "bg-slate-300"
-              }`}
+            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium duration-300 ease-in-out dark:hover:bg-meta-4 ${
+              pathname.includes("price-room" || "dashboard") && "bg-slate-300"
+            }`}
           >
             <PriceChangeIcon />
             Giá phòng

@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isSuccess: false,
-  listHotels:[],
-  hotel:[],
+  listHotels: [],
+  hotel: [],
   newHotel: {
     province: "",
     description: "",
@@ -11,42 +11,44 @@ const initialState = {
     ward: "",
     street: "",
     name: "",
+    mainPhoneNumber: "",
+    mainEmail: "",
     rate: "",
     amenities: [],
     extraServices: [],
-    checkInTime:"",
-    checkOutTime:"",
-    images:[],
+    checkInTime: "",
+    checkOutTime: "",
+    images: [],
   },
-  roomTypes:[],
-  newRoomType:{
-    name:"",
-    sdRoomName:[],
-    count:0,
+  roomTypes: [],
+  newRoomType: {
+    name: "",
+    sdRoomName: [],
+    count: 0,
     price: 0,
-    bathroomCount:0,
-    roomArea:0,
-    adultCount:0,
-    childrenCount:0,
-    description:"",
-    bedTypes:[],
-    amenities:[],
+    bathroomCount: 0,
+    roomArea: 0,
+    adultCount: 0,
+    childrenCount: 0,
+    description: "",
+    bedTypes: [],
+    amenities: [],
     view: "",
-    images:[],
+    images: [],
   },
-  roomAvailableByFilter:[],
-  reservedRoomInfo:{
-    reservation:[],
-    totalPrice:0,
-    totalCommission:0
+  roomAvailableByFilter: [],
+  reservedRoomInfo: {
+    reservation: [],
+    totalPrice: 0,
+    totalCommission: 0,
   },
-  hotelInfo:{},
-  revenueHotelByYear:{},
-  revenueHotelAllYear:{},
-  services:[],
-  roomAmenities:[],
-  views:[],
-
+  hotelInfo: {},
+  revenueHotelByYear: {},
+  revenueHotelAllYear: {},
+  services: [],
+  roomAmenities: [],
+  views: [],
+  roomTypeDetail:{},
 };
 const hostSlice = createSlice({
   name: "HOST",
@@ -60,10 +62,10 @@ const hostSlice = createSlice({
       state.newHotel.street = address.street;
     },
     addNameAndRateHotel: (state, { payload }) => {
-      const { name,description, rate } = payload;
+      const { name, description, rate } = payload;
       state.newHotel.name = name;
       state.newHotel.rate = rate;
-      state.newHotel.description= description;
+      state.newHotel.description = description;
     },
     addExtraAmenityHotel: (state, { payload }) => {
       const extraAmenity = payload;
@@ -81,24 +83,33 @@ const hostSlice = createSlice({
       ];
     },
     addCheckInCheckOutTime: (state, { payload }) => {
-      const {checkInTime,checkOutTime} = payload;
-      state.newHotel.checkInTime = checkInTime
-      state.newHotel.checkOutTime=checkOutTime
+      const { mainPhoneNumber, mainEmail, checkInTime, checkOutTime } = payload;
+      state.newHotel.mainPhoneNumber = mainPhoneNumber;
+      state.newHotel.mainEmail = mainEmail;
+      state.newHotel.checkInTime = checkInTime;
+      state.newHotel.checkOutTime = checkOutTime;
     },
-    addImagesHotel:(state,{payload})=>{
+    addImagesHotel: (state, { payload }) => {
       const images = payload;
-      state.newHotel.images = [
-        ...state.newHotel.images,
-        images,
-      ];
+      state.newHotel.images = [...state.newHotel.images, images];
     },
 
-    addHotel: (state,  payload ) => {
-      const  newHotel  = payload;
-      state.hotel=[...state.hotel,newHotel]
+    addHotel: (state, payload) => {
+      const newHotel = payload;
+      state.hotel = [...state.hotel, newHotel];
     },
     addBasicInfoRoomType: (state, { payload }) => {
-      const {name, sdRoomName, count,bedTypes,roomArea,adultCount,childrenCount,amenities,view }= payload;
+      const {
+        name,
+        sdRoomName,
+        count,
+        bedTypes,
+        roomArea,
+        adultCount,
+        childrenCount,
+        amenities,
+        view,
+      } = payload;
       state.newRoomType.name = name;
       state.newRoomType.sdRoomName = sdRoomName;
       state.newRoomType.count = count;
@@ -108,66 +119,63 @@ const hostSlice = createSlice({
       state.newRoomType.childrenCount = childrenCount;
       state.newRoomType.amenities = amenities;
       state.newRoomType.view = view;
-
     },
     addRoomTypePrice: (state, { payload }) => {
       const price = payload;
       state.newRoomType.price = price;
-    },  
-    addImagesRoomType:(state,{payload})=>{
+    },
+    addImagesRoomType: (state, { payload }) => {
       const images = payload;
-      state.newHotel.images = [
-        ...state.newHotel.images,
-        images,
-      ];
+      state.newHotel.images = [...state.newHotel.images, images];
     },
-    addRoomType: (state,  payload ) => {
-      const  newRoomType  = payload;
-      state.roomTypes=[...state.roomTypes,newRoomType]
+    addRoomType: (state, payload) => {
+      const newRoomType = payload;
+      state.roomTypes = [...state.roomTypes, newRoomType];
     },
-    GetListRoomTypes: (state,  payload ) => {
-      const  roomTypes  = payload.payload.roomTypes;
-      state.roomTypes=roomTypes
+    GetListRoomTypes: (state, payload) => {
+      const roomTypes = payload.payload.roomTypes;
+      state.roomTypes = roomTypes;
     },
-    filterRoomAvailable: (state,  payload ) => {  
-      const  roomAvailableByFilter  = payload.payload;
-      state.roomAvailableByFilter=roomAvailableByFilter
+    filterRoomAvailable: (state, payload) => {
+      const roomAvailableByFilter = payload.payload;
+      state.roomAvailableByFilter = roomAvailableByFilter;
     },
-    updateRoomType:(state, payload)=>{
-      const  {room,index} = payload;
-      state.roomTypes[index]=room
+    updateRoomType: (state, payload) => {
+      const { room, index } = payload;
+      state.roomTypes[index] = room;
     },
-    getReservedRoomInfo: (state,  payload ) => {  
-      const  reservedRoomInfo  = payload.payload;
-      state.reservedRoomInfo=reservedRoomInfo
+    getReservedRoomInfo: (state, payload) => {
+      const reservedRoomInfo = payload.payload;
+      state.reservedRoomInfo = reservedRoomInfo;
     },
     getHotel: (state, { payload }) => {
-      state.hotelInfo = payload
+      state.hotelInfo = payload;
     },
-    updateHotel:(state, payload)=>{
-      const  {hotel,index} = payload;
-      state.hotel[index]=hotel
+    updateHotel: (state, payload) => {
+      const { hotel, index } = payload;
+      state.hotel[index] = hotel;
     },
     listRevenueHotelByYear: (state, { payload }) => {
-      state.revenueHotelByYear = payload
+      state.revenueHotelByYear = payload;
     },
     listRevenueHotelAllYear: (state, { payload }) => {
-      state.revenueHotelAllYear = payload
+      state.revenueHotelAllYear = payload;
     },
-   getServices: (state, { payload }) => {
-      state.services = payload
+    getServices: (state, { payload }) => {
+      state.services = payload;
     },
     getRoomAmenities: (state, { payload }) => {
-      state.roomAmenities = payload
+      state.roomAmenities = payload;
     },
     getRoomViews: (state, { payload }) => {
-      state.views = payload
+      state.views = payload;
     },
-
     getListHotels: (state, { payload }) => {
-      console.log("payload",payload)
-      state.listHotels = payload
+      state.listHotels = payload;
     },
+    getRoomTypeDetail: (state, {payload})=>{
+      state.roomTypeDetail = payload
+    }
   },
 });
 export const {
@@ -188,11 +196,12 @@ export const {
   getReservedRoomInfo,
   getHotel,
   updateHotel,
-  listRevenueHotelByYear, 
+  listRevenueHotelByYear,
   listRevenueHotelAllYear,
   getServices,
   getRoomAmenities,
   getRoomViews,
-  getListHotels
+  getListHotels,
+  getRoomTypeDetail,
 } = hostSlice.actions;
 export default hostSlice.reducer;

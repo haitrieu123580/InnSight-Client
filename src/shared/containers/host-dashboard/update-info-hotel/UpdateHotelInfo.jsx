@@ -51,10 +51,8 @@ const UpdateHotelInfoContainer = () => {
     setIsEditing(!isEditing);
   };
   const [status, setStatus] = useState(hotelInfo.status);
-  console.log("a",status)
 
   const handleChange = () => {
-    console.log("a",status)
     if(status==="ACTIVE"){
       setStatus("INACTIVE")
     }
@@ -124,7 +122,6 @@ const UpdateHotelInfoContainer = () => {
     if (data.images[0]) {
       for (let i = 0; i < data.images.length; i++) {
         const file = data.images[i];
-        
         formData.append(`images[${i}]`, file);
       }
     } else {
@@ -340,7 +337,6 @@ const UpdateHotelInfoContainer = () => {
                         accept="image/*"
                         multiple
                         {...register("images")} 
-
                       />
                     </div>
                   </div>
@@ -388,7 +384,6 @@ const UpdateHotelInfoContainer = () => {
                     thị trên nền tảng của chúng tôi và sẵn sàng đón khách
                   </h3>
                 </div>
-
                 <button
                   type="submit"
                   className="mt-3 border bg-sky-700 w-48 h-10 text-white text-base rounded-lg float-right mr-5"

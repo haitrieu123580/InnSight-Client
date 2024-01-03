@@ -45,6 +45,7 @@ const RoomStatus = lazy(() => import('../pages/host-pages/dashboard/room-status/
 const Reservation = lazy(() => import('../pages/host-pages/dashboard/reservation/Reservation'))
 const UpdateHotelInfo = lazy(() => import('../pages/host-pages/dashboard/update-hotel-info/UpdateHotelInfo'))
 const Revenue = lazy(() => import('../pages/host-pages/dashboard/revenue/Revenue'))
+const UpdateRoomType = lazy(() => import('../pages/host-pages/dashboard/room-price/UpdateRoomType'))
 
 
 
@@ -262,6 +263,11 @@ const privateRoutes = [
   {
     path: "/host/revenue",
     component: Revenue,
+    layout: HostManageLayout,
+  },
+  {
+    path: "/host/update-roomtype",
+    component: UpdateRoomType,
     layout: HostManageLayout,
   },
 ];
