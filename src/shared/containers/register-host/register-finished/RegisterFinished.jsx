@@ -25,18 +25,12 @@ const RegisterFinishedContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const newHotel = useSelector((state) => state.Host.newHotel);
-
-
-
   const [guaranteeChecked, setGuaranteeChecked] = useState(false);
   const [agreeChecked, setAgreeChecked] = useState(false);
   const [isFinished, setFinished] = useState(false);
-
-
   const handleChangeGuaranteeChecked = (event) => {
     setGuaranteeChecked(event.target.checked);
   };
-
   const handleChangeAgreeChecked = (event) => {
     setAgreeChecked(event.target.checked);
   };
@@ -48,10 +42,9 @@ const RegisterFinishedContainer = () => {
     }
   }, [guaranteeChecked, agreeChecked]);
 
-
-  const onSubmit = () => {
+  const onSubmit = (event) => {
     if (isFinished) {
-
+      event.target.disabled = true;
       const formData = new FormData();
       formData.append("name", newHotel.name || "");
       formData.append("checkInTime", newHotel.checkInTime || "");
@@ -116,6 +109,7 @@ const RegisterFinishedContainer = () => {
           ShowToastify.showErrorToast("Đăng kí thất bại");
         },
       });
+      
     } else {
       toast.error("Bạn phải đồng ý với tất cả điều khoản.");
     }
@@ -186,11 +180,10 @@ const RegisterFinishedContainer = () => {
                   <IcChevronLeft />
                 </button>
               </Link>
-
-              <button
-                className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
-                onClick={onSubmit}
-              >
+                <button
+                  className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
+                  onClick={onSubmit}
+                >
                 Hoàn tất đăng nhập và mở phòng cho khách đặt
               </button>
             </div>
