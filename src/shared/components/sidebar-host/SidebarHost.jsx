@@ -8,6 +8,7 @@ import IcPencil from "../icons/header-icons/IcPencil";
 import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../redux/host/action";
 import ShowToastify from "../../../utils/ShowToastify";
+import { getCurentHotel } from "../../../redux/host/slice";
 
 const SidebarHost = () => {
   const location = useLocation();
@@ -36,6 +37,10 @@ const SidebarHost = () => {
     const selectedHotel = event.target.value;
     setHotelId(selectedHotel);
     localStorage.setItem("hotelId", selectedHotel);
+    dispatch({
+      type: getCurentHotel,
+      payload: selectedHotel,
+    });
   };
 
   return (

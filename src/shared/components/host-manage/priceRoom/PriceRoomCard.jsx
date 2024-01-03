@@ -1,9 +1,9 @@
 import { Button} from "@mui/material";
 import { List, ListItem } from "@mui/material";
 
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import Constants from "../../../../utils/Contants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../redux/host/action";
 import ShowToastify from "../../../../utils/ShowToastify";
 import Dialog from "@mui/material/Dialog";
@@ -15,12 +15,15 @@ import { useNavigate } from "react-router";
 const PriceRoomCard = ({ room }) => {
   const navigate = useNavigate();
   const bedTypes = Constants.bedTypes;
+  const { currentHotel } = useSelector((state) => state.Host);
+
   const [isShowAmenities, setIsShowAmenities] = useState(false);
   const handleShowAmenities = () => {
     setIsShowAmenities(!isShowAmenities);
   };
-  let hotelId = JSON.parse(localStorage.getItem("hotelId"));
 
+  // let hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  let hotelId= currentHotel
   const dispatch = useDispatch();
   const [reloadData, setReloadData] = useState(false);
 

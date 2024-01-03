@@ -13,7 +13,8 @@ import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../redux/host/action";
 const ReservationContainer = () => {
-  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  const { currentHotel } = useSelector((state) => state.Host);
+  const hotelId= currentHotel
   const dispatch = useDispatch();
   let reservedRoomInfo = useSelector(
     (state) => state.Host.reservedRoomInfo)  
@@ -29,7 +30,7 @@ const ReservationContainer = () => {
   };
   useEffect(()=>{
     handleFilter(dateFilterStart, dateFilterEnd);
-  },[dateFilterStart,dateFilterEnd])
+  },[dateFilterStart,dateFilterEnd, hotelId])
 
   const handleFilter = (startDay, endDay) => {
     const bodyFilter = {
