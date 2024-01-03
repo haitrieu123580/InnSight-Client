@@ -75,10 +75,7 @@ const AddRoomImageContainer = () => {
             formData.append(`images[${index}]`, image.file||null);
           }
         });
-      }
-      
-      
-      
+      }      
       if (newRoomType.bedTypes && Array.isArray(newRoomType.bedTypes)) {
         newRoomType.bedTypes.forEach((bedType, i) => {
           if (bedType && bedType.name ) {
