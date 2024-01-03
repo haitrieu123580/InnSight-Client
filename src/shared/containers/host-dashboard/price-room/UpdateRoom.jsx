@@ -100,11 +100,6 @@ const UpdateRoomContainer = () => {
       return newRoomName;
     });
   };
-
-  const [description, setDecription] = useState(roomTypeDetail.description);
-  const handleChangeDecription = (event) => {
-    setDecription(event.target.value);
-  };
   const [view, setView] = useState(roomTypeDetail.view);
   const handleChangeView = (event) => {
     setView(event.target.value);
@@ -152,7 +147,7 @@ const UpdateRoomContainer = () => {
     formData.append("roomArea", roomArea || "");
     formData.append("adultCount", adultCount || "");
     formData.append("childrenCount", childrenCount || "");
-    formData.append("description", description || "");
+    formData.append("description", "");
     formData.append("view", view || "");
     if (roomName && Array.isArray(roomName)) {
       roomName.forEach((roomName, i) => {
@@ -221,17 +216,6 @@ const UpdateRoomContainer = () => {
                   className="my-2"
                   value={roomType}
                   onChange={handleChangeRoomType}
-                />
-              </Box>
-            </div>
-            <div className={`my-3`}>
-              <h3 className="font-bold">Mô tả về loại phòng này?</h3>
-              <Box sx={{ minWidth: 100 }}>
-                <TextField
-                  fullWidth
-                  className="my-2"
-                  value={description}
-                  onChange={handleChangeDecription}
                 />
               </Box>
             </div>
@@ -474,4 +458,4 @@ const UpdateRoomContainer = () => {
   );
 };
 
-export default UpdateRoomContainer;
+export default UpdateRoomContainer; 
