@@ -1,7 +1,7 @@
 import { Button} from "@mui/material";
 import { List, ListItem } from "@mui/material";
 
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Constants from "../../../../utils/Contants";
 import { useDispatch } from "react-redux";
 import HostAction from "../../../../redux/host/action";
@@ -10,7 +10,10 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import styles from "./PriceRoom.module.scss";
+import { getRoomTypeDetail } from "../../../../redux/host/slice";
+import { useNavigate } from "react-router";
 const PriceRoomCard = ({ room }) => {
+  const navigate = useNavigate();
   const bedTypes = Constants.bedTypes;
   const [isShowAmenities, setIsShowAmenities] = useState(false);
   const handleShowAmenities = () => {
@@ -70,9 +73,15 @@ const PriceRoomCard = ({ room }) => {
     setPriceUpdate(selectedRoom.price);
   };
   const handleSelectRoomToUpdate = (room) => {
-    setOpen(true);
+    // setOpen(true);
     setSelectedRoom(room);
     loadInfoRoom(room);
+    dispatch({
+      type: getRoomTypeDetail,
+      payload: room,
+    });
+    navigate(`/host/update-roomtype`)
+    
   };
   function handleDeleteRoomType(roomTypeId) {
     dispatch({

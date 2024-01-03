@@ -46,7 +46,6 @@ const SettingContainer = () => {
   };
 
   const onSubmit = (data) => {
-    console.log('data', data);
     dispatch({
         type: SettingAction.UPDATE_PROFILE,
         data: data,
@@ -56,7 +55,6 @@ const SettingContainer = () => {
           window.location.href= ('/admin_setting');
         },
         onError: () => {
-          console.log("Xảy ra lỗi")
           window.location.href= ('/admin_setting');
         }
     })

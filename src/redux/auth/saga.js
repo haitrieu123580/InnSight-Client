@@ -58,7 +58,6 @@ function* watchLogOut() {
   yield takeEvery(actions.LOG_OUT, function* (payload) {
     const { onSuccess, onError } = payload;
     const token = JSON.parse(localStorage.getItem("Token"));
-    // console.log('token', token);
     try {
       const response = yield call(LogOut, token);
       if (response?.Data) {

@@ -6,15 +6,12 @@ import IcCamera from "../../../components/icons/home-icons/IcCamera";
 import { Link } from "react-router-dom";
 import { FormLabel } from "@mui/material";
 import CircleExclamation from "../../../components/icons/home-icons/IcCircleExclamation";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { addImagesHotel } from "../../../../redux/host/slice";
 const RegisterHost5Container = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
   const [previewImages, setPreviewImages] = useState([]);
 
   const handleFileChange = (event) => {
@@ -113,6 +110,7 @@ const RegisterHost5Container = () => {
               <button
                 className={`border-2  font-bold text-2xl flex-grow rounded-md text-center  ${styles["btn-continue"]}`}
                 onClick={onSubmit}
+                disabled={previewImages.length < 5 }
               >
                 Tiếp tục
               </button>

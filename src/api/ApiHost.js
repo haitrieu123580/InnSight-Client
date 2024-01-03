@@ -164,7 +164,6 @@ export const UpdateHotel = async (userId, HotelId, newHotel) => {
   }
 };
 export const getRevenueHotelByYear = async ({ data, hotelId }) => {
-  console.log("hotelId", Data);
   const response = await axios.post(
     `${BASE_URL}/hotel/revenue/by-year`,
     JSON.stringify(data),
