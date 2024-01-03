@@ -42,7 +42,6 @@ const UpdateRoomContainer = () => {
   }, []);
   const roomAmenities = useSelector((state) => state.Host.roomAmenities) || [];
   const views = useSelector((state) => state.Host.views) || [];
-
   const handleAddRoomAmenities = (e) => {
     let addElement = e.target.parentElement.parentElement.parentElement;
     let infoAmenity = addElement.children[1];
