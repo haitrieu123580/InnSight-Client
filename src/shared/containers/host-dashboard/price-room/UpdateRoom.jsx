@@ -16,10 +16,10 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router";
 const UpdateRoomContainer = () => {
-  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  const { currentHotel } = useSelector((state) => state.Host);
+  const hotelId= currentHotel
   const navigate = useNavigate();
   const { roomTypeDetail } = useSelector((state) => state.Host) || {};
-  console.log("rôm", roomTypeDetail);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HostAction from '../../../../redux/host/action';
 import RevenueByYear from '../../../components/host-manage/revenue/RevenueByYear';
@@ -6,12 +6,12 @@ import ShowToastify from '../../../../utils/ShowToastify';
 
 const RevenueContainer = () => {
   const dispatch = useDispatch();
-  const {revenueHotelByYear} = useSelector((state) => state.Host) || {}
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
   const data = { year: currentYear.toString() };
-  const hotelId = localStorage.getItem("hotelId")
+  const { currentHotel } = useSelector((state) => state.Host);
+  const hotelId= currentHotel
   useEffect(() => {
     dispatch({
       type: HostAction.REVENUE_HOTEL_BY_YEAR,
@@ -24,7 +24,7 @@ const RevenueContainer = () => {
         }
     });
 
-  }, [dispatch]);
+  }, [dispatch, hotelId]);
   return (
       <>
         <RevenueByYear/>

@@ -15,7 +15,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 const RoomStatusContainer = () => {
-  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  const { currentHotel } = useSelector((state) => state.Host);  
+  const hotelId= currentHotel
   const dispatch = useDispatch();
   let roomAvailable = useSelector(
     (state) => state.Host.roomAvailableByFilter)  
@@ -24,7 +25,7 @@ const RoomStatusContainer = () => {
   
   useEffect(()=>{
     handleFilter(dateFilterStart, dateFilterEnd);
-  },[dateFilterStart,dateFilterEnd])
+  },[dateFilterStart,dateFilterEnd,hotelId])
 
   const handleChangeStartDay = (newValue) => {
     setDateFilterStart(newValue);
