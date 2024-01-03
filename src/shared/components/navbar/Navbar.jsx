@@ -44,11 +44,12 @@ const Navbar = () => {
                         <Link to={'/qltaikhoan'}>
                             <h1 className='font-bold'>DASHBOARD</h1>
                         </Link>
-                        : 
+                        : ""}
+                        {role == roles.host ? 
                         <Link to={'/host/dashboard'}>
                             <h1 className='font-bold'>DASHBOARD</h1>
                         </Link>
-                        }
+                        : ""}
                         <div className="pr-10">
                             <Link to={'/mysettings/info'}>
                                 <button
