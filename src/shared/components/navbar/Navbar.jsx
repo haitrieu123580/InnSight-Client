@@ -5,6 +5,8 @@ import IcGroup from '../icons/header-icons/IcGroup'
 import IcAvatar from '../icons/header-icons/IcAvatar'
 import IcPencil from '../icons/header-icons/IcPencil'
 import roles from '../../../utils/Roles'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
 const Navbar = () => {
     const isLogin = localStorage.getItem('isLogin') || false;
     const role = window.atob(JSON.parse(localStorage.getItem("role")));
@@ -39,17 +41,8 @@ const Navbar = () => {
                         </Link>
                     </>
                 ) : (
+                    
                     <>
-                        {role == roles.admin ? 
-                        <Link to={'/qltaikhoan'}>
-                            <h1 className='font-bold'>DASHBOARD</h1>
-                        </Link>
-                        : ""}
-                        {role == roles.host ? 
-                        <Link to={'/host/dashboard'}>
-                            <h1 className='font-bold'>DASHBOARD</h1>
-                        </Link>
-                        : ""}
                         <div className="pr-10">
                             <Link to={'/mysettings/info'}>
                                 <button
@@ -60,6 +53,16 @@ const Navbar = () => {
                                 </button>
                             </Link>
                         </div>
+                        {role == roles.admin ? 
+                        <Link to={'/qltaikhoan'}>
+                            <ArrowForwardIcon className='text-lg'/><span className='font-bold w-1/2'>Go to Dashboard</span>
+                        </Link>
+                        : ""}
+                        {role == roles.host ? 
+                        <Link to={'/host/dashboard'}>
+                            <ArrowForwardIcon className='text-lg'/><span className='font-bold w-1/2'>Go to Dashboard</span>
+                        </Link>
+                        : ""}
                     </>
                 )
                 }
