@@ -65,7 +65,7 @@ const RegisterHost4Container = () => {
               </div>
               <div className="pt-4">
                 <FormLabel>
-                  Vui lòng cho chúng tôi biết email của bạn?
+                  Vui lòng cho chúng tôi biết email chính để liên hệ với bạn?
                 </FormLabel>
                 <div className="pt-2">
                   <input

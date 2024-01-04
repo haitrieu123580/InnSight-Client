@@ -87,13 +87,12 @@ const RegisterFinishedContainer = () => {
       }
 
       if (newHotel.images[0]) {
+        console.log("a")
         newHotel.images[0].forEach((image, index) => {
           if (image) {
             formData.append(`images[${index}]`, image.file || null);
           }
         });
-      } else {
-        formData.append(`images[0]`, null);
       }
 
       formData.append('status','PENDING')
