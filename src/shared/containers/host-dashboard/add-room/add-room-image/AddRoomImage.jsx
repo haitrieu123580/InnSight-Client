@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./AddRoomImage.module.scss";
 import IcChevronLeft from "../../../../components/icons/home-icons/IcChevronLeft";
 import IcXmark from "../../../../components/icons/home-icons/IcXmark";
-import IcCamera from "../../../../components/icons/home-icons/IcCamera";
 import { Link } from "react-router-dom";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText,  FormLabel } from "@mui/material";
 import CircleExclamation from "../../../../components/icons/home-icons/IcCircleExclamation";
@@ -10,6 +9,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import HostAction from "../../../../../redux/host/action";
 import ShowToastify from "../../../../../utils/ShowToastify";
+import HintAddImage from "../../../../components/hint-add-image/HintAddImage";
 const AddRoomImageContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -161,7 +161,7 @@ const AddRoomImageContainer = () => {
             </div>
 
             <div className={`flex pt-7`}>
-              <Link to="/host/add-cancel-policy">
+              <Link to="/host/add-room-price">
                 <button
                   className={`border-2 px-6 py-3 mr-2 flex-none rounded-md`}
                 >
@@ -178,48 +178,7 @@ const AddRoomImageContainer = () => {
             </div>
           </div>
           <div className="flex-1">
-            <div className={`flex-1  justify-between ml-3 hidden xl:flex `}>
-              <div className={`mx-4 p-5 flex-1 ${styles["hint-box"]}`}>
-                <div className="flex h-16 align-top ">
-                  <IcCamera />
-                  <h2 className="text-xl pl-2">
-                    Nếu tôi không có ảnh chụp chuyên nghiệp thì sao?
-                  </h2>
-                </div>
-                <div>
-                  <h2>
-                    Không sao cả! Quý vị có thể sử dụng smartphone hoặc máy ảnh
-                    kỹ thuật số. Sau đây là một số mẹo chụp ảnh đẹp cho chỗ nghỉ
-                    của Quý vị:
-                  </h2>
-                  <ul className="py-5 px-8">
-                    <li>
-                      Những hình ảnh tốt nhất cần thể hiện được cả thiết kế nội
-                      thất và ngoại thất của chỗ nghỉ.
-                    </li>
-                    <li>Ảnh ngang tốt hơn ảnh dọc</li>
-                    <li>
-                      Hãy chụp ảnh vào ban ngày. Mở rèm và bật tất cả đèn để có
-                      ánh sáng tốt nhất.
-                    </li>
-                    <li>
-                      Nhằm bảo vệ sự riêng tư, Quý vị hãy lưu ý rằng những hình
-                      ảnh được đăng không hiển thị biển số xe, màn hình TV, máy
-                      tính để bàn hay máy tính xách tay.
-                    </li>
-                    <li>
-                      Tránh dùng hình ảnh chìm, logo hay giá phòng không thuộc
-                      về chỗ nghỉ trong ảnh
-                    </li>
-                  </ul>
-                  <h2>
-                    Tốt nhất Quý vị nên tránh sử dụng ảnh mà mình không biết tác
-                    giả. Quý vị chỉ nên sử dụng ảnh của người khác khi đã có sự
-                    chấp thuận của họ
-                  </h2>
-                </div>
-              </div>
-            </div>
+            <HintAddImage />
           </div>
         </div>
       </div>

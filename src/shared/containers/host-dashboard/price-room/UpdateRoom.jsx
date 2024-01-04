@@ -169,7 +169,7 @@ const UpdateRoomContainer = () => {
     if (previewImages[0]) {
       previewImages.forEach((image, index) => {
         if (image) {
-          formData.append(`images[${index}]`, image.file || null);
+          formData.append(`images[${index}]`, image.file);
         }
       });
     }
