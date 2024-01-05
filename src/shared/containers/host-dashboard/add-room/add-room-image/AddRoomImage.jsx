@@ -13,8 +13,11 @@ import HintAddImage from "../../../../components/hint-add-image/HintAddImage";
 const AddRoomImageContainer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const hotelId = JSON.parse(localStorage.getItem("hotelId"));
   const newRoomType = useSelector((state) => state.Host.newRoomType);
+  const { currentHotel } = useSelector((state) => state.Host);
+  // const hotelId = JSON.parse(localStorage.getItem("hotelId"));
+  const hotelId = currentHotel;
+
   const [previewImages, setPreviewImages] = useState([]);
   const handleFileChange = (event) => {
     const files = event.target.files;
