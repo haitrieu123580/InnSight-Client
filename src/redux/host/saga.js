@@ -15,12 +15,14 @@ import {
   UpdateRoomType,
   deleteRoomTypeById,
   getRevenueHotelByYear,
+  SearchRoomType,
 } from "../../api/ApiHost";
 import {
-  GetListRoomTypes,
   filterRoomAvailable,
   getHotel,
   getListHotels,
+  getListRoomTypes,
+  getListSearchRoomTypes,
   getReservedRoomInfo,
   getRoomAmenities,
   getRoomViews,
@@ -67,7 +69,7 @@ function* watchGetRoomTypes() {
     try {
       const response = yield call(GetRoomTypes, id);
       if (response?.Data) {
-        yield put(GetListRoomTypes(response?.Data));
+        yield put(getListRoomTypes(response?.Data));
         onSuccess && onSuccess();
       }
     } catch (error) {
@@ -249,6 +251,23 @@ function* watchGetListHotels() {
   });
 }
 
+function* watchSearchRoomType() {
+  yield takeEvery(actions.SEARCH_ROOMTYPE, function* (payload) {
+      const {hotelId, name, onSuccess, onError } = payload;
+      console.log("saga", payload)
+      try {
+          const response = yield call(SearchRoomType, {hotelId, name });
+          if (response?.Data) {
+            yield put(getListSearchRoomTypes(response?.Data));
+            onSuccess && onSuccess();
+          }
+      } catch (error) {
+          onError && onError();
+      } finally {
+      }
+  });
+}
+
 export default function* HostSaga() {
   yield all([
     fork(watchAddHotel),
@@ -265,5 +284,6 @@ export default function* HostSaga() {
     fork(watchGetAmenities),
     fork(watchGetViews),
     fork(watchGetListHotels),
+    fork(watchSearchRoomType),
   ]);
 }

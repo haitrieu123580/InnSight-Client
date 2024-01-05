@@ -133,7 +133,7 @@ const hostSlice = createSlice({
       const newRoomType = payload;
       state.roomTypes = [...state.roomTypes, newRoomType];
     },
-    GetListRoomTypes: (state, payload) => {
+    getListRoomTypes: (state, payload) => {
       const roomTypes = payload.payload.roomTypes;
       state.roomTypes = roomTypes;
     },
@@ -179,7 +179,11 @@ const hostSlice = createSlice({
     },
     getCurentHotel: (state, {payload})=>{
       state.currentHotel = payload
-    }
+    },
+    getListSearchRoomTypes: (state, payload) => {
+      const roomTypes = payload.payload;
+      state.roomTypes = roomTypes;
+    },
   },
 });
 export const {
@@ -195,7 +199,7 @@ export const {
   addRoomTypePrice,
   addImagesRoomType,
   filterRoomAvailable,
-  GetListRoomTypes,
+  getListRoomTypes,
   updateRoomType,
   getReservedRoomInfo,
   getHotel,
@@ -208,5 +212,6 @@ export const {
   getListHotels,
   getRoomTypeDetail,
   getCurentHotel,
+  getListSearchRoomTypes
 } = hostSlice.actions;
 export default hostSlice.reducer;
