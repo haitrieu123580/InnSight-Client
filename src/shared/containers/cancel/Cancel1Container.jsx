@@ -87,7 +87,7 @@ const Cancel1Container = () => {
                 type="button"
                 onClick={handleAcceptCancel}
               >
-                  <Link to={'/cancel/4'}> Xác nhận hủy</Link>
+                  <Link to={'/cancel/2'}> Xác nhận hủy</Link>
               </button>
               <Link to={'/book/invoice'}>
                 <button
