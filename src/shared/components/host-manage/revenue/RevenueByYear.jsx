@@ -6,6 +6,7 @@ import ShowToastify from "../../../../utils/ShowToastify";
 
 const RevenueYear = () => {
   const { revenueHotelByYear } = useSelector((state) => state.Host) || {};
+  const { currentHotel } = useSelector((state) => state.Host);
   const yearOptions = [2020, 2021, 2022, 2023, 2024];
   const [selectedYear, setSelectedYear] = useState(
     new Date().getFullYear().toString()
@@ -13,7 +14,9 @@ const RevenueYear = () => {
   const [series, setSeries] = useState([]);
   const dispatch = useDispatch();
   const data = { year: selectedYear.toString() };
-  const hotelId = localStorage.getItem("hotelId");
+  // const hotelId = localStorage.getItem("hotelId");
+  const hotelId = currentHotel;
+
   useEffect(() => {
     dispatch({
       type: HostAction.REVENUE_HOTEL_BY_YEAR,

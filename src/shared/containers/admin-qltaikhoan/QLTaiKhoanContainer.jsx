@@ -43,6 +43,7 @@ const QLTaiKhoanContainer = () => {
   const [reloadData, setReloadData] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+
   const email = searchParams.get('email') || '';
   
   useEffect(() => {

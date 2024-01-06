@@ -280,3 +280,15 @@ export const GetListHotels = async () => {
     };
   }
 };
+
+export const SearchRoomType = async ({ hotelId, name }) => {
+  if (name===null) {name=''}
+  const response = await axios.get(`${BASE_URL}/room-types/search`, {
+    params: {name},
+    headers: {
+      "Content-Type": "application/json",
+      hotelId: `${hotelId}`,
+    },
+  });
+  return { Data: response?.data };
+};

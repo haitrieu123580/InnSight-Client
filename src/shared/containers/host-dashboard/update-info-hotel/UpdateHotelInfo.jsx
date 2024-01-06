@@ -125,11 +125,7 @@ const UpdateHotelInfoContainer = () => {
         const file = data.images[i];
         formData.append(`images[${i}]`, file);
       }
-    } else {
-      for (let i = 0; i < hotelInfo.hotelImages.length; i++) {
-        formData.append(`images[${i}]`, hotelInfo.hotelImages[i]);
-      }
-    }
+    } 
     dispatch({
       type: HostAction.UPDATE_HOTEL,
       userId: userId,

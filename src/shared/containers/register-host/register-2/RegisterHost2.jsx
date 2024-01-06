@@ -18,11 +18,15 @@ const RegisterHost2Container = () => {
   const onStarChange = (e) => {
     setStar(e.target.value);
   };
-  const { handleSubmit, register } = useForm({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
     criteriaMode: "all",
   });
   const onSubmit = (data) => {
-    data.rate=star
+    data.rate = star;
     dispath({
       type: addNameAndRateHotel,
       payload: data,
@@ -42,7 +46,7 @@ const RegisterHost2Container = () => {
             Cho chúng tôi biết thêm về chỗ nghỉ của Quý vị
           </p>
         </div>
-        <form  onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="block lg:flex justify-between">
             <div className={`flex-1 ${styles["form"]}`}>
               <div className={`px-5 flex flex-col pb-5 $styles['info-hotel']`}>
@@ -50,13 +54,16 @@ const RegisterHost2Container = () => {
                   Khách sạn của Quý vị tên gì?
                   <span className="text-red-600"> *</span>
                 </h3>
-
+                {errors.name && (
+                  <span className="text-red-600">{errors.name.message}</span>
+                )}
                 <input
                   className={`border-2 py-2 px-5 text-xl`}
                   placeholder="Tên chỗ nghỉ"
                   id="name"
-                  {...register("name")}
-
+                  {...register("name", {
+                    required: "Tên chỗ nghỉ là bắt buộc",
+                  })}
                 ></input>
                 <span className="pt-2 px-6 opacity-70 hidden lg:block">
                   Tên này sẽ được hiển thị tới khách khi họ tìm kiếm chỗ nghỉ
@@ -68,16 +75,22 @@ const RegisterHost2Container = () => {
                   Thêm mô tả cho khách sạn của bạn?
                   <span className="text-red-600"> *</span>
                 </h3>
-
+                {errors.description && (
+                  <span className="text-red-600">
+                    {errors.description.message}
+                  </span>
+                )}
                 <textarea
                   className={`border-2 py-2 px-5 text-xl`}
                   placeholder="Mô tả"
                   id="description"
-                  {...register("description")}
-
+                  {...register("description", {
+                    required: "Mô tả khách sạn là bắt buộc",
+                  })}
                 ></textarea>
                 <span className="pt-2 px-6 opacity-70 hidden lg:block">
-                  Mô tả một số ưu điểm, và dịch vụ của khách sạn để thu hút khách đặt phòng
+                  Mô tả một số ưu điểm, và dịch vụ của khách sạn để thu hút
+                  khách đặt phòng
                 </span>
               </div>
 

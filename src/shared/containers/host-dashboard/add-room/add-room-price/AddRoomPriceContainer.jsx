@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { addRoomTypePrice } from "../../../../../redux/host/slice";
 
 const AddRoomPriceContainer = () => {
-  const commission=15;
+  const commission=10;
   const [price, setPrice] =useState (0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const AddRoomPriceContainer = () => {
       payload: price,  
     });
 
-    navigate("/host/add-cancel-policy");
+    navigate("/host/add-room-image");
   };
   return (
     <div className={` ${styles["add-room-price"]}`}>
@@ -36,12 +36,13 @@ const AddRoomPriceContainer = () => {
             <h3 className="pb-2">Số tiền khách trả</h3>
             <TextField
               id="price-room"
+              type="number"
               helperText="Bao gồm các loại thuế, phí và hoa hồng"
               onChange={(e)=>{setPrice(e.target.value)}}
             />
           </Stack>
           <Stack paddingX={8} spacing={2}>
-            <h3 className="text-gray-400 py-1">15% hoa hồng cho InnSight</h3>
+            <h3 className="text-gray-400 py-1">10% hoa hồng cho InnSight</h3>
             <Stack direction="row" spacing={1}>
               <CheckIcon />
               <h3 className="text-gray-400 py-1">
