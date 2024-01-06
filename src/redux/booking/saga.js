@@ -40,7 +40,7 @@ function* watchPayment() {
         const { reservation, onError, onSuccess } = payload
         try {
             const response = yield call(payment, reservation);
-            if (response?.Data !== "") {
+            if (response.status !== 404) {
                 yield put(pay(response?.Data))
                 onSuccess && onSuccess();
             }
@@ -55,10 +55,14 @@ function* watchReservationCancel() {
     yield takeEvery(actions.RESERVATION_CANCEL, function* (payload) {
         const {reservationCode, onSuccess, onError } = payload
         try {
-            const response = yield call(reservationCancel, reservationCode);
-            if (response?.Data) {
+            const response = yield call(reservationCancel, {reservationCode});
+            console.log(response)
+            if(response.status ==200){
                 yield put(cancel(response?.Data))
                 onSuccess && onSuccess();
+            }
+            else{
+                onError && onError();
             }
         } catch (error) {
             onError && onError();
