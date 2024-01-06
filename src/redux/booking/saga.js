@@ -57,7 +57,7 @@ function* watchReservationCancel() {
         try {
             const response = yield call(reservationCancel, {reservationCode});
             console.log(response)
-            if(response.status ==200){
+            if(response?.Data){
                 yield put(cancel(response?.Data))
                 onSuccess && onSuccess();
             }
