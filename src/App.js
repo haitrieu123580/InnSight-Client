@@ -60,11 +60,9 @@ function App() {
                   element={
                     isLogin ? (
                       <Layout>
-                        <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin }> 
                         <Suspense fallback={<div>Loading...</div>}>
                           {<route.component />}
                         </Suspense>
-                         </ProtectedRoute> 
                       </Layout>
                     ) : (
                       <Navigate to="/sign-in" replace={true} />
