@@ -60,11 +60,11 @@ function App() {
                   element={
                     isLogin ? (
                       <Layout>
-                        {/* <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin }> */}
+                        <ProtectedRoute user={userRole === Roles.host || userRole === Roles.admin }> 
                         <Suspense fallback={<div>Loading...</div>}>
                           {<route.component />}
                         </Suspense>
-                        {/* </ProtectedRoute> */}
+                         </ProtectedRoute> 
                       </Layout>
                     ) : (
                       <Navigate to="/sign-in" replace={true} />
@@ -86,7 +86,7 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    // isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
+                    isLogin && (userRole === Roles.host || userRole === Roles.admin) ? (
                       <Layout>
 
                         <Suspense fallback={<div>Loading...</div>}>
@@ -94,9 +94,9 @@ function App() {
                         </Suspense>
 
                       </Layout>
-                    // ) : (
-                    //   <Navigate to="/" replace={true} />
-                    // )
+                     ) : (
+                       <Navigate to="/" replace={true} />
+                    )
                   }
                 />
               );
